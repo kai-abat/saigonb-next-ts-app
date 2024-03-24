@@ -7,21 +7,23 @@ import {
   Image as ImageUI,
 } from "@nextui-org/react";
 import Image from "next/image";
-import Router from "next/router";
-import Printer from "../Printer";
+import { useRouter } from "next/navigation";
 
 const MenuCard = ({ menuItem }: AppProps) => {
+  const router = useRouter();
   // const hotPrices = menuItem?.price.filter((p) => p.type === "Hot");
 
   // const icedPrices = menuItem?.price.filter((p) => p.type === "Iced");
 
-  if (!menuItem) return;
+  if (!menuItem || menuItem.category === null) return;
 
   return (
     <Card
       shadow="sm"
       isPressable
-      onPress={() => Router.push(`/menu/${menuItem.id}`)}
+      onPress={() =>
+        router.push(`/menu/${menuItem.category?.name}/${menuItem.name}`)
+      }
       className="  bg-primary hover:ring-2 transition-all duration-700 hover:ring-secondary"
     >
       <CardBody

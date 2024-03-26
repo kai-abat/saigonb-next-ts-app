@@ -1,3 +1,4 @@
 - Improve performance of loading images
 - Add authentication for /admin
 - [auth] Add "New Menu" action under /Menu
+- Refactor

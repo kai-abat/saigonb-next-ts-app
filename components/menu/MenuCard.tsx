@@ -36,7 +36,7 @@ const MenuCard = ({ menuItem }: AppProps) => {
           radius="none"
           shadow="sm"
           width={300}
-          height={500}
+          height={400}
           alt={menuItem.name}
           className=" h-full sm:h-auto aspect-square"
           src={menuItem.coverPhotos.at(0)?.image}

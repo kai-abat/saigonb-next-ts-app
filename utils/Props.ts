@@ -72,4 +72,11 @@ export declare interface AppProps {
   showBrand?: boolean;
   align?: "left" | "right" | "center";
   className?: string;
+  images?: MenuCoverPhoto[];
+}
+
+export declare interface ImageStore {
+  id: number;
+  imageUrl: string;
+  isActive: boolean;
 }

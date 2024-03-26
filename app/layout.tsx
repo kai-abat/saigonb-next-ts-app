@@ -26,7 +26,7 @@ export default function RootLayout({ children }: AppProps) {
           >
             <Header />
             <main className="flex">
-              <section className=" m-auto min-w-[420px] max-w-[1024px]">
+              <section className=" m-auto min-w-[300px] max-w-[1024px] w-[90vw] sm:w-[80vw]">
                 <BreadCrumbs />
                 <Divider className="my-2" />
                 {children}

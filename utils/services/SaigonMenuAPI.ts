@@ -66,6 +66,7 @@ export const fetchAllMenu = async (): Promise<Menu[]> => {
   // await new Promise((resolve) => setTimeout(resolve, 5000));
   // console.log("fetchAllMenu", data);
   if (error) {
+    console.log("fetchAllMenu", error);
     throw new Error(error.message);
   }
 
@@ -81,6 +82,7 @@ export const fetchAllCategoriesClient = async (): Promise<
     .select("*, Menu(*, Category(*),MenuCoverPhoto(*), MenuPrice(*))");
 
   if (error) {
+    console.log("fetchAllCategoriesClient", error);
     throw new Error(error.message);
   }
 
@@ -115,6 +117,7 @@ export const fetchCategoryByName = async (
     .single();
 
   if (error) {
+    console.log("fetchCategoryByName", error);
     throw new Error(error.message);
   }
 

@@ -66,13 +66,16 @@ export declare interface AppProps {
   type?: string;
   sub?: string;
   name?: string;
+  label?: string;
   title?: string;
+  description?: string;
   category?: CategoryWithMenu;
   categories?: CategoryWithMenu[];
   showBrand?: boolean;
   align?: "left" | "right" | "center";
   className?: string;
   images?: MenuCoverPhoto[];
+  capitalize?: boolean;
 }
 
 export declare interface ImageStore {

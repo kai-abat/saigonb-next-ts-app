@@ -4,16 +4,22 @@ import { useFormState } from "react-dom";
 import FormRow from "../form/FormRow";
 import { Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { Category } from "@/utils/Props";
+import Title from "../Title";
+import LabeledSwitch from "../nextui/LabeledSwitch";
+import ImagePicker from "../ui/ImagePicker";
 
-const AddMenuForm = ({ categories }: { categories: Category[] }) => {
+const NewMenuForm = ({ categories }: { categories: Category[] }) => {
   const [state, formAction] = useFormState(LoginAction, { message: null });
   return (
     <>
       <header>
-        <h1>Add New Menu</h1>
+        <Title>New Menu</Title>
       </header>
       <main className="">
-        <form className=" max-w-[50rem]" action={formAction}>
+        <form
+          className=" max-w-[50rem] flex flex-col gap-3"
+          action={formAction}
+        >
           <FormRow className="flex gap-4">
             <Input
               type="text"
@@ -32,6 +38,15 @@ const AddMenuForm = ({ categories }: { categories: Category[] }) => {
                 <SelectItem key={category.id}>{category.altName}</SelectItem>
               )}
             </Select>
+          </FormRow>
+          <FormRow>
+            <LabeledSwitch
+              title="Featured Menu"
+              description="Featured menu will be posted in featured section."
+            />
+          </FormRow>
+          <FormRow>
+            <ImagePicker />
           </FormRow>
           {/* <p>
             <label htmlFor="email">Your email</label>
@@ -64,4 +79,4 @@ const AddMenuForm = ({ categories }: { categories: Category[] }) => {
     </>
   );
 };
-export default AddMenuForm;
+export default NewMenuForm;

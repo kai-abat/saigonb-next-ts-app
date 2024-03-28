@@ -10,6 +10,7 @@ import {
 } from "react-icons/md";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Button, Divider } from "@nextui-org/react";
+import Title from "../Title";
 
 const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -19,9 +20,7 @@ const LoginForm = () => {
   const [state, formAction] = useFormState(LoginAction, { message: null });
   return (
     <section className=" flex flex-col gap-5 justify-start items-center border-1 border-primary rounded-md p-3 bg-content3">
-      <h1 className=" text-2xl font-semibold">
-        Welcome brewers, Please login now
-      </h1>
+      <Title>Welcome brewers, Please login now</Title>
       <Divider className="w-full" />
 
       <form className="flex flex-col gap-5 w-full" action={formAction}>

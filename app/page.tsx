@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import Title from "@/components/Title";
 import Carousel from "@/components/flowbite/Carousel";
 import { CarouselData } from "@/utils/Props";
 import { fetchCarouselData } from "@/utils/services/LandingAPI";
@@ -16,7 +17,7 @@ export default async function Home() {
     <>
       {/* <Carousel data={carouselData} /> */}
       <Hero />
-      <h1>Lorem ipsum dolor sit amet</h1>
+      <Title>Lorem ipsum dolor sit amet</Title>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Purus gravida quis

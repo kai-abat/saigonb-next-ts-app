@@ -16,6 +16,11 @@ module.exports = {
         destination: "/menu",
         permanent: true,
       },
+      {
+        source: "/admin",
+        destination: "/admin/login",
+        permanent: true,
+      },
     ];
   },
 };

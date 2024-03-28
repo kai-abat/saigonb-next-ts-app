@@ -1,5 +1,5 @@
 import FilterMenu from "@/components/menu/FilterMenu";
-import { fetchAllCategories } from "@/utils/services/SaigonMenuAPI";
+import { fetchAllCategories } from "@/utils/services/MenuAPI";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

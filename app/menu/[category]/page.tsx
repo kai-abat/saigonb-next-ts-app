@@ -3,7 +3,7 @@ import MenuListings from "@/components/menu/MenuListings";
 import {
   fetchAllCategories,
   fetchAllCategoriesClient,
-} from "@/utils/services/SaigonMenuAPI";
+} from "@/utils/services/MenuAPI";
 
 // Return a list of `params` to populate the [slug] dynamic segment
 export async function generateStaticParams() {

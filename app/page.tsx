@@ -1,7 +1,7 @@
 import Hero from "@/components/Hero";
 import Carousel from "@/components/flowbite/Carousel";
 import { CarouselData } from "@/utils/Props";
-import { fetchCarouselData } from "@/utils/services/SaigonLandingAPI";
+import { fetchCarouselData } from "@/utils/services/LandingAPI";
 import Image from "next/image";
 
 export default async function Home() {
@@ -14,7 +14,7 @@ export default async function Home() {
 
   return (
     <>
-      <Carousel data={carouselData} />
+      {/* <Carousel data={carouselData} /> */}
       <Hero />
       <h1>Lorem ipsum dolor sit amet</h1>
       <p>

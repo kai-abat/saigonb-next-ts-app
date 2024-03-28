@@ -1,6 +1,4 @@
 import { AppProps } from "@/utils/Props";
-import { Divider, Image as ImageUI } from "@nextui-org/react";
-import Image from "next/image";
 import CardPrice from "./CardPrice";
 import ImageSlider from "../ImageSlider";
 

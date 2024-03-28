@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { MENU } from "./TempData";
 import { SupaCategory, SupaMenu } from "../types/SupabaseCompProps";
-import { CategoryWithMenu, Menu } from "../Props";
+import { Category, CategoryWithMenu, Menu } from "../Props";
 import { createServerCompClient } from "../supabase/ServerCompClient";
 import { getSupabaseClient } from "../supabase/ClientSupabase";
 
@@ -98,11 +98,28 @@ export const fetchAllCategories = async (): Promise<CategoryWithMenu[]> => {
     .select("*, Menu(*, Category(*),MenuCoverPhoto(*), MenuPrice(*))");
 
   if (error) {
+    console.log("fetchAllCategories", error);
     throw new Error(error.message);
   }
 
   // await new Promise((resolve) => setTimeout(resolve, 5000));
   return extractCategoriesFromDB(categories);
+};
+
+export const fetchCategoriesOnly = async (): Promise<Category[]> => {
+  const supabase = createServerCompClient();
+
+  const { data: categories, error } = await supabase
+    .from("Category")
+    .select("id, name, altName");
+
+  if (error) {
+    console.log("fetchCategoriesOnly", error);
+    throw new Error(error.message);
+  }
+
+  // await new Promise((resolve) => setTimeout(resolve, 5000));
+  return categories;
 };
 
 export const fetchCategoryByName = async (

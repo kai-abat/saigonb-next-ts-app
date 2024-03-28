@@ -1,6 +1,6 @@
 import Printer from "@/components/Printer";
 import MenuDetails from "@/components/menu/MenuDetails";
-import { fetchAllCategories } from "@/utils/services/SaigonMenuAPI";
+import { fetchAllCategories } from "@/utils/services/MenuAPI";
 
 const MenuItemPage = async ({
   params,

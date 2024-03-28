@@ -7,7 +7,7 @@ const Footer = () => {
   const copyright = `Copyright © ${year} Saigon Brewers. All rights reserved.`;
   return (
     <div className="bg-primary gap-10 flex flex-col sm:flex-row justify-center items-center py-6 px-3 sm:justify-between">
-      <Logo showBrand={false} />
+      <Logo />
       <div className="flex flex-wrap gap-x-8 justify-center items-center">
         <p>{copyright}</p>
         <p>

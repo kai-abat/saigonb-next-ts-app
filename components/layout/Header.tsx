@@ -11,7 +11,6 @@ import {
   NavbarMenu,
   NavbarMenuItem,
 } from "@nextui-org/react";
-import Logo from "./Logo";
 import {
   HiOutlineHome,
   HiOutlinePhone,
@@ -20,6 +19,7 @@ import {
 import { ThemeSwitcher } from "../ThemeSwitcher";
 import { usePathname } from "next/navigation";
 import { IoLogoFacebook, IoLogoInstagram } from "react-icons/io";
+import LogoHeader from "./LogoHeader";
 
 interface Menu {
   name: string;
@@ -71,7 +71,7 @@ const Header = () => {
     >
       <NavbarContent>
         <NavbarBrand>
-          <Logo />
+          <LogoHeader />
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">

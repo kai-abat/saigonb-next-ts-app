@@ -2,10 +2,7 @@ import Printer from "@/components/Printer";
 import FilterMenu from "@/components/menu/FilterMenu";
 import MenuListings from "@/components/menu/MenuListings";
 import { PageProps } from "@/utils/Props";
-import {
-  fetchAllCategories,
-  fetchAllMenu,
-} from "@/utils/services/SaigonMenuAPI";
+import { fetchAllCategories, fetchAllMenu } from "@/utils/services/MenuAPI";
 
 // params - dynamic route example [slug]
 // serchParams are the /menu?category=all

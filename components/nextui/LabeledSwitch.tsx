@@ -1,9 +1,11 @@
 import { AppProps } from "@/utils/Props";
 import { Switch, cn } from "@nextui-org/react";
 
-function LabeledSwitch({ title = "", description = "" }: AppProps) {
+function LabeledSwitch({ title = "", description = "", name, id }: AppProps) {
   return (
     <Switch
+      name={name}
+      id={id}
       defaultSelected
       classNames={{
         base: cn(

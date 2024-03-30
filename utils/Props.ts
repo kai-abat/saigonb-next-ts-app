@@ -76,6 +76,7 @@ export declare interface AppProps {
   className?: string;
   images?: MenuCoverPhoto[];
   capitalize?: boolean;
+  id?: string;
 }
 
 export declare interface ImageStore {

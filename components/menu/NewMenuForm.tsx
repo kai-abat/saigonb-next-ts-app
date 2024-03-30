@@ -2,38 +2,66 @@
 import { LoginAction } from "@/utils/services/LoginAction";
 import { useFormState } from "react-dom";
 import FormRow from "../form/FormRow";
-import { Input, Select, SelectItem, Textarea } from "@nextui-org/react";
+import {
+  Button,
+  Divider,
+  Input,
+  Select,
+  SelectItem,
+  Textarea,
+} from "@nextui-org/react";
 import { Category } from "@/utils/Props";
 import Title from "../Title";
 import LabeledSwitch from "../nextui/LabeledSwitch";
-import ImagePicker from "../ui/ImagePicker";
+import ImageUpload from "../ui/ImageUpload";
+import { useState } from "react";
+import PriceList from "../ui/PriceList";
 
-const NewMenuForm = ({ categories }: { categories: Category[] }) => {
-  const [state, formAction] = useFormState(LoginAction, { message: null });
+const NewMenuForm = ({ categories = [] }: { categories: Category[] }) => {
+  const [state, formAction] = useFormState(LoginAction, { message: "" });
+  const [menuName, setMenuName] = useState<string>("");
   return (
     <>
       <header>
         <Title>New Menu</Title>
       </header>
       <main className="">
-        <form
-          className=" max-w-[50rem] flex flex-col gap-3"
-          action={formAction}
-        >
-          <FormRow className="flex gap-4">
+        <form className="flex flex-col gap-3" action={formAction}>
+          <FormRow>
             <Input
+              color="default"
+              name="menuName"
+              id="menuName"
               type="text"
               label="Menu Name"
               isRequired
-              isClearable
+              value={menuName}
+              onChange={(e) => setMenuName(e.target.value)}
               radius="sm"
+              className=" max-w-[500px] min-w-[300px]"
             />
           </FormRow>
-          <FormRow className="flex gap-4">
-            <Textarea minRows={3} label="Description" isRequired radius="sm" />
+          <FormRow>
+            <Textarea
+              color="default"
+              name="description"
+              id="description"
+              minRows={3}
+              label="Description"
+              isRequired
+              radius="sm"
+              className=" max-w-[500px] min-w-[300px]"
+            />
           </FormRow>
           <FormRow>
-            <Select items={categories} label="Select Category">
+            <Select
+              color="default"
+              name="category"
+              id="category"
+              items={categories}
+              label="Select Category"
+              className=" max-w-[500px] min-w-[300px]"
+            >
               {(category) => (
                 <SelectItem key={category.id}>{category.altName}</SelectItem>
               )}
@@ -42,11 +70,45 @@ const NewMenuForm = ({ categories }: { categories: Category[] }) => {
           <FormRow>
             <LabeledSwitch
               title="Featured Menu"
+              name="isFeatured"
+              id="isFeatured"
               description="Featured menu will be posted in featured section."
             />
           </FormRow>
           <FormRow>
-            <ImagePicker />
+            <span className=" font-semibold">Cover Photos</span>
+          </FormRow>
+          <FormRow>
+            <ImageUpload />
+          </FormRow>
+          <FormRow>
+            <span className=" font-semibold">Price List</span>
+          </FormRow>
+          <FormRow>
+            <PriceList />
+          </FormRow>
+
+          <FormRow>
+            <Divider className="w-full" />
+          </FormRow>
+
+          <FormRow>
+            <Button
+              color="primary"
+              radius="md"
+              type="submit"
+              className="max-w-[500px] min-w-[300px]"
+            >
+              Submit
+            </Button>
+            <Button
+              color="default"
+              radius="md"
+              type="button"
+              className="max-w-[500px] min-w-[300px]"
+            >
+              Cancel
+            </Button>
           </FormRow>
           {/* <p>
             <label htmlFor="email">Your email</label>

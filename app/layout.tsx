@@ -23,7 +23,7 @@ export default function RootLayout({ children }: AppProps) {
         <Providers>
           <section
             id="main-section"
-            className="min-w-420px flex flex-col gap-6 bg-primary-50 dark:bg-stone-950"
+            className="min-w-420px flex flex-col gap-6 bg-primary-100 dark:bg-stone-950"
           >
             <Header />
             <main className="flex">

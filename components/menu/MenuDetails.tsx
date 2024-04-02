@@ -1,4 +1,4 @@
-import { AppProps } from "@/utils/Props";
+import { AppProps } from "@/utils/types/Props";
 import CardPrice from "./CardPrice";
 import ImageSlider from "../ImageSlider";
 

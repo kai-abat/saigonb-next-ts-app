@@ -4,23 +4,24 @@ import { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import ImageUploadCard from "./ImageUploadCard";
 import { MdOutlineAddAPhoto } from "react-icons/md";
+import { UseFormRegister } from "react-hook-form";
 
 const ImageUpload = () => {
   const [imageURLList, setImageURLList] = useState<
-    { id: string; imageUrl: string; fileName: string; sort: number }[]
-  >([{ id: "1", imageUrl: "", fileName: "menuName-1", sort: 1 }]);
+    { id: number; imageUrl: string; sort: number }[]
+  >([{ id: 1, imageUrl: "", sort: 1 }]);
 
   function handleAddImageComponent() {
-    const len = imageURLList.length + 1;
-    setImageURLList([
-      ...imageURLList,
-      {
-        id: `${len.toString()}`,
+    setImageURLList((prevState) => {
+      const newId = prevState.length + 1;
+      const newData = {
+        id: newId,
         imageUrl: "",
-        fileName: `menuName-${len.toString()}`,
-        sort: len,
-      },
-    ]);
+        sort: newId,
+      };
+
+      return [...prevState, newData];
+    });
   }
 
   return (
@@ -31,7 +32,6 @@ const ImageUpload = () => {
       {imageURLList.map((imageData, index) => {
         return (
           <ImageUploadCard
-            imageURLList={imageURLList}
             setImageURLList={setImageURLList}
             key={index}
             imageData={imageData}

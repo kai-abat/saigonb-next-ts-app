@@ -41,6 +41,7 @@ export default function useUploadImage() {
   return {
     handlePickClick,
     getImagePreviewUrl,
+    imagePreviewUrl,
     handleImageChange,
     imageInputRef,
     selectedFile,

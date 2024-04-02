@@ -3,7 +3,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button, Image as ImageUI } from "@nextui-org/react";
-import { AppProps } from "@/utils/Props";
+import { AppProps } from "@/utils/types/Props";
 
 // import classes from './image-picker.module.css';
 

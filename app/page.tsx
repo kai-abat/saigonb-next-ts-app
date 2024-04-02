@@ -1,7 +1,7 @@
 import Hero from "@/components/Hero";
 import Title from "@/components/Title";
 import Carousel from "@/components/flowbite/Carousel";
-import { CarouselData } from "@/utils/Props";
+import { CarouselData } from "@/utils/types/Props";
 import { fetchCarouselData } from "@/utils/services/LandingAPI";
 import Image from "next/image";
 

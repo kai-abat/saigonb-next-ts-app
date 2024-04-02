@@ -1,12 +1,15 @@
-import { AppProps } from "@/utils/Props";
+import { AppProps } from "@/utils/types/Props";
 import { Switch, cn } from "@nextui-org/react";
+import { useState } from "react";
 
 function LabeledSwitch({ title = "", description = "", name, id }: AppProps) {
+  const [isSelected, setIsSelected] = useState<boolean>(true);
   return (
     <Switch
       name={name}
       id={id}
-      defaultSelected
+      isSelected={isSelected}
+      onValueChange={setIsSelected}
       classNames={{
         base: cn(
           "inline-flex flex-row-reverse w-full max-w-md bg-content2 hover:bg-content3 items-center",

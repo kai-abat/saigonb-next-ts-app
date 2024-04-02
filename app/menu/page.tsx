@@ -1,7 +1,7 @@
 import Printer from "@/components/Printer";
 import FilterMenu from "@/components/menu/FilterMenu";
 import MenuListings from "@/components/menu/MenuListings";
-import { PageProps } from "@/utils/Props";
+import { PageProps } from "@/utils/types/Props";
 import { fetchAllCategories, fetchAllMenu } from "@/utils/services/MenuAPI";
 
 // params - dynamic route example [slug]

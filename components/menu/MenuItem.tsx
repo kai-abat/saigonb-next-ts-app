@@ -1,4 +1,4 @@
-import { AppProps } from "@/utils/Props";
+import { AppProps } from "@/utils/types/Props";
 import MenuCard from "./MenuCard";
 import { Divider } from "@nextui-org/react";
 import Title from "../Title";

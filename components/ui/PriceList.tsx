@@ -6,21 +6,22 @@ import PriceCard from "./PriceCard";
 import { MdAdd, MdOutlineAddAPhoto } from "react-icons/md";
 
 const PriceList = () => {
+  const defaultValues = { id: 1, type: "Hot", size: "8oz", price: 100 };
   const [priceList, setPriceList] = useState<
     { id: number; type: string; size: string; price: number }[]
-  >([{ id: 1, type: "Hot", size: "8oz", price: 100 }]);
+  >([defaultValues]);
 
   function handleAddPriceComponent() {
-    const len = priceList.length + 1;
-    setPriceList([
-      ...priceList,
-      {
-        id: len,
-        type: "Hot",
-        size: "8oz",
-        price: 100,
-      },
-    ]);
+    setPriceList((prevState) => {
+      const newId = prevState.length + 1;
+      const newData = {
+        id: newId,
+        type: defaultValues.type,
+        size: defaultValues.size,
+        price: defaultValues.price,
+      };
+      return [...prevState, newData];
+    });
   }
 
   useEffect(() => {

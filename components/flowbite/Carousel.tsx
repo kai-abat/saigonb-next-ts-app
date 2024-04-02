@@ -1,4 +1,4 @@
-import { Media } from "@/utils/Props";
+import { Media } from "@/utils/types/Props";
 import type { CustomFlowbiteTheme } from "flowbite-react";
 import { Carousel as FBCarousel } from "flowbite-react";
 import Image from "next/image";

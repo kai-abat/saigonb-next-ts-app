@@ -1,5 +1,5 @@
 "use client";
-import { AppProps } from "@/utils/Props";
+import { AppProps } from "@/utils/types/Props";
 import {
   Card,
   CardBody,

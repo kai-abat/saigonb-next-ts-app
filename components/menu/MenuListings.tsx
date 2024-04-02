@@ -1,4 +1,4 @@
-import { AppProps } from "@/utils/Props";
+import { AppProps } from "@/utils/types/Props";
 import MenuItem from "./MenuItem";
 
 const MenuListings = ({ categories }: AppProps) => {

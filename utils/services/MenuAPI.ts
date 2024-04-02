@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { MENU } from "./TempData";
 import { SupaCategory, SupaMenu } from "../types/SupabaseCompProps";
-import { Category, CategoryWithMenu, Menu } from "../Props";
+import { Category, CategoryWithMenu, Menu } from "../types/Props";
 import { createServerCompClient } from "../supabase/ServerCompClient";
 import { getSupabaseClient } from "../supabase/ClientSupabase";
 

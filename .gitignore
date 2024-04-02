@@ -37,3 +37,5 @@ next-env.d.ts
 
 #text
 textfile.txt
+components/menu/NewMenuFormContent copy.tsx
+components/menu/NewMenuForm copy.tsx

@@ -1,4 +1,4 @@
-import { AppProps } from "@/utils/Props";
+import { AppProps } from "@/utils/types/Props";
 import Link from "next/link";
 import Logo from "./Logo";
 import Brand from "./Brand";

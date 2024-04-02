@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AppProps } from "@/utils/Props";
+import { AppProps } from "@/utils/types/Props";
 import Header from "@/components/layout/Header";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import Footer from "@/components/layout/Footer";

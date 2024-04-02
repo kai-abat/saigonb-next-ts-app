@@ -1,5 +1,5 @@
 "use client";
-import { MenuCategoriesDefault } from "@/utils/Props";
+import { MenuCategoriesDefault } from "@/utils/types/Props";
 import { Button } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";

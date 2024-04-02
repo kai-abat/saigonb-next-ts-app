@@ -1,4 +1,4 @@
-import { CarouselData } from "../Props";
+import { CarouselData } from "../types/Props";
 import { HomeData } from "./TempData";
 
 export const fetchCarouselData = async () => {

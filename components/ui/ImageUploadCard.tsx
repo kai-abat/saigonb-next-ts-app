@@ -5,6 +5,7 @@ import {
   Card,
   CardBody,
   CardFooter,
+  CardHeader,
   Image as ImageUI,
   Input,
 } from "@nextui-org/react";
@@ -19,107 +20,85 @@ import {
 
 const ImageUploadCard = ({
   imageData,
-  imageURLList,
   setImageURLList,
 }: {
   imageData: {
-    id: string;
+    id: number;
     imageUrl: string;
-    fileName: string;
     sort: number;
   };
-  imageURLList: {
-    id: string;
-    imageUrl: string;
-    fileName: string;
-    sort: number;
-  }[];
+
   setImageURLList: Dispatch<
     SetStateAction<
       {
-        id: string;
+        id: number;
         imageUrl: string;
-        fileName: string;
         sort: number;
       }[]
     >
   >;
 }) => {
-  const [fileName, setFileName] = useState<string>(imageData.fileName);
-  const [orderBy, setOrderBy] = useState<string>(imageData.sort.toString());
-  const {
-    handlePickClick,
-    getImagePreviewUrl,
-    handleImageChange,
-    imageInputRef,
-  } = useUploadImage();
-
-  const imageUrl = getImagePreviewUrl();
+  const { handlePickClick, handleImageChange, imagePreviewUrl, imageInputRef } =
+    useUploadImage();
 
   useEffect(() => {
-    if (typeof imageUrl === "string" && imageData.imageUrl === "") {
-      const newList = imageURLList.map((data) =>
-        data.id === imageData.id ? { ...data, imageUrl: imageUrl } : data
+    if (typeof imagePreviewUrl === "string") {
+      setImageURLList((prevState) =>
+        prevState.map((state) =>
+          state.id === imageData.id
+            ? { ...state, imageUrl: imagePreviewUrl }
+            : state
+        )
       );
-      setImageURLList([...newList]);
-      imageData.imageUrl = imageUrl;
     }
-  }, [imageData.id, imageURLList, imageUrl, setImageURLList, imageData]);
+  }, [imagePreviewUrl, setImageURLList, imageData]);
 
   function handleCloseCard() {
-    const newList = imageURLList
-      .filter((data) => data.id != imageData.id)
-      .sort((a, b) => a.sort - b.sort);
-
-    setImageURLList([...newList]);
+    setImageURLList((prevState) =>
+      prevState
+        .filter((state) => state.id !== imageData.id)
+        .map((state, index) => ({ ...state, id: index + 1, sort: index + 1 }))
+    );
   }
 
   function handleSelectFile(e: ChangeEvent<HTMLInputElement>) {
     handleImageChange(e);
   }
 
-  function handleFilenameChange(e: ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    const newFileName = e.target.value;
-    imageData.fileName = newFileName;
-    setFileName(newFileName);
-    const newList = imageURLList.map((data) =>
-      data.id === imageData.id ? { ...data, filename: newFileName } : data
-    );
-    setImageURLList([...newList]);
-  }
-
   function handleOrderByChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     const newOrderBy = e.target.value;
-    imageData.sort = Number(newOrderBy);
-    setOrderBy(newOrderBy);
-    const newList = imageURLList.map((data) =>
-      data.id === imageData.id ? { ...data, sort: Number(newOrderBy) } : data
+    setImageURLList((prevState) =>
+      prevState.map((state) =>
+        state.id === imageData.id
+          ? { ...state, sort: Number(newOrderBy) }
+          : state
+      )
     );
-    setImageURLList([...newList]);
   }
 
   return (
     <Card className="p-3 bg-content3 border-2 border-primary hover:border-secondary transition-all duration-400 ease-in">
-      <CardBody>
-        {!imageUrl && <p>No image picked yet.</p>}
-        {imageUrl && (
-          <ImageUI
-            as={Image}
-            src={imageUrl}
+      <CardHeader>
+        {!imageData.imageUrl && <p>No image picked yet.</p>}
+        {imageData.imageUrl && (
+          <Image
+            // as={Image}
+            src={imageData.imageUrl}
             alt="The image selected by the user."
             width={100}
             height={100}
             className="aspect-square object-cover object-center"
-            radius="none"
+            // radius="none"
           />
         )}
-      </CardBody>
-      <CardFooter>
+      </CardHeader>
+      <CardBody>
         <div className="flex flex-col gap-3">
+          <Input type="text" readOnly value={imageData.imageUrl} />
+          {/* nextui Input has bug in select file */}
           <input
-            className="hidden w-full"
+            className="w-full"
             type="file"
             accept="image/png, image/jpeg"
             id={`image-file-${imageData.id}`}
@@ -128,30 +107,22 @@ const ImageUploadCard = ({
             onChange={handleSelectFile}
           />
           <Input
-            type="text"
-            label="Filename"
-            isRequired
-            radius="sm"
-            id={`image-filename-${imageData.id}`}
-            name={`image-filename-${imageData.id}`}
-            value={fileName}
-            onChange={handleFilenameChange}
-            color="default"
-            variant="faded"
-          />
-          <Input
             type="number"
             label="Order By"
             isReadOnly
             radius="sm"
             id={`image-order-key-${imageData.id}`}
             name={`image-order-key-${imageData.id}`}
-            value={orderBy}
+            value={imageData.sort.toString()}
             onChange={handleOrderByChange}
             min="1"
             max="10"
-            className="hidden"
+            // className="hidden"
           />
+        </div>
+      </CardBody>
+      <CardFooter>
+        <div className="flex flex-col gap-3 w-full">
           <Button
             className="w-full"
             color="primary"
@@ -167,7 +138,7 @@ const ImageUploadCard = ({
             name={`delete-btn-${imageData.id}`}
             onPress={handleCloseCard}
           >
-            Delete
+            Delete : {imageData.id} : {imageData.sort}
           </Button>
         </div>
       </CardFooter>

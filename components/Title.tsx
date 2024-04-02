@@ -1,4 +1,4 @@
-import { AppProps } from "@/utils/Props";
+import { AppProps } from "@/utils/types/Props";
 
 const Title = ({ children, capitalize }: AppProps) => {
   return (

@@ -1,6 +1,6 @@
 "use client";
 
-import { MenuCoverPhoto } from "@/utils/Props";
+import { MenuCoverPhoto } from "@/utils/types/Props";
 import { Button, Image as ImageUI } from "@nextui-org/react";
 import Image from "next/image";
 import { useRef, useState } from "react";

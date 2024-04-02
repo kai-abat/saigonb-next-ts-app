@@ -1,4 +1,4 @@
-import { AppProps } from "@/utils/Props";
+import { AppProps } from "@/utils/types/Props";
 import { formatToCurreny } from "@/utils/Helper";
 
 const CardPriceItem = ({ price }: AppProps) => {

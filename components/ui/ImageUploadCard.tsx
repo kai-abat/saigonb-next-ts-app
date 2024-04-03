@@ -1,4 +1,5 @@
 "use client";
+import { getFallbackImagePath } from "@/utils/Helper";
 import useUploadImage from "@/utils/hooks/useUploadImage";
 import {
   Button,
@@ -78,27 +79,35 @@ const ImageUploadCard = ({
   }
 
   return (
-    <Card className="p-3 bg-content3 border-2 border-primary hover:border-secondary transition-all duration-400 ease-in">
-      <CardHeader>
-        {!imageData.imageUrl && <p>No image picked yet.</p>}
-        {imageData.imageUrl && (
-          <Image
-            // as={Image}
-            src={imageData.imageUrl}
-            alt="The image selected by the user."
-            width={100}
-            height={100}
-            className="aspect-square object-cover object-center"
-            // radius="none"
-          />
-        )}
+    <Card className="p-3 bg-content3 border-2 border-primary hover:border-secondary transition-all duration-400 ease-in gap-y-1 rounded-xl">
+      <CardHeader className=" p-2">
+        <div className=" h-[150px] w-[150px] aspect-square flex justify-center items-center text-center border-2 border-secondary overflow-hidden rounded-xl">
+          {!imageData.imageUrl && (
+            <Image
+              src={getFallbackImagePath()}
+              alt="No image selected yet."
+              width={150}
+              height={150}
+              className="aspect-square object-cover object-center"
+            />
+          )}
+          {imageData.imageUrl && (
+            <Image
+              src={imageData.imageUrl}
+              alt="The image selected by the user."
+              width={150}
+              height={150}
+              className="aspect-square object-cover object-center"
+            />
+          )}
+        </div>
       </CardHeader>
-      <CardBody>
-        <div className="flex flex-col gap-3">
-          <Input type="text" readOnly value={imageData.imageUrl} />
+      <CardFooter className="p-2">
+        <div className="flex flex-col gap-3 w-full">
+          {/* <Input type="text" readOnly value={imageData.imageUrl} /> */}
           {/* nextui Input has bug in select file */}
           <input
-            className="w-full"
+            className="w-full hidden"
             type="file"
             accept="image/png, image/jpeg"
             id={`image-file-${imageData.id}`}
@@ -117,28 +126,26 @@ const ImageUploadCard = ({
             onChange={handleOrderByChange}
             min="1"
             max="10"
-            // className="hidden"
+            className="hidden"
           />
-        </div>
-      </CardBody>
-      <CardFooter>
-        <div className="flex flex-col gap-3 w-full">
           <Button
-            className="w-full"
+            className="w-full rounded-xl"
             color="primary"
             id={`select-image-btn-${imageData.id}`}
             name={`select-image-btn-${imageData.id}`}
             onPress={handlePickClick}
+            radius="none"
           >
-            Select Image
+            Browse
           </Button>
           <Button
             color="danger"
             id={`delete-btn-${imageData.id}`}
             name={`delete-btn-${imageData.id}`}
             onPress={handleCloseCard}
+            className="w-full rounded-xl"
           >
-            Delete : {imageData.id} : {imageData.sort}
+            Remove
           </Button>
         </div>
       </CardFooter>

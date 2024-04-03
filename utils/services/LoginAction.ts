@@ -28,14 +28,8 @@ export const LoginAction = async (
 
     const fdIsFeatured = formData.get("isFeatured") === null ? false : true;
     const fdCategory = formData.get("category");
-    let fdCategoryNum: number = 0;
-
-    if (typeof fdCategory === "string") {
-      const isStringNum = fdCategory.match(/^[0-9]+$/g);
-      if (isStringNum) {
-        fdCategoryNum = Number(fdCategory);
-      }
-    }
+    let fdCategoryNum: FormDataEntryValue =
+      fdCategory === null ? "" : fdCategory;
 
     const newMenu = {
       menuName: formData.get("menuName"),
@@ -62,7 +56,7 @@ export const LoginAction = async (
         message: "Invalid form data",
         errors: e.issues.map((issue) => ({
           path: issue.path.join("."),
-          message: `${issue.message}`,
+          message: `SERVER: ${issue.message}`,
         })),
       };
     }

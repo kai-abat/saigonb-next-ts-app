@@ -3,21 +3,17 @@ import { extractErrorMessge } from "@/utils/Helper";
 import ErrorMessage from "./ErrorMessage";
 const FormRow = ({
   children,
-  formState,
-  name,
+  errorMessage,
 }: {
   children: React.ReactNode;
-  formState?: State;
-  name?: string;
+  errorMessage?: string;
 }) => {
-  let message: string | null | undefined;
-  if (formState && name) {
-    message = extractErrorMessge(formState, name);
-  }
   return (
     <div className="flex gap-4">
       {children}
-      {typeof message === "string" && <ErrorMessage message={message} />}
+      {errorMessage && errorMessage.length > 0 && (
+        <ErrorMessage message={errorMessage} />
+      )}
     </div>
   );
 };

@@ -1,14 +1,38 @@
 import { AppProps } from "@/utils/types/Props";
 import { Switch, cn } from "@nextui-org/react";
-import { useState } from "react";
+import { ChangeEvent, ChangeEventHandler, useState } from "react";
 
-function LabeledSwitch({ title = "", description = "", name, id }: AppProps) {
+function LabeledSwitch({
+  title = "",
+  description = "",
+  name,
+  onChangeIsFeatured,
+}: {
+  title: string;
+  description: string;
+  name: string;
+  onChangeIsFeatured: ChangeEventHandler<HTMLInputElement>;
+}) {
   const [isSelected, setIsSelected] = useState<boolean>(true);
+  const id = name;
+
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
+    console.log(
+      "LabeledSwitch handleChange",
+      e.target.name,
+      e.target.value,
+      e.target.checked
+    );
+
+    // onChange(e);
+  }
   return (
     <Switch
       name={name}
       id={id}
       isSelected={isSelected}
+      // onChange={handleChange}
+      onChange={(e) => onChangeIsFeatured(e)}
       onValueChange={setIsSelected}
       classNames={{
         base: cn(

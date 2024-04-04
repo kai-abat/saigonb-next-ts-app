@@ -8,12 +8,19 @@ export const menuNameSchema = z
 
 export const descriptionSchema = z
   .string()
-  .min(10, "Description should be at least 10 charact,ers")
+  .min(10, "Description should be at least 10 characters")
   .max(100, "Description should be at most 100 characters");
 
 export const categorySchema = z
   .string()
   .regex(new RegExp("^[0-9]+$"), "Please select a category");
+
+export const imageURLSchema = z
+  .string({
+    required_error: "Please Select Image.",
+    invalid_type_error: "Image URL must be a string",
+  })
+  .url("Please select cover images.");
 
 export const isFeaturedSchema = z.boolean();
 

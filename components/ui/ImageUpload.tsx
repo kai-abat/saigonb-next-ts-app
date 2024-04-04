@@ -4,12 +4,12 @@ import { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import ImageUploadCard from "./ImageUploadCard";
 import { MdOutlineAddAPhoto } from "react-icons/md";
-import { UseFormRegister } from "react-hook-form";
+import { State } from "@/utils/services/LoginAction";
 
-const ImageUpload = () => {
+const ImageUpload = ({ formState }: { formState: State }) => {
   const [imageURLList, setImageURLList] = useState<
-    { id: number; imageUrl: string; sort: number }[]
-  >([{ id: 1, imageUrl: "", sort: 1 }]);
+    { id: number; imageUrl: string; orderNumber: number }[]
+  >([{ id: 1, imageUrl: "", orderNumber: 1 }]);
 
   function handleAddImageComponent() {
     setImageURLList((prevState) => {
@@ -17,7 +17,7 @@ const ImageUpload = () => {
       const newData = {
         id: newId,
         imageUrl: "",
-        sort: newId,
+        orderNumber: newId,
       };
 
       return [...prevState, newData];
@@ -35,6 +35,7 @@ const ImageUpload = () => {
             setImageURLList={setImageURLList}
             key={index}
             imageData={imageData}
+            formState={formState}
           />
         );
       })}

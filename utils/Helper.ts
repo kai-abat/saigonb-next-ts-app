@@ -25,3 +25,10 @@ export const extractErrorMessge = (
 export const getFallbackImagePath = (): string => {
   return "/images/saigonbrewers-fallback-loader-large.png";
 };
+
+export const extractServerErrorMessage = (
+  servMessage: string | null | undefined
+): string | undefined => {
+  if (!servMessage) return undefined;
+  return servMessage.match(/^SERVER: (.+)/)?.at(1);
+};

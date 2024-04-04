@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { SafeParseReturnType, z } from "zod";
 import { State } from "../services/LoginAction";
-import { extractErrorMessge } from "../Helper";
+import { extractErrorMessge, extractServerErrorMessage } from "../Helper";
 
 const useZodClientValidation = (
   name: string,
@@ -19,7 +19,7 @@ const useZodClientValidation = (
   useEffect(() => {
     let servMessageMenuName = extractErrorMessge(formState, name);
     if (servMessageMenuName !== null) {
-      const errMessage = servMessageMenuName.match(/^SERVER: (.+)/)?.at(1);
+      const errMessage = extractServerErrorMessage(servMessageMenuName);
       if (errMessage) {
         setValid(false);
         setMessage(errMessage);
@@ -27,6 +27,10 @@ const useZodClientValidation = (
       }
     }
   }, [formState, name]);
+
+  const onBrowseImageStateRender = (value: string) => {
+    checkSchema(nameRef.current, value);
+  };
 
   const onChangeSelectEvent = (event: ChangeEvent<HTMLSelectElement>) => {
     const name = event.target.name;
@@ -68,7 +72,14 @@ const useZodClientValidation = (
     }
   };
 
-  return { valid, message, onChangeEvent, onChangeSelectEvent, name };
+  return {
+    valid,
+    message,
+    onChangeEvent,
+    onChangeSelectEvent,
+    name,
+    onBrowseImageStateRender,
+  };
 };
 
 export default useZodClientValidation;

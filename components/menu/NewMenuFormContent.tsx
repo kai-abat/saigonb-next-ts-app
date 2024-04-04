@@ -143,7 +143,7 @@ const NewMenuFormContent = ({
         <span className=" font-semibold">Cover Photos</span>
       </FormRow>
       <FormRow>
-        <ImageUpload />
+        <ImageUpload formState={formState} />
       </FormRow>
       <FormRow>
         <span className=" font-semibold">Price List</span>

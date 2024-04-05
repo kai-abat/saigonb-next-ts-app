@@ -11,6 +11,8 @@ const PriceList = () => {
     { id: number; type: string; size: string; price: number }[]
   >([defaultValues]);
 
+  const disabledRemoveBtn = priceList.length < 2;
+
   function handleAddPriceComponent() {
     setPriceList((prevState) => {
       const newId = prevState.length + 1;
@@ -24,10 +26,6 @@ const PriceList = () => {
     });
   }
 
-  useEffect(() => {
-    console.log("useEffect", priceList);
-  }, [priceList]);
-
   return (
     <div
       id="image-upload-container"
@@ -35,7 +33,12 @@ const PriceList = () => {
     >
       {priceList.map((price, index) => {
         return (
-          <PriceCard price={price} setPriceList={setPriceList} key={index} />
+          <PriceCard
+            price={price}
+            setPriceList={setPriceList}
+            key={index}
+            disabledRemoveBtn={disabledRemoveBtn}
+          />
         );
       })}
 

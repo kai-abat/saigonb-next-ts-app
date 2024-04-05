@@ -173,8 +173,8 @@ const NewMenuFormContent = ({
             color="primary"
             radius="md"
             type="submit"
-            className="max-w-[500px] min-w-[300px] invalid:disabled:bg-content4 disabled:text-foreground"
-            disabled={pending || !allValid}
+            className="max-w-[500px] min-w-[300px]"
+            isDisabled={pending || !allValid}
           >
             {!pending ? (
               "Save"

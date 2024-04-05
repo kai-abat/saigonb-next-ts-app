@@ -26,6 +26,7 @@ const ImageUploadCard = ({
   imageData,
   setImageURLList,
   formState,
+  disabledRemoveBtn,
 }: {
   imageData: {
     id: number;
@@ -42,6 +43,7 @@ const ImageUploadCard = ({
       }[]
     >
   >;
+  disabledRemoveBtn: boolean;
 }) => {
   const { handlePickClick, handleImageChange, imageInputRef, selectedFile } =
     useUploadImage();
@@ -214,6 +216,7 @@ ${
             name={`delete-btn-${imageData.id}`}
             onPress={handleCloseCard}
             className="w-full rounded-xl"
+            isDisabled={disabledRemoveBtn}
           >
             Remove
           </Button>

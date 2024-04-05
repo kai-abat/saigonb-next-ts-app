@@ -14,6 +14,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 const PriceCard = ({
   price,
   setPriceList,
+  disabledRemoveBtn,
 }: {
   price: {
     id: number;
@@ -31,6 +32,7 @@ const PriceCard = ({
       }[]
     >
   >;
+  disabledRemoveBtn: boolean;
 }) => {
   function handleSelectSize(e: ChangeEvent<HTMLSelectElement>) {
     const newSize = e.target.value;
@@ -62,14 +64,14 @@ const PriceCard = ({
 
   function handlePriceChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    const newPrice = e.target.value;
-    price.price = Number(newPrice);
+    const newPrice = Number(e.target.value) < 1 ? 1 : Number(e.target.value);
+    price.price = newPrice;
     setPriceList((prevState) =>
       prevState.map((state) =>
         state.id === price.id
           ? {
               ...state,
-              price: Number(newPrice),
+              price: newPrice,
             }
           : state
       )
@@ -135,8 +137,9 @@ const PriceCard = ({
           color="danger"
           className="w-full"
           onPress={handleCloseCard}
+          isDisabled={disabledRemoveBtn}
         >
-          Delete {price.id} : {price.type} : {price.price}
+          Remove
         </Button>
       </CardFooter>
     </Card>

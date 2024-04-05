@@ -11,6 +11,8 @@ const ImageUpload = ({ formState }: { formState: State }) => {
     { id: number; imageUrl: string; orderNumber: number }[]
   >([{ id: 1, imageUrl: "", orderNumber: 1 }]);
 
+  const disabledRemoveBtn = imageURLList.length < 2;
+
   function handleAddImageComponent() {
     setImageURLList((prevState) => {
       const newId = prevState.length + 1;
@@ -36,6 +38,7 @@ const ImageUpload = ({ formState }: { formState: State }) => {
             key={index}
             imageData={imageData}
             formState={formState}
+            disabledRemoveBtn={disabledRemoveBtn}
           />
         );
       })}

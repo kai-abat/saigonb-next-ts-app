@@ -32,3 +32,20 @@ body {
     text-wrap: balance;
   }
 } */
+
+@layer components {
+  .container-curve-shape {
+    --mask: radial-gradient(
+          89.44px at calc(100% - 120px) 50%,
+          #000 99%,
+          #0000 101%
+        )
+        0 calc(50% - 80px) / 100% 160px,
+      radial-gradient(89.44px at calc(100% + 80px) 50%, #0000 99%, #000 101%)
+        calc(100% - 40px) 50%/100% 160px repeat-y;
+    -webkit-mask: var(--mask);
+    mask: var(--mask);
+
+    @apply bg-primary drop-shadow-lg shadow-2xl;
+  }
+}

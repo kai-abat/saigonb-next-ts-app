@@ -1,4 +1,19 @@
-OK - Improve performance of loading images 
-- Add authentication for /admin
-- [auth] Add "New Menu" action under /Menu
+- Improve performance of loading images [DONE] 
+- Add authentication for /admin 
+  - Login [DONE]
+  - LOGOUT [**ONGOING]
+  - CHANGE PASSWORD
+
+- MENU PAGE
+  - MENU LISTINGS [DONE]
+  - MENU DETAILS [DONE]
+  - ADD MENU
+    - ADD MENU FORM [DONE]
+    - ADD MENU FUNCTIONALITY 
+    - EDIT MENU
+    - DELETE MENU
+
+- HOME PAGE
+- ABOUT PAGE
+- CONTACT PAGE
 - Refactor

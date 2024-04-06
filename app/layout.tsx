@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppProps } from "@/utils/types/Props";
 import Header from "@/components/layout/Header";
@@ -7,6 +6,7 @@ import BreadCrumbs from "@/components/BreadCrumbs";
 import Footer from "@/components/layout/Footer";
 import { Divider } from "@nextui-org/react";
 import { Providers } from "./providers";
+import { getUserData } from "@/utils/services/UserAPI";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +16,9 @@ export const metadata: Metadata = {
     "Saigon Brewers, Legitimate brewers of vietnamese coffee beans and more",
 };
 
-export default function RootLayout({ children }: AppProps) {
+export default async function RootLayout({ children }: AppProps) {
+  const userData = await getUserData();
+
   return (
     <html lang="en">
       <body>

@@ -39,3 +39,6 @@ next-env.d.ts
 textfile.txt
 components/menu/NewMenuFormContent copy.tsx
 components/menu/NewMenuForm copy.tsx
+utils/types/supabase_1.ts
+utils/types/supabase_2.ts
+1.8.1

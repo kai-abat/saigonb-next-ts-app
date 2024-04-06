@@ -1,5 +1,5 @@
 "use client";
-import { LoginAction, State } from "@/utils/services/LoginAction";
+import { newMenuAction, State } from "@/utils/actions/newMenuAction";
 import { useFormState, useFormStatus } from "react-dom";
 import FormRow from "../form/FormRow";
 import {
@@ -24,9 +24,12 @@ interface ErrSetType {
 }
 
 const NewMenuForm = ({ categories = [] }: NewMenuProps) => {
-  const [state, formAction] = useFormState<State, FormData>(LoginAction, null);
+  const [state, formAction] = useFormState<State, FormData>(
+    newMenuAction,
+    null
+  );
 
-  // Show the return value/state of server action LoginAction
+  // Show the return value/state of server action newMenuAction
   useEffect(() => {
     if (!state) {
       return;

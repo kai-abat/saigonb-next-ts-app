@@ -1,18 +1,15 @@
 import FilterMenu from "@/components/menu/FilterMenu";
 import MenuListings from "@/components/menu/MenuListings";
-import {
-  fetchAllCategories,
-  fetchAllCategoriesClient,
-} from "@/utils/services/MenuAPI";
+import { fetchAllCategories } from "@/utils/services/MenuAPI";
 
 // Return a list of `params` to populate the [slug] dynamic segment
-export async function generateStaticParams() {
-  const defaultCategories = await fetchAllCategoriesClient();
+// export async function generateStaticParams() {
+//   const defaultCategories = await fetchAllCategoriesClient();
 
-  return defaultCategories.map((category) => ({
-    category: category.name,
-  }));
-}
+//   return defaultCategories.map((category) => ({
+//     category: category.name,
+//   }));
+// }
 
 const MenuCategoryPage = async ({
   params,

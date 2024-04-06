@@ -18,7 +18,7 @@ export type State =
     }
   | null;
 
-export const LoginAction = async (
+export const newMenuAction = async (
   prevState: State | null,
   formData: FormData
 ): Promise<State> => {
@@ -26,7 +26,7 @@ export const LoginAction = async (
     // we're gonna put a delay in here to simulate some kind of data processing like persisting data
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
-    console.log("LoginAction formData:", formData);
+    console.log("newMenuAction formData:", formData);
 
     // Process Given Input/Select/Checked Components
     const fdIsFeatured = formData.get("isFeatured") === null ? false : true;
@@ -89,7 +89,7 @@ export const LoginAction = async (
     console.log("image upload card:", NewMenuSchemaExtended.keyof());
     // Price List
 
-    console.log("LoginAction: newMenuTemp", newMenuTemp);
+    console.log("newMenuAction: newMenuTemp", newMenuTemp);
 
     // Validate our data
     const result = NewMenuSchemaExtended.parse(newMenuTemp);

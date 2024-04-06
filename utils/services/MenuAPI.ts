@@ -1,9 +1,9 @@
-import { cookies } from "next/headers";
+"use server";
+
 import { MENU } from "./TempData";
 import { SupaCategory, SupaMenu } from "../types/SupabaseCompProps";
 import { Category, CategoryWithMenu, Menu } from "../types/Props";
-import { createServerCompClient } from "../supabase/ServerCompClient";
-import { getSupabaseClient } from "../supabase/ClientSupabase";
+import { createSupabaseServerClient } from "../supabase/server";
 
 const extractCategoriesFromDB = (supaCategories: SupaCategory[]) => {
   const category: CategoryWithMenu[] = supaCategories.map((category) =>
@@ -54,69 +54,80 @@ const extractMenuFromDB = (supaMenu: SupaMenu[]): Menu[] => {
   return menu;
 };
 
-export const fetchAllMenu = async (): Promise<Menu[]> => {
-  const supabase = createServerCompClient();
+export const fetchAllMenu = async (): Promise<Menu[] | undefined> => {
+  const supabase = createSupabaseServerClient();
 
   const { data: menuTbl, error } = await supabase
     .from("Menu")
     .select("*, Category(*), MenuCoverPhoto(*), MenuPrice(*)");
 
+  if (!menuTbl) return;
+
   // const { data, error } = await supabase.from("Menu").select("*");
   // Temporary add timeout to show loading indicator
   // await new Promise((resolve) => setTimeout(resolve, 5000));
   // console.log("fetchAllMenu", data);
-  if (error) {
-    console.log("fetchAllMenu", error);
-    throw new Error(error.message);
-  }
+  // if (error) {
+  //   console.log("fetchAllMenu", error);
+  //   throw new Error(error.message);
+  // }
 
   return extractMenuFromDB(menuTbl);
 };
 
 export const fetchAllCategoriesClient = async (): Promise<
-  CategoryWithMenu[]
+  CategoryWithMenu[] | undefined
 > => {
-  const supabase = getSupabaseClient();
+  const supabase = createSupabaseServerClient();
   const { data: categories, error } = await supabase
     .from("Category")
     .select("*, Menu(*, Category(*),MenuCoverPhoto(*), MenuPrice(*))");
+  if (!categories) return;
 
-  if (error) {
-    console.log("fetchAllCategoriesClient", error);
-    throw new Error(error.message);
-  }
+  // if (error) {
+  //   console.log("fetchAllCategoriesClient", error);
+  //   throw new Error(error.message);
+  // }
 
   // await new Promise((resolve) => setTimeout(resolve, 5000));
   return extractCategoriesFromDB(categories);
 };
 
-export const fetchAllCategories = async (): Promise<CategoryWithMenu[]> => {
-  const supabase = createServerCompClient();
+export const fetchAllCategories = async (): Promise<
+  CategoryWithMenu[] | undefined
+> => {
+  const supabase = createSupabaseServerClient();
 
   const { data: categories, error } = await supabase
     .from("Category")
     .select("*, Menu(*, Category(*),MenuCoverPhoto(*), MenuPrice(*))");
 
-  if (error) {
-    console.log("fetchAllCategories", error);
-    throw new Error(error.message);
-  }
+  if (!categories) return;
+
+  // if (error) {
+  //   console.log("fetchAllCategories", error);
+  //   throw new Error(error.message);
+  // }
 
   // await new Promise((resolve) => setTimeout(resolve, 5000));
   return extractCategoriesFromDB(categories);
 };
 
-export const fetchCategoriesOnly = async (): Promise<Category[]> => {
-  const supabase = createServerCompClient();
+export const fetchCategoriesOnly = async (): Promise<
+  Category[] | undefined
+> => {
+  const supabase = createSupabaseServerClient();
 
   const { data: categories, error } = await supabase
     .from("Category")
     .select("id, name, altName");
 
-  if (error) {
-    console.log("fetchCategoriesOnly", error);
-    throw new Error(error.message);
-  }
+  if (!categories) return;
+
+  // if (error) {
+  //   console.log("fetchCategoriesOnly", error);
+  //   throw new Error(error.message);
+  // }
 
   // await new Promise((resolve) => setTimeout(resolve, 5000));
   return categories;
@@ -124,19 +135,20 @@ export const fetchCategoriesOnly = async (): Promise<Category[]> => {
 
 export const fetchCategoryByName = async (
   name: string
-): Promise<CategoryWithMenu> => {
-  const supabase = createServerCompClient();
+): Promise<CategoryWithMenu | undefined> => {
+  const supabase = createSupabaseServerClient();
 
   const { data: category, error } = await supabase
     .from("Category")
     .select("*, Menu(*, Category(*),MenuCoverPhoto(*), MenuPrice(*))")
     .eq("name", name)
     .single();
+  if (!category) return;
 
-  if (error) {
-    console.log("fetchCategoryByName", error);
-    throw new Error(error.message);
-  }
+  // if (error) {
+  //   console.log("fetchCategoryByName", error);
+  //   throw new Error(error.message);
+  // }
 
   // await new Promise((resolve) => setTimeout(resolve, 5000));
   return extractCategoryFromDB(category);

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button, Input } from "@nextui-org/react";
 import ImageUploadCard from "./ImageUploadCard";
 import { MdOutlineAddAPhoto } from "react-icons/md";
-import { State } from "@/utils/services/LoginAction";
+import { State } from "@/utils/actions/newMenuAction";
 
 const ImageUpload = ({ formState }: { formState: State }) => {
   const [imageURLList, setImageURLList] = useState<

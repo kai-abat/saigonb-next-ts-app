@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import {
   Navbar,
@@ -20,6 +21,7 @@ import { ThemeSwitcher } from "../ThemeSwitcher";
 import { usePathname } from "next/navigation";
 import { IoLogoFacebook, IoLogoInstagram } from "react-icons/io";
 import LogoHeader from "./LogoHeader";
+import UserProfileHeader from "../ui/UserProfileHeader";
 
 interface Menu {
   name: string;
@@ -100,6 +102,9 @@ const Header = () => {
         </NavbarItem>
         <NavbarItem>
           <ThemeSwitcher />
+        </NavbarItem>
+        <NavbarItem>
+          <UserProfileHeader userData={undefined} />
         </NavbarItem>
         {/* <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>

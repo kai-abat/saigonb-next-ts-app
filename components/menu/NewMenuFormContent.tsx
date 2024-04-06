@@ -12,7 +12,7 @@ import {
 import FormRow from "../form/FormRow";
 import LabeledSwitch from "../nextui/LabeledSwitch";
 import { useFormStatus } from "react-dom";
-import { State } from "@/utils/services/LoginAction";
+import { State } from "@/utils/actions/newMenuAction";
 import { Category } from "@/utils/types/Props";
 import ImageUpload from "../ui/ImageUpload";
 import PriceList from "../ui/PriceList";

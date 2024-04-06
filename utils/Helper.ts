@@ -1,4 +1,4 @@
-import { State } from "./services/LoginAction";
+import { State } from "./actions/newMenuAction";
 
 export const formatToCurreny = (value: number): string => {
   return `₱${value}`;

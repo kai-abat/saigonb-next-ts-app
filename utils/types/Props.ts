@@ -9,6 +9,13 @@ export declare interface Category {
   altName: string | null;
 }
 
+export declare interface UserProfile {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
 export declare interface CategoryWithMenu {
   id: number;
   name: string;

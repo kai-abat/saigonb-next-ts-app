@@ -24,7 +24,6 @@ const extractIndividualPaths = (asPath: string) => {
       } else {
         to = paths.slice(0, index + 1).join("/");
       }
-      // console.log("BreadCrumbs MAP:", path, index, asPath);
       return { name, to };
     });
   }
@@ -33,8 +32,6 @@ const extractIndividualPaths = (asPath: string) => {
 const BreadCrumbs = () => {
   const path = usePathname();
   const crumbs = extractIndividualPaths(path);
-
-  // console.log("BreadCrumbs", router);
 
   return (
     <div className="flex flex-col flex-wrap gap-4 ">

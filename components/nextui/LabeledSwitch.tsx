@@ -16,16 +16,6 @@ function LabeledSwitch({
   const [isSelected, setIsSelected] = useState<boolean>(true);
   const id = name;
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    console.log(
-      "LabeledSwitch handleChange",
-      e.target.name,
-      e.target.value,
-      e.target.checked
-    );
-
-    // onChange(e);
-  }
   return (
     <Switch
       name={name}

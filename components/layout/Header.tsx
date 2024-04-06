@@ -104,7 +104,7 @@ const Header = () => {
           <ThemeSwitcher />
         </NavbarItem>
         <NavbarItem>
-          <UserProfileHeader userData={undefined} />
+          <UserProfileHeader />
         </NavbarItem>
         {/* <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>

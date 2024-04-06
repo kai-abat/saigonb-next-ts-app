@@ -24,7 +24,6 @@ const LoginForm = () => {
 
   const bool = state !== null && state.isValid;
 
-  console.log("LoginForm", state, "bool:", bool);
   return (
     <section className=" flex flex-col gap-3 justify-start items-start   w-full py-5 px-8">
       <Title>Sign In</Title>

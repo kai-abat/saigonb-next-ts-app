@@ -22,7 +22,7 @@ export default async function RootLayout({ children }: AppProps) {
   return (
     <html lang="en">
       <body>
-        <Providers>
+        <Providers userData={userData}>
           <section
             id="main-section"
             className="min-w-420px flex flex-col gap-6 bg-primary-100 dark:bg-stone-950"

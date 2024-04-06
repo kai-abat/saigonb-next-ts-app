@@ -18,7 +18,6 @@ export const signIn = async (state: any, formData: FormData) => {
   // we're gonna put a delay in here to simulate some kind of data processing like persisting data
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
-  console.log("signIn", formData);
   const supabase = createSupabaseServerClient();
 
   // type-casting here for convenience

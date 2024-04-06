@@ -9,6 +9,8 @@ export const getUserData = async (): Promise<UserProfile | undefined> => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  console.log("getUserData: No auth user");
   if (!user) return;
 
   const { data: userProfileDB, error } = await supabase
@@ -16,6 +18,13 @@ export const getUserData = async (): Promise<UserProfile | undefined> => {
     .select("*")
     .eq("id", user.id)
     .single();
+  console.log(
+    "getUserData: No UserProfile user",
+    user.id,
+    user.email,
+    user.role,
+    userProfileDB
+  );
   if (!userProfileDB) return;
 
   // if (error) {
@@ -29,6 +38,7 @@ export const getUserData = async (): Promise<UserProfile | undefined> => {
     lastName: userProfileDB.lastName ?? "",
     email: user.email ?? "",
   };
+  console.log("getUserData", userProfile);
 
   return userProfile;
 };

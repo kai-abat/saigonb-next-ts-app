@@ -12,7 +12,6 @@ const SubmitButton = ({
 }) => {
   const { pending: isPending } = useFormStatus();
 
-  console.log("SubmitButton", isPending, isValid);
   return (
     <Button
       color="primary"

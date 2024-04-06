@@ -1,11 +1,19 @@
 // app/providers.tsx
 "use client";
 
+import { UserProfile } from "@/utils/types/Props";
+import { useRouter } from "next/navigation";
 import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider } from "next-themes";
-import { useRouter } from "next/navigation";
+import ReduxStoreProvider from "@/components/provider/ReduxStoreProvider";
 
-export function Providers({ children }: { children: React.ReactNode }) {
+export function Providers({
+  children,
+  userData,
+}: {
+  children: React.ReactNode;
+  userData: UserProfile | undefined;
+}) {
   const router = useRouter();
   return (
     <NextUIProvider navigate={router.push}>
@@ -14,7 +22,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         enableSystem={true}
         defaultTheme="system"
       >
-        {children}
+        <ReduxStoreProvider userData={userData}>{children}</ReduxStoreProvider>
       </ThemeProvider>
     </NextUIProvider>
   );

@@ -36,6 +36,7 @@ export const getUserData = async (): Promise<UserProfile | undefined> => {
     id: userProfileDB.id,
     firstName: userProfileDB.firstName ?? "",
     lastName: userProfileDB.lastName ?? "",
+    position: userProfileDB.position ?? "Barista",
     email: user.email ?? "",
   };
   console.log("getUserData", userProfile);

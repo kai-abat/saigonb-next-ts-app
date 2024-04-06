@@ -13,6 +13,7 @@ export declare interface UserProfile {
   id: string;
   firstName: string;
   lastName: string;
+  position: string;
   email: string;
 }
 

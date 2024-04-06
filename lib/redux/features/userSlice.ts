@@ -15,6 +15,7 @@ export const initialState: UserProfile = {
   firstName: "",
   lastName: "",
   email: "",
+  position: "",
 };
 
 export const userSlice = createSlice({
@@ -28,6 +29,7 @@ export const userSlice = createSlice({
       state.id = action.payload.id;
       state.firstName = action.payload.firstName;
       state.lastName = action.payload.lastName;
+      state.position = action.payload.position;
     },
     updateUserID(state, action: PayloadAction<string>) {
       state.id = action.payload;

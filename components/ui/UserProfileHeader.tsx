@@ -1,9 +1,9 @@
 "use client";
 import { useAppSelector, useAppStore } from "@/lib/redux/hooks";
 import { getUser } from "@/lib/redux/features/userSlice";
-import { UserProfile } from "@/utils/types/Props";
-import { Avatar } from "@nextui-org/react";
+import { Avatar, Button, Tooltip } from "@nextui-org/react";
 import { BsCamera } from "react-icons/bs";
+import { RiLogoutBoxRLine } from "react-icons/ri";
 
 const UserProfileHeader = () => {
   const userData = useAppSelector(getUser);
@@ -23,7 +23,24 @@ const UserProfileHeader = () => {
           />
         }
       />
-      <span className="capitalize">{userData.firstName}</span>
+      <div className="hidden lg:flex lg:flex-col lg:gap-0 lg:justify-center lg:items-start ">
+        <div className="capitalize font-medium text-sm">
+          {userData.firstName}
+        </div>
+        <div className="capitalize font-light align-text-top text-sm">
+          {userData.position}
+        </div>
+      </div>
+      <div className="hidden md:flex">
+        <Tooltip content="Logout" showArrow color="secondary" radius="sm">
+          <Button
+            radius="sm"
+            color="secondary"
+            startContent={<RiLogoutBoxRLine />}
+            isIconOnly
+          ></Button>
+        </Tooltip>
+      </div>
     </div>
   );
 };

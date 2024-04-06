@@ -100,7 +100,7 @@ const Header = () => {
             <IoLogoInstagram />
           </Link>
         </NavbarItem>
-        <NavbarItem>
+        <NavbarItem className="hidden sm:flex">
           <ThemeSwitcher />
         </NavbarItem>
         <NavbarItem>

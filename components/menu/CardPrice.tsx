@@ -1,8 +1,8 @@
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 import CardPriceItem from "./CardPriceItem";
 import { Divider } from "@nextui-org/react";
 
-const CardPrice = ({ prices, type, sub }: AppProps) => {
+const CardPrice = ({ prices, type, sub }: ComponentProps) => {
   return (
     <div className="w-full p-3 flex flex-col gap-2">
       <div className="flex gap-2 items-center justify-center">

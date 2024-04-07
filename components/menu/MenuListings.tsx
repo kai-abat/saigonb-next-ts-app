@@ -1,7 +1,7 @@
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 import MenuItem from "./MenuItem";
 
-const MenuListings = ({ categories }: AppProps) => {
+const MenuListings = ({ categories }: ComponentProps) => {
   if (!categories || categories.length < 1) return <p>No Menu Avaialble</p>;
   return (
     <div className="flex flex-col gap-3">

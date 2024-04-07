@@ -13,6 +13,8 @@ const MenuItemPage = async ({
 
   const categories = await fetchAllCategories();
 
+  if (!categories) return;
+
   const category = categories.find(
     (category) => category.name.toLowerCase() === categoryParam.toLowerCase()
   );

@@ -3,11 +3,11 @@
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Button, Image as ImageUI } from "@nextui-org/react";
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 
 // import classes from './image-picker.module.css';
 
-export default function ImagePicker({ label = "", name = "" }: AppProps) {
+export default function ImagePicker({ label = "", name = "" }: ComponentProps) {
   const [selectedFile, setSelectedFile] = useState<any>();
   const [imagePreviewUrl, setImagePreviewUrl] = useState<any>();
   const imageInput = useRef<HTMLInputElement>(null);

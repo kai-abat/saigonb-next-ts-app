@@ -1,4 +1,4 @@
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 import { Switch, cn } from "@nextui-org/react";
 import { ChangeEvent, ChangeEventHandler, useState } from "react";
 

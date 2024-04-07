@@ -1,6 +1,6 @@
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 
-const Brand = ({ className = "" }: AppProps) => {
+const Brand = ({ className = "" }: ComponentProps) => {
   return (
     <p
       className={`uppercase tracking-wide text-base sm:text-lg md:text-xl ${

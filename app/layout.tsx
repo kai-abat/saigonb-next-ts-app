@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 import Header from "@/components/layout/Header";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import Footer from "@/components/layout/Footer";
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     "Saigon Brewers, Legitimate brewers of vietnamese coffee beans and more",
 };
 
-export default async function RootLayout({ children }: AppProps) {
+export default async function RootLayout({ children }: ComponentProps) {
   const userData = await getUserData();
 
   return (

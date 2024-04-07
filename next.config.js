@@ -12,8 +12,8 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: "/menu/all",
-        destination: "/menu",
+        source: "/menu",
+        destination: "/menu/all",
         permanent: true,
       },
       {

@@ -6,7 +6,7 @@ import {
   setUser,
 } from "@/lib/redux/features/userSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { AppProps, UserProfile } from "@/utils/types/Props";
+import { ComponentProps, UserProfile } from "@/utils/types/Props";
 
 const Initializer = ({
   children,

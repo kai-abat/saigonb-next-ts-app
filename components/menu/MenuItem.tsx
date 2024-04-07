@@ -1,10 +1,10 @@
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 import MenuCard from "./MenuCard";
 import { Divider } from "@nextui-org/react";
 import Title from "../Title";
 
 // name: category name
-const MenuItem = ({ name, menus }: AppProps) => {
+const MenuItem = ({ name, menus }: ComponentProps) => {
   if (!menus) return;
   return (
     <div className="flex flex-col gap-4 bg-content4  rounded-xl p-3">

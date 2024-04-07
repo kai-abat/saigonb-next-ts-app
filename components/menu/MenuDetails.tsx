@@ -1,8 +1,8 @@
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 import CardPrice from "./CardPrice";
 import ImageSlider from "../ImageSlider";
 
-const MenuDetails = ({ menuItem }: AppProps) => {
+const MenuDetails = ({ menuItem }: ComponentProps) => {
   const hotPrices = menuItem?.price.filter((p) => p.type === "Hot");
 
   const icedPrices = menuItem?.price.filter((p) => p.type === "Iced");

@@ -1,7 +1,7 @@
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 import { formatToCurreny } from "@/utils/Helper";
 
-const CardPriceItem = ({ price }: AppProps) => {
+const CardPriceItem = ({ price }: ComponentProps) => {
   if (!price) return;
   return (
     <div className="flex justify-between">

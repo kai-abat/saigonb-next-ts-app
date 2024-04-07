@@ -1,6 +1,6 @@
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 
-const Title = ({ children, capitalize }: AppProps) => {
+const Title = ({ children, capitalize }: ComponentProps) => {
   return (
     <h1
       className={`font-bold text-3xl text-stone-800 dark:text-stone-100 ${

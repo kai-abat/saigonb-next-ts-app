@@ -1,5 +1,5 @@
 "use client";
-import { AppProps } from "@/utils/types/Props";
+import { ComponentProps } from "@/utils/types/Props";
 import {
   Card,
   CardBody,
@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const MenuCard = ({ menuItem }: AppProps) => {
+const MenuCard = ({ menuItem }: ComponentProps) => {
   const router = useRouter();
   // const hotPrices = menuItem?.price.filter((p) => p.type === "Hot");
 

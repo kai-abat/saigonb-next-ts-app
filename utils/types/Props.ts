@@ -63,7 +63,7 @@ export declare interface PageProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
-export declare interface AppProps {
+export declare interface ComponentProps {
   children?: React.ReactNode; // best, accepts everything React can render
   style?: React.CSSProperties; // to pass through style props
   onChange?: React.FormEventHandler<HTMLInputElement>; // form events! the generic parameter is the type of event.target
@@ -85,6 +85,7 @@ export declare interface AppProps {
   images?: MenuCoverPhoto[];
   capitalize?: boolean;
   id?: string;
+  userData?: UserProfile;
 }
 
 export declare interface ImageStore {

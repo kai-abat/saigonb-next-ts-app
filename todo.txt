@@ -1,15 +1,18 @@
 - Improve performance of loading images [DONE] 
-- Add authentication for /admin 
+- Add authentication for /admin
+  - LOGIN WEB PAGE [DONE] 
   - Login [DONE]
-  - LOGOUT [**ONGOING]
+  - LOGOUT [DONE]
   - CHANGE PASSWORD
 
 - MENU PAGE
   - MENU LISTINGS [DONE]
   - MENU DETAILS [DONE]
   - ADD MENU
+    - ADD MENU WEB PAGE [DONE]
+    - ADD MENU VALIDATION CLIENT/SERVER [DONE]
     - ADD MENU FORM [DONE]
-    - ADD MENU FUNCTIONALITY 
+    - ADD MENU FUNCTIONALITY [**ONGOING]
     - EDIT MENU
     - DELETE MENU
 

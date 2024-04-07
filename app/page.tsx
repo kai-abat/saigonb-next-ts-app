@@ -1,10 +1,10 @@
 import Hero from "@/components/Hero";
 import Title from "@/components/Title";
-import Carousel from "@/components/flowbite/Carousel";
 import { CarouselData } from "@/utils/types/Props";
 import { fetchCarouselData } from "@/utils/services/LandingAPI";
 import Image from "next/image";
 import { getUserData } from "@/utils/services/UserAPI";
+import Carousel from "@/components/Carousel";
 
 export default async function HomePage() {
   // const carouselData: CarouselData[] = data.carousel.map((car) => ({
@@ -19,6 +19,7 @@ export default async function HomePage() {
   return (
     <>
       {/* <Carousel data={carouselData} /> */}
+      <Carousel data={carouselData} />
       <Hero />
       <Title>Lorem ipsum dolor sit amet</Title>
       <p>

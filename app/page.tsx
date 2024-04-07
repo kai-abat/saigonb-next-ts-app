@@ -4,12 +4,15 @@ import Carousel from "@/components/flowbite/Carousel";
 import { CarouselData } from "@/utils/types/Props";
 import { fetchCarouselData } from "@/utils/services/LandingAPI";
 import Image from "next/image";
+import { getUserData } from "@/utils/services/UserAPI";
 
-export default async function Home() {
+export default async function HomePage() {
   // const carouselData: CarouselData[] = data.carousel.map((car) => ({
   //   image: car.coverPhoto,
   //   title: car.title,
   // }));
+
+  const userData = await getUserData();
 
   const carouselData: CarouselData[] = await fetchCarouselData();
 

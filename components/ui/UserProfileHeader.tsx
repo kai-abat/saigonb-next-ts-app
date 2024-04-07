@@ -1,14 +1,22 @@
-"use client";
-import { useAppSelector, useAppStore } from "@/lib/redux/hooks";
-import { getUser } from "@/lib/redux/features/userSlice";
-import { Avatar, Button, Tooltip } from "@nextui-org/react";
+import { Avatar, Button, Spinner, Tooltip } from "@nextui-org/react";
 import { BsCamera } from "react-icons/bs";
 import { RiLogoutBoxRLine } from "react-icons/ri";
+import { signOut } from "@/utils/actions/adminAction";
+import { useTransition } from "react";
+import { UserProfile } from "@/utils/types/Props";
 
-const UserProfileHeader = () => {
-  const userData = useAppSelector(getUser);
+const UserProfileHeader = ({
+  userData,
+}: {
+  userData: UserProfile | undefined;
+}) => {
+  const [isPending, startTransition] = useTransition();
 
   if (!userData) return;
+
+  const handleLogout = async () => {
+    startTransition(async () => await signOut());
+  };
 
   return (
     <div className="flex gap-x-3 justify-end items-center font-medium">
@@ -32,12 +40,25 @@ const UserProfileHeader = () => {
         </div>
       </div>
       <div className="hidden md:flex">
-        <Tooltip content="Logout" showArrow color="secondary" radius="sm">
+        <Tooltip
+          content="Logout"
+          showArrow
+          color="secondary"
+          radius="sm"
+          disableAnimation
+          closeDelay={200}
+        >
           <Button
             radius="sm"
             color="secondary"
-            startContent={<RiLogoutBoxRLine />}
+            disableRipple
+            disableAnimation
+            // startContent={<Spinner size="lg" color="current" />}
+            isLoading={isPending}
+            startContent={!isPending && <RiLogoutBoxRLine />}
             isIconOnly
+            onClick={handleLogout}
+            // isDisabled={isPending}
           ></Button>
         </Tooltip>
       </div>

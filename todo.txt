@@ -13,7 +13,7 @@
     - EDIT MENU
     - DELETE MENU
 
-- HOME PAGE
+- HOME PAGE 
 - ABOUT PAGE
 - CONTACT PAGE
 - Refactor

@@ -7,6 +7,7 @@ import Footer from "@/components/layout/Footer";
 import { Divider } from "@nextui-org/react";
 import { Providers } from "./providers";
 import { getUserData } from "@/utils/services/UserAPI";
+import Initializer from "@/components/Initializer";
 
 // const inter = Inter({ subsets: ["latin"] });
 
@@ -22,12 +23,13 @@ export default async function RootLayout({ children }: AppProps) {
   return (
     <html lang="en">
       <body>
-        <Providers userData={userData}>
+        <Providers>
+          {/* <Initializer userData={userData}> */}
           <section
             id="main-section"
             className="min-w-420px flex flex-col gap-6 bg-primary-100 dark:bg-stone-950"
           >
-            <Header />
+            <Header userData={userData} />
             <main className="flex">
               <section className=" m-auto min-w-[300px] max-w-[1024px] w-[90vw] sm:w-[80vw]">
                 <BreadCrumbs />
@@ -37,6 +39,7 @@ export default async function RootLayout({ children }: AppProps) {
             </main>
             <Footer />
           </section>
+          {/* </Initializer> */}
         </Providers>
       </body>
     </html>

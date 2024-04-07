@@ -9,18 +9,13 @@ import { Provider } from "react-redux";
 
 export default function ReduxStoreProvider({
   children,
-  userData,
 }: {
   children: React.ReactNode;
-  userData: UserProfile | undefined;
 }) {
   const storeRef = useRef<AppStore>();
   if (!storeRef.current) {
     // Create the store instance the first time this renders
     storeRef.current = makeStore();
-    if (userData) {
-      storeRef.current.dispatch(setUser(userData));
-    }
   }
 
   useEffect(() => {

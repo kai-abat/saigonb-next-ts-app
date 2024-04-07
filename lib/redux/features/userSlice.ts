@@ -24,6 +24,9 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     // Use the PayloadAction type to declare the contents of `action.payload`
+    initializeUser(state) {
+      state = { ...initialState };
+    },
     setUser(state, action: PayloadAction<UserProfile>) {
       state.email = action.payload.email;
       state.id = action.payload.id;
@@ -47,6 +50,7 @@ export const userSlice = createSlice({
 });
 
 export const {
+  initializeUser,
   setUser,
   updateUserID,
   updateFirstName,

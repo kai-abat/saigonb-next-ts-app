@@ -14,7 +14,7 @@ export type State = {
   }>;
 } | null;
 
-export const signIn = async (state: any, formData: FormData) => {
+export const signIn = async (state: State, formData: FormData) => {
   // we're gonna put a delay in here to simulate some kind of data processing like persisting data
   await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -37,6 +37,23 @@ export const signIn = async (state: any, formData: FormData) => {
         "Sorry, your email and password was incorrect. Please double-check your account.",
     };
   }
+
+  revalidatePath("/", "layout");
+  redirect("/");
+};
+
+export const signOut = async () => {
+  // we're gonna put a delay in here to simulate some kind of data processing like persisting data
+  await new Promise((resolve) => setTimeout(resolve, 3000));
+
+  const supabase = createSupabaseServerClient();
+
+  await supabase.auth.signOut();
+
+  // For Debugging only
+  // const { data: sessionData } = await supabase.auth.getSession();
+  // const { data: userData } = await supabase.auth.getUser();
+  // console.log("signout", sessionData, userData);
 
   revalidatePath("/", "layout");
   redirect("/");

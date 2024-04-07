@@ -7,13 +7,7 @@ import { NextUIProvider } from "@nextui-org/react";
 import { ThemeProvider } from "next-themes";
 import ReduxStoreProvider from "@/components/provider/ReduxStoreProvider";
 
-export function Providers({
-  children,
-  userData,
-}: {
-  children: React.ReactNode;
-  userData: UserProfile | undefined;
-}) {
+export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   return (
     <NextUIProvider navigate={router.push}>
@@ -22,7 +16,7 @@ export function Providers({
         enableSystem={true}
         defaultTheme="system"
       >
-        <ReduxStoreProvider userData={userData}>{children}</ReduxStoreProvider>
+        <ReduxStoreProvider>{children}</ReduxStoreProvider>
       </ThemeProvider>
     </NextUIProvider>
   );

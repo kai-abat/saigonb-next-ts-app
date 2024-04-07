@@ -22,6 +22,7 @@ import { usePathname } from "next/navigation";
 import { IoLogoFacebook, IoLogoInstagram } from "react-icons/io";
 import LogoHeader from "./LogoHeader";
 import UserProfileHeader from "../ui/UserProfileHeader";
+import { UserProfile } from "@/utils/types/Props";
 
 interface Menu {
   name: string;
@@ -36,7 +37,7 @@ const menuItems: Menu[] = [
   { name: "Contact Us", to: "/contactus", icon: <HiOutlinePhone /> },
 ];
 
-const Header = () => {
+const Header = ({ userData }: { userData: UserProfile | undefined }) => {
   const asPath = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -104,7 +105,7 @@ const Header = () => {
           <ThemeSwitcher />
         </NavbarItem>
         <NavbarItem>
-          <UserProfileHeader />
+          <UserProfileHeader userData={userData} />
         </NavbarItem>
         {/* <NavbarItem className="hidden lg:flex">
           <Link href="#">Login</Link>

@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Button, Input } from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 import ImageUploadCard from "./ImageUploadCard";
-import { MdOutlineAddAPhoto } from "react-icons/md";
 import { State } from "@/utils/actions/newMenuAction";
+import { RiImageAddLine } from "react-icons/ri";
+import ImageUploadEmptyCard from "./ImageUploadEmptyCard";
 
 const ImageUpload = ({ formState }: { formState: State }) => {
   const [imageURLList, setImageURLList] = useState<
@@ -29,7 +30,7 @@ const ImageUpload = ({ formState }: { formState: State }) => {
   return (
     <div
       id="image-upload-container"
-      className="flex flex-col justify-center sm:justify-start items-center sm:flex-row gap-3 flex-wrap h-max "
+      className="flex flex-col justify-center items-center sm:justify-start  sm:flex-row gap-4 flex-wrap h-max w-full "
     >
       {imageURLList.map((imageData, index) => {
         return (
@@ -44,16 +45,7 @@ const ImageUpload = ({ formState }: { formState: State }) => {
       })}
 
       {imageURLList.length < 10 && (
-        <Button
-          className="p-2"
-          color="primary"
-          radius="md"
-          size="lg"
-          isIconOnly
-          onPress={handleAddImageComponent}
-        >
-          <MdOutlineAddAPhoto className=" w-6 h-6" />
-        </Button>
+        <ImageUploadEmptyCard handler={handleAddImageComponent} />
       )}
       <Input
         type="text"

@@ -23,7 +23,7 @@ export const extractErrorMessge = (
 };
 
 export const getFallbackImagePath = (): string => {
-  return "/images/saigonbrewers-fallback-loader-large.png";
+  return "/images/saigonbrewers-fallback-loader-w400.png";
 };
 
 export const extractServerErrorMessage = (

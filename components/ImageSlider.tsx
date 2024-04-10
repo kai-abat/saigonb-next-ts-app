@@ -1,7 +1,8 @@
 "use client";
 
+import { getFallbackImagePath } from "@/utils/Helper";
 import { MenuCoverPhoto } from "@/utils/types/Props";
-import { Button, Image as ImageUI } from "@nextui-org/react";
+import { Button, Image as ImageUI, cn } from "@nextui-org/react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { GrNext, GrPrevious } from "react-icons/gr";
@@ -34,6 +35,12 @@ export function ImageSlider({ images }: { images: MenuCoverPhoto[] }) {
           width={600}
           height={600}
           radius="sm"
+          fallbackSrc={getFallbackImagePath()}
+          classNames={{
+            wrapper: cn(
+              "aspect-square bg-no-repeat bg-center bg-cover w-full h-full "
+            ),
+          }}
         />
       </div>
       <div className="relative flex gap-x-1 items-center justify-center shrink max-w-[400px] min-w-[200px] w-full">
@@ -69,6 +76,12 @@ export function ImageSlider({ images }: { images: MenuCoverPhoto[] }) {
                     width={150}
                     height={150}
                     radius="sm"
+                    fallbackSrc={getFallbackImagePath()}
+                    classNames={{
+                      wrapper: cn(
+                        "aspect-square bg-no-repeat bg-center bg-cover "
+                      ),
+                    }}
                   />
                 </div>
               </div>

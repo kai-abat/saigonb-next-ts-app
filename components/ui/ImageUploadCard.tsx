@@ -131,7 +131,7 @@ const ImageUploadCard = ({
 
   const imageUploadCard = (
     <Card
-      className={`p-3 bg-content3 border-2  transition-all duration-400 ease-in gap-y-1 rounded-xl 
+      className={`p-3 bg-content3 border-2 gap-y-4 rounded-xl w-60 h-96
 ${
   validImageURL
     ? "border-primary hover:border-secondary"
@@ -139,88 +139,88 @@ ${
 } `}
     >
       <CardHeader className=" p-2">
-        <div className=" h-[150px] w-[150px] aspect-square flex justify-center items-center text-center border-2 border-secondary overflow-hidden rounded-xl">
+        <div className=" w-full aspect-square flex justify-center items-center text-center border-2 border-secondary overflow-hidden rounded-xl ">
           {!imageData.imageUrl && (
             <Image
               src={getFallbackImagePath()}
               alt="No image selected yet."
-              width={150}
-              height={150}
-              className="aspect-square object-cover object-center"
+              width={250}
+              height={250}
+              className="w-full aspect-square object-cover object-center"
             />
           )}
           {imageData.imageUrl && (
             <Image
               src={imageData.imageUrl}
               alt="The image selected by the user."
-              width={150}
-              height={150}
+              width={250}
+              height={250}
               className="aspect-square object-cover object-center"
             />
           )}
         </div>
       </CardHeader>
-      <CardFooter className="p-2">
-        <div className="flex flex-col gap-3 w-full">
-          <Input
-            type="number"
-            readOnly
-            value={imageData.id.toString()}
-            name={nameImageID}
-            className="hidden"
-          />
-          <Input
-            type="text"
-            value={imageData.imageUrl}
-            // onChange={onChangeImageURL}
-            // onInput={onChangeImageURL}
-            readOnly
-            name={nameImageURL}
-            className="hidden"
-            // label={nameImageURL}
-          />
+      <CardFooter className="p-2 flex flex-col gap-4 w-full">
+        {/* <div className="flex flex-col gap-4 w-full"> */}
+        <Input
+          type="number"
+          readOnly
+          value={imageData.id.toString()}
+          name={nameImageID}
+          className="hidden"
+        />
+        <Input
+          type="text"
+          value={imageData.imageUrl}
+          // onChange={onChangeImageURL}
+          // onInput={onChangeImageURL}
+          readOnly
+          name={nameImageURL}
+          className="hidden"
+          // label={nameImageURL}
+        />
 
-          {/* nextui Input has bug in select file */}
-          <input
-            className="w-full hidden"
-            type="file"
-            accept="image/png, image/jpeg"
-            id={`image-file-${imageData.id}`}
-            name={nameImageFile}
-            ref={imageInputRef}
-            onChange={handleSelectFile}
-          />
-          <Input
-            type="number"
-            label="Order By"
-            isReadOnly
-            radius="sm"
-            name={nameImageOrder}
-            value={imageData.orderNumber.toString()}
-            onChange={handleOrderByChange}
-            min="1"
-            max="10"
-            className="hidden"
-          />
-          <Button
-            className="w-full rounded-xl"
-            color="primary"
-            name={`select-image-btn-${imageData.id}`}
-            onPress={handlePickClick}
-            radius="none"
-          >
-            Browse
-          </Button>
-          <Button
-            color="danger"
-            name={`delete-btn-${imageData.id}`}
-            onPress={handleCloseCard}
-            className="w-full rounded-xl"
-            isDisabled={disabledRemoveBtn}
-          >
-            Remove
-          </Button>
-        </div>
+        {/* nextui Input has bug in select file */}
+        <input
+          className="w-full hidden"
+          type="file"
+          accept="image/png, image/jpeg"
+          id={`image-file-${imageData.id}`}
+          name={nameImageFile}
+          ref={imageInputRef}
+          onChange={handleSelectFile}
+        />
+        <Input
+          type="number"
+          label="Order By"
+          isReadOnly
+          radius="sm"
+          name={nameImageOrder}
+          value={imageData.orderNumber.toString()}
+          onChange={handleOrderByChange}
+          min="1"
+          max="10"
+          className="hidden"
+        />
+        <Button
+          className="w-full rounded-xl"
+          color="primary"
+          name={`select-image-btn-${imageData.id}`}
+          onPress={handlePickClick}
+          radius="none"
+        >
+          Browse
+        </Button>
+        <Button
+          color="danger"
+          name={`delete-btn-${imageData.id}`}
+          onPress={handleCloseCard}
+          className="w-full rounded-xl"
+          isDisabled={disabledRemoveBtn}
+        >
+          Remove
+        </Button>
+        {/* </div> */}
       </CardFooter>
     </Card>
   );

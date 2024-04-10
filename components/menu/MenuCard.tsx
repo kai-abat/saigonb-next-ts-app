@@ -1,10 +1,12 @@
 "use client";
+import { getFallbackImagePath } from "@/utils/Helper";
 import { ComponentProps } from "@/utils/types/Props";
 import {
   Card,
   CardBody,
   CardFooter,
   Image as ImageUI,
+  cn,
 } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -30,17 +32,23 @@ const MenuCard = ({ menuItem }: ComponentProps) => {
         id="card-body"
         className="overflow-visible p-0 flex justify-center items-center flex-none"
       >
-        <ImageUI
-          isZoomed
-          as={Image}
-          radius="none"
-          shadow="sm"
-          width={300}
-          height={400}
-          alt={menuItem.name}
-          className=" h-full sm:h-auto aspect-square"
-          src={menuItem.coverPhotos.at(0)?.image}
-        />
+        <div className="w-full aspect-square bg-red-400">
+          <ImageUI
+            isZoomed
+            as={Image}
+            radius="none"
+            shadow="sm"
+            width={400}
+            height={400}
+            alt={menuItem.name}
+            className="w-full aspect-square object-cover "
+            src={menuItem.coverPhotos.at(0)?.image}
+            fallbackSrc={getFallbackImagePath()}
+            classNames={{
+              wrapper: cn("aspect-square bg-no-repeat bg-center bg-cover "),
+            }}
+          />
+        </div>
       </CardBody>
       <CardFooter className="text-small flex-col w-full">
         <b>{menuItem.name}</b>

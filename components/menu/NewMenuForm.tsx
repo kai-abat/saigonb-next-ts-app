@@ -19,10 +19,6 @@ import PriceList from "../ui/PriceList";
 import { NewMenuProps } from "@/utils/types/ClientProps";
 import NewMenuFormContent from "./NewMenuFormContent";
 
-interface ErrSetType {
-  [key: string]: string;
-}
-
 const NewMenuForm = ({ categories = [] }: NewMenuProps) => {
   const [state, formAction] = useFormState<State, FormData>(
     newMenuAction,

@@ -14,7 +14,10 @@ export type State = {
   }>;
 } | null;
 
-export const signIn = async (state: State, formData: FormData) => {
+export const signIn = async (
+  state: State,
+  formData: FormData
+): Promise<State> => {
   // we're gonna put a delay in here to simulate some kind of data processing like persisting data
   await new Promise((resolve) => setTimeout(resolve, 2000));
 

@@ -1,6 +1,23 @@
-import Printer from "@/components/Printer";
 import MenuDetails from "@/components/menu/MenuDetails";
 import { fetchAllCategories } from "@/utils/services/MenuAPI";
+import { fetchAllMenuClient } from "@/utils/services/MenuClientAPI";
+
+export async function generateStaticParams() {
+  const menus = await fetchAllMenuClient();
+
+  if (!menus)
+    return [
+      {
+        menuName: encodeURIComponent("Ca Phe Sua"),
+      },
+    ];
+
+  const menuNames = menus.map((menu) => {
+    return { menuName: encodeURIComponent(menu.name) };
+  });
+  console.log("Menu/[category][menuName] generateStaticParams...", menuNames);
+  return menuNames;
+}
 
 const MenuItemPage = async ({
   params,

@@ -5,10 +5,10 @@ import FormRow from "../form/FormRow";
 import { Input } from "@nextui-org/input";
 import { MdOutlineSupervisedUserCircle } from "react-icons/md";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Button, Divider } from "@nextui-org/react";
+import { Divider } from "@nextui-org/react";
 import Title from "../Title";
 import { RiLockPasswordLine } from "react-icons/ri";
-import { signIn } from "@/utils/actions/adminAction";
+import { State, signIn } from "@/utils/actions/adminAction";
 import SubmitButton from "../ui/SubmitButton";
 
 const LoginForm = () => {
@@ -16,11 +16,7 @@ const LoginForm = () => {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const [state, formAction] = useFormState(signIn, {
-    status: "success",
-    isValid: true,
-    message: "Initialization",
-  });
+  const [state, formAction] = useFormState<State, FormData>(signIn, null);
 
   const bool = state !== null && state.isValid;
 
@@ -80,7 +76,7 @@ const LoginForm = () => {
           />
         </FormRow>
 
-        {state.status === "error" && (
+        {state && state.status === "error" && (
           <FormRow>
             <p className=" text-danger text-sm">{state.message}</p>
           </FormRow>

@@ -22,8 +22,9 @@ export type State =
   | null;
 
 export const newMenuAction = async (
-  prevState: State | null,
-  formData: FormData
+  prevState: State,
+  formData: FormData,
+  menuId?: number
 ): Promise<State> => {
   try {
     // we're gonna put a delay in here to simulate some kind of data processing like persisting data

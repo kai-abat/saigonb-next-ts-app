@@ -1,5 +1,8 @@
 "use server";
 
+import { createSupabaseServerClient } from "../supabase/server";
+import { FileBody, SupaCoverPhotoFile } from "../types/SupabaseCompProps";
+import { Database } from "../types/supabase";
 import { NewMenuSchema, imageURLSchema } from "../zod/NewMenuSchema";
 import { ZodError, z } from "zod";
 
@@ -30,25 +33,22 @@ export const newMenuAction = async (
 
     // Process Given Input/Select/Checked Components
     const fdIsFeatured = formData.get("isFeatured") === null ? false : true;
-    const fdCategory = formData.get("category");
-    let fdCategoryNum: FormDataEntryValue =
-      fdCategory === null ? "" : fdCategory;
+    const fdCategory = formData.get("category") as string;
+    let fdCategoryNum: string = fdCategory === null ? "" : fdCategory;
 
     //
     let newMenu = {
-      menuName: formData.get("menuName"),
-      description: formData.get("description"),
+      menuName: formData.get("menuName") as string,
+      description: formData.get("description") as string,
       category: fdCategoryNum,
       isFeatured: fdIsFeatured,
     };
 
-    let newMenuTemp = {};
-    newMenuTemp = { ...newMenu };
-
     // Process Dynamic Components
     // Cover Photo
+
     const imageNumber: number = Number(formData.get("image-number-of-upload"));
-    let imageUploadObj = {};
+    let coverPhotos: SupaCoverPhotoFile[] = [];
     let NewMenuSchemaExtended = z.object({});
     NewMenuSchemaExtended = NewMenuSchemaExtended.merge(NewMenuSchema);
     for (let index = 0; index < imageNumber; index++) {
@@ -63,36 +63,95 @@ export const newMenuAction = async (
       const imageDataOrder_Key = `image-order-${currentNumber}`;
 
       const imageDataID_Value = Number(formData.get(imageDataID_Key));
-      const imageDataURL_Value = formData.get(imageDataURL_Key);
-      const imageDataFile_Value = formData.get(imageDataFile_Key);
+      const imageDataURL_Value = formData.get(imageDataURL_Key) as string;
+      const imageDataFile_Value = formData.get(imageDataFile_Key) as FileBody;
       const imageDataOrder_Value = Number(formData.get(imageDataOrder_Key));
 
+      // create zod object for validation
       const imageDataSchema = z.object({
         [imageDataID_Key]: z.number(),
         [imageDataURL_Key]: imageURLSchema,
         [imageDataOrder_Key]: z.number(),
       });
 
+      // merge zod object to main schema
       NewMenuSchemaExtended = NewMenuSchemaExtended.merge(imageDataSchema);
 
-      const newMenuAddonImageData = {
+      const imageDataObj = {
         [imageDataID_Key]: imageDataID_Value,
         [imageDataURL_Key]: imageDataURL_Value,
         [imageDataOrder_Key]: imageDataOrder_Value,
       };
-      newMenuTemp = {
-        ...newMenuTemp,
-        ...newMenuAddonImageData,
+
+      coverPhotos.push({
+        imageUrl: imageDataURL_Value,
+        imageFile: imageDataFile_Value,
+        orderNumber: imageDataOrder_Value,
+      });
+
+      newMenu = {
+        ...newMenu,
+        ...imageDataObj,
       };
     }
 
-    console.log("image upload card:", NewMenuSchemaExtended.keyof());
     // Price List
+    let newPrices: Database["public"]["Tables"]["MenuPrice"]["Insert"][] = [];
+    for (let index = 0; index < imageNumber; index++) {
+      const currentNumber = index + 1;
+      // price-number
+      // price-select-type-2
+      // price-select-size-2
+      // price-input-2
 
-    console.log("newMenuAction: newMenuTemp", newMenuTemp);
+      const priceType_Key = `price-select-type-${currentNumber}`;
+      const priceSize_Key = `price-select-size-${currentNumber}`;
+      const priceInput_Key = `price-input-${currentNumber}`;
+
+      const priceType_Value = formData.get(priceType_Key) as string;
+      const priceSize_Value = formData.get(priceSize_Key) as string;
+      const priceInput_Value = Number(formData.get(priceInput_Key));
+
+      const priceDataObj = {
+        [priceType_Key]: priceType_Value,
+        [priceSize_Key]: priceSize_Value,
+        [priceInput_Key]: priceInput_Value,
+      };
+
+      newPrices.push({
+        type: priceType_Value,
+        size: priceSize_Value,
+        price: priceInput_Value,
+      });
+    }
 
     // Validate our data
-    const result = NewMenuSchemaExtended.parse(newMenuTemp);
+    const result = NewMenuSchemaExtended.parse(newMenu);
+
+    // Save data to database
+    // Menu
+    console.log("Menu data before saving to DB", newMenu);
+    const menuDB = await insertMenu({
+      name: newMenu.menuName,
+      description: newMenu.description,
+      isFeatured: newMenu.isFeatured,
+      categoryId: newMenu.category === "" ? null : Number(newMenu.category),
+    });
+    console.log("Menu data after saving to DB", menuDB);
+
+    // Cover Photos
+    console.log("Cover Photos before saving to DB", coverPhotos);
+    const coverPhotosDB = await insertCoverPhotos(
+      coverPhotos,
+      newMenu.menuName,
+      menuDB?.id
+    );
+    console.log("Cover Photos saved to DB", coverPhotosDB);
+
+    // Price List
+    console.log("Price List before saving to DB", newPrices);
+    const pricesDB = await insertPriceList(newPrices, menuDB?.id);
+    console.log("Price List after saving to DB", pricesDB);
 
     return {
       status: "success",
@@ -119,4 +178,95 @@ export const newMenuAction = async (
       message: "Something went wrong. Please try again.",
     };
   }
+};
+
+const insertMenu = async (
+  menu: Database["public"]["Tables"]["Menu"]["Insert"]
+) => {
+  const supabase = createSupabaseServerClient();
+  let menuQuery = supabase.from("Menu").insert([menu]);
+  const { data } = await menuQuery.select().single();
+
+  return data;
+};
+
+const insertPriceList = async (
+  menuPrices: Database["public"]["Tables"]["MenuPrice"]["Insert"][],
+  menuId: number | null | undefined
+) => {
+  menuPrices = menuPrices.map((price) => {
+    return { ...price, menuId: menuId };
+  });
+  const supabase = createSupabaseServerClient();
+  let priceQuery = supabase.from("MenuPrice").insert([...menuPrices]);
+  const { data } = await priceQuery.select();
+  return data;
+};
+
+const insertCoverPhotos = async (
+  coverPhotos: SupaCoverPhotoFile[],
+  menuName: string,
+  menuId: number | null | undefined
+) => {
+  const supabase = createSupabaseServerClient();
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+  // upload cover photo to database
+  if (!supabaseUrl) return null;
+
+  menuName = menuName.split(" ").join("-");
+
+  // let coverPhotosDB: Database["public"]["Tables"]["MenuCoverPhoto"]["Row"][] =
+  //   [];
+
+  const coverPhotosDB = await Promise.all(
+    coverPhotos.map(async (coverPhoto) => {
+      // coverPhoto = { ...coverPhoto, menuId: menuId };
+      const hasImagePath: boolean =
+        coverPhoto.imageUrl !== null &&
+        coverPhoto.imageUrl.startsWith(supabaseUrl);
+
+      const imageFilename = `${menuName}_${coverPhoto.orderNumber}`;
+
+      // /storage/v1/object/public/saigon
+      const imagePath =
+        hasImagePath && coverPhoto.imageUrl !== null
+          ? coverPhoto.imageUrl
+          : `${supabaseUrl}/storage/v1/object/public/saigon/${imageFilename}`;
+
+      const coverPhotoDB: Database["public"]["Tables"]["MenuCoverPhoto"]["Insert"] =
+        {
+          imageUrl: imagePath,
+          menuId: menuId,
+          orderNumber: coverPhoto.orderNumber,
+        };
+
+      // upload image to supabase
+      let error = false;
+      // if (!hasImagePath) {
+      //   console.log("Uploading image:", imageFilename, imagePath);
+      //   const { error: storageError } = await supabase.storage
+      //     .from("saigon")
+      //     .upload(imageFilename, coverPhoto.imageFile);
+
+      //   if (storageError) {
+      //     console.log("Storage error", imageFilename);
+      //     error = true;
+      //   }
+      // } else {
+      //   console.log("Image already uploaded", imagePath);
+      // }
+
+      if (!error) {
+        // store data to supabasse
+        let converPhotoQuery = supabase
+          .from("MenuCoverPhoto")
+          .insert([coverPhotoDB]);
+        const { data } = await converPhotoQuery.select().single();
+        return data;
+      }
+    })
+  );
+
+  return coverPhotosDB;
 };

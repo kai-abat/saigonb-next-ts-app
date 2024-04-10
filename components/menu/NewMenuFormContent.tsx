@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Button,
   Divider,
   Input,
   Select,
@@ -25,6 +24,8 @@ import {
 } from "@/utils/zod/NewMenuSchema";
 import { useState } from "react";
 import { extractErrorMessge } from "@/utils/Helper";
+import SelectDropDown from "../ui/SelectDropDown";
+import Button from "../ui/Button";
 
 const NewMenuFormContent = ({
   categories,
@@ -128,11 +129,13 @@ const NewMenuFormContent = ({
           name={nameCategory}
           id={nameCategory}
           items={categories}
-          label="Select Category"
+          label="Category"
           className=" max-w-[500px] min-w-[300px]"
           onChange={onChangeCategory}
           errorMessage={messageCategory}
           isInvalid={!validCategory}
+          placeholder="-- Select --"
+          // disableAnimation
         >
           {(category) => (
             <SelectItem key={category.id}>{category.altName}</SelectItem>
@@ -168,12 +171,11 @@ const NewMenuFormContent = ({
       {!allValid && <p>{formErrorMessage}</p>}
 
       <FormRow>
-        <>
+        <div className="flex gap-4 flex-col sm:flex-row w-full ">
           <Button
-            color="primary"
-            radius="md"
+            color="secondary"
             type="submit"
-            className="max-w-[500px] min-w-[300px]"
+            className="w-full max-w-full sm:max-w-[200px] lg:max-w-[300px] min-w-[100px]"
             isDisabled={pending || !allValid}
           >
             {!pending ? (
@@ -186,15 +188,15 @@ const NewMenuFormContent = ({
             )}
           </Button>
           <Button
-            color="default"
-            radius="md"
-            type="button"
-            className="max-w-[500px] min-w-[300px]"
-            disabled={pending}
+            type="reset"
+            color="secondary"
+            className="w-full max-w-full sm:max-w-[200px] lg:max-w-[300px] min-w-[100px]"
+            variant="bordered"
+            isDisabled={pending}
           >
-            Cancel
+            Clear
           </Button>
-        </>
+        </div>
       </FormRow>
     </>
   );

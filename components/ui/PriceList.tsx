@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
+import { Button, Input } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import PriceCard from "./PriceCard";
 import { MdAdd, MdOutlineAddAPhoto } from "react-icons/md";
@@ -54,6 +54,14 @@ const PriceList = () => {
           <MdAdd className=" w-6 h-6" />
         </Button>
       )}
+      <Input
+        type="text"
+        readOnly
+        id="price-number"
+        name="price-number"
+        value={priceList.length.toString()}
+        className="hidden"
+      />
     </div>
   );
 };

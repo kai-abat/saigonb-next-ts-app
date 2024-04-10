@@ -6,6 +6,24 @@ export declare interface SupaCategory {
   Menu: SupaMenu[];
 }
 
+export declare interface SupaCoverPhotoFile {
+  created_at?: string;
+  id?: number;
+  imageFile: FileBody;
+  imageUrl: string;
+  menuId?: number | null;
+  orderNumber: number;
+}
+
+export declare interface SupaMenuNoRef {
+  id?: number;
+  created_at?: string;
+  name: string;
+  description: string | null;
+  isFeatured: boolean;
+  categoryId: number | null;
+}
+
 export declare interface SupaMenu {
   categoryId: number | null;
   created_at: string;
@@ -34,3 +52,15 @@ export declare interface SupaMenu {
     type: string;
   }[];
 }
+
+export type FileBody =
+  | ArrayBuffer
+  | ArrayBufferView
+  | Blob
+  | Buffer
+  | File
+  | FormData
+  | NodeJS.ReadableStream
+  | ReadableStream<Uint8Array>
+  | URLSearchParams
+  | string;

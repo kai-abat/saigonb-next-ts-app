@@ -43,16 +43,12 @@ const PriceList = () => {
       })}
 
       {priceList.length < 10 && (
-        <Button
-          className="p-2"
-          color="primary"
-          radius="md"
-          size="lg"
-          isIconOnly
-          onPress={handleAddPriceComponent}
+        <div
+          onClick={handleAddPriceComponent}
+          className="w-60 h-80 bg-content3 flex justify-center items-center rounded-xl border-primary border-2 cursor-pointer hover:border-secondary"
         >
-          <MdAdd className=" w-6 h-6" />
-        </Button>
+          <MdAdd className="w-full h-full fill-stone-300" />
+        </div>
       )}
       <Input
         type="text"

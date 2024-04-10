@@ -87,7 +87,7 @@ const PriceCard = ({
   }
 
   return (
-    <Card className="p-3 border-2 border-primary hover:border-secondary bg-content3 transition-all duration-400 ease-in w-60">
+    <Card className="p-3 border-2 border-primary hover:border-secondary bg-content3 transition-all duration-400 ease-in w-60 h-80">
       <CardBody>
         <div className="flex flex-col gap-3">
           {/* <Input label="ID" value={price.id.toString()} /> */}

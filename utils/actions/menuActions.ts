@@ -42,9 +42,9 @@ export const deleteMenuAction = async (
     const priceList = menu.price;
     const coverPhotos = menu.coverPhotos;
 
-    console.log("DB Menu", menu);
-    console.log("DB priceList", priceList);
-    console.log("DB coverPhotos", coverPhotos);
+    // console.log("DB Menu", menu);
+    // console.log("DB priceList", priceList);
+    // console.log("DB coverPhotos", coverPhotos);
 
     const imageUrls = coverPhotos.map((cover) => cover.image);
     const supabase = createSupabaseServerClient();

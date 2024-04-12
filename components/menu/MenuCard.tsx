@@ -36,7 +36,9 @@ const MenuCard = ({
 
   if (!menuItem || !menuItem.category) return;
 
-  const menuDetailsLink = `/menu/${menuItem.category.name}/${menuItem.name}`;
+  const menuDetailsLink = `/menu/${encodeURIComponent(
+    menuItem.category.name
+  )}/${encodeURIComponent(menuItem.name)}`;
   const deleteMessage = `Are you sure you want to delete the menu: "${menuItem.name}"`;
 
   return (

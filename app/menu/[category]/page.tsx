@@ -58,7 +58,7 @@ const MenuCategoryPage = async ({
 
   const categories = categoriesTbl.map((categoryTbl) => categoryTbl.name);
   const defaultCategories = ["all", ...categories];
-  console.log("FilterMenu: defaultCategories:", defaultCategories);
+  // console.log("FilterMenu: defaultCategories:", defaultCategories);
   return (
     <>
       <FilterMenu

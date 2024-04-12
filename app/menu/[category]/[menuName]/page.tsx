@@ -8,12 +8,16 @@ export async function generateStaticParams() {
   if (!menus)
     return [
       {
+        category: "Ca%20Phe",
         menuName: encodeURIComponent("Ca Phe Sua"),
       },
     ];
 
   const menuNames = menus.map((menu) => {
-    return { menuName: encodeURIComponent(menu.name) };
+    return {
+      category: menu.category ? encodeURIComponent(menu.category.name) : "all",
+      menuName: encodeURIComponent(menu.name),
+    };
   });
   // console.log("Menu/[category][menuName] generateStaticParams...", menuNames);
   return menuNames;

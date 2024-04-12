@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Input } from "@nextui-org/react";
 import ImageUploadCard from "./ImageUploadCard";
-import { State } from "@/utils/actions/newMenuAction";
+import { State } from "@/utils/actions/menuActions";
 import { RiImageAddLine } from "react-icons/ri";
 import ImageUploadEmptyCard from "./ImageUploadEmptyCard";
 

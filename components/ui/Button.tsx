@@ -1,4 +1,5 @@
-import { Button as ButtonNUI } from "@nextui-org/react";
+import { Button as ButtonNUI, Link } from "@nextui-org/react";
+import { ReactNode } from "react";
 
 const Button = ({
   type = "button",
@@ -7,6 +8,12 @@ const Button = ({
   children,
   variant = "solid",
   isDisabled = false,
+  isIconOnly = false,
+  startContent,
+  endContent,
+  isLink = false,
+  href = "/",
+  onPress,
 }: {
   type?: "button" | "reset" | "submit";
   color?:
@@ -27,6 +34,12 @@ const Button = ({
   className?: string | undefined;
   children?: React.ReactNode;
   isDisabled?: boolean;
+  isIconOnly?: boolean;
+  startContent?: ReactNode;
+  endContent?: ReactNode;
+  isLink?: boolean;
+  href?: string;
+  onPress?: any;
 }) => {
   // className = color === "primary" ? `${className} text-foreground` : className;
   return (
@@ -36,6 +49,12 @@ const Button = ({
       type={type}
       color={color}
       className={` font-bold ${className}`}
+      isIconOnly={isIconOnly}
+      startContent={startContent}
+      endContent={endContent}
+      as={isLink ? Link : undefined}
+      href={isLink ? href : undefined}
+      onPress={onPress}
     >
       {children}
     </ButtonNUI>

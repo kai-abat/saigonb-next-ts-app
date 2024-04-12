@@ -1,4 +1,4 @@
-import AddMenuButton from "@/components/menu/AddMenuButton";
+import NewMenuButton from "@/components/menu/NewMenuButton";
 import FilterMenu from "@/components/menu/FilterMenu";
 import MenuListings from "@/components/menu/MenuListings";
 import { fetchAllCategories } from "@/utils/services/MenuAPI";
@@ -22,7 +22,7 @@ export async function generateStaticParams() {
 
   defaultCategories = [...defaultCategories, ...categoriesDB];
 
-  console.log("Menu/[category] generateStaticParams...", defaultCategories);
+  // console.log("Menu/[category] generateStaticParams...", defaultCategories);
 
   return defaultCategories;
 }
@@ -32,16 +32,16 @@ const MenuCategoryPage = async ({
 }: {
   params: { category: string };
 }) => {
-  console.log("MenuCategoryPage: fetching user authenticated...");
-  console.time();
+  // console.log("MenuCategoryPage: fetching user authenticated...");
+  // console.time();
   const userData = await getUserData();
-  console.timeEnd();
-  console.log("MenuCategoryPage: finish getting user authenticated...");
-  console.log("MenuCategoryPage: fetching all categories...");
-  console.time();
+  // console.timeEnd();
+  // console.log("MenuCategoryPage: finish getting user authenticated...");
+  // console.log("MenuCategoryPage: fetching all categories...");
+  // console.time();
   const categoriesTbl = await fetchAllCategories();
-  console.timeEnd();
-  console.log("MenuCategoryPage: finish getting all categories...");
+  // console.timeEnd();
+  // console.log("MenuCategoryPage: finish getting all categories...");
 
   if (!categoriesTbl) return;
 
@@ -65,7 +65,7 @@ const MenuCategoryPage = async ({
         currentCategory={categoryParam}
         defaultCategories={defaultCategories}
       />
-      {userData && <AddMenuButton />}
+      {userData && <NewMenuButton />}
       <MenuListings categories={filteredCategory} />
     </>
   );

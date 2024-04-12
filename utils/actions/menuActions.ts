@@ -1,10 +1,13 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { ZodError, z } from "zod";
 import { createSupabaseServerClient } from "../supabase/server";
 import { FileBody, SupaCoverPhotoFile } from "../types/SupabaseCompProps";
 import { Database } from "../types/supabase";
 import { NewMenuSchema, imageURLSchema } from "../zod/NewMenuSchema";
-import { ZodError, z } from "zod";
+import { fetchMenuById } from "../services/MenuAPI";
 
 export type State =
   | {
@@ -20,6 +23,59 @@ export type State =
       }>;
     }
   | null;
+
+export const deleteMenuAction = async (
+  prevState: State,
+  formData: FormData
+): Promise<State> => {
+  // we're gonna put a delay in here to simulate some kind of data processing like persisting data
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+
+  console.log("deleteMenuAction", formData);
+  // menu-id
+  const menuId = Number(formData.get("menu-id") as string);
+
+  // delete data from database
+  const menu = await fetchMenuById(menuId);
+
+  if (menu) {
+    const priceList = menu.price;
+    const coverPhotos = menu.coverPhotos;
+
+    console.log("DB Menu", menu);
+    console.log("DB priceList", priceList);
+    console.log("DB coverPhotos", coverPhotos);
+
+    const imageUrls = coverPhotos.map((cover) => cover.image);
+    const supabase = createSupabaseServerClient();
+
+    // delete cover photos
+    await supabase.storage.from("saigon").remove(imageUrls);
+    // delete cover photo db
+    await Promise.all(
+      coverPhotos.map(async (cover) => {
+        const { error } = await supabase
+          .from("MenuCoverPhoto")
+          .delete()
+          .eq("id", cover.id);
+      })
+    );
+    // delete price list db
+    await Promise.all(
+      priceList.map(async (price) => {
+        const { error } = await supabase
+          .from("MenuPrice")
+          .delete()
+          .eq("id", price.id);
+      })
+    );
+    // delete menu db
+    await supabase.from("Menu").delete().eq("id", menu.id);
+  }
+
+  revalidatePath("/menu", "layout");
+  redirect("/menu/all");
+};
 
 export const newMenuAction = async (
   prevState: State,
@@ -217,9 +273,6 @@ const insertCoverPhotos = async (
 
   menuName = menuName.split(" ").join("-");
 
-  // let coverPhotosDB: Database["public"]["Tables"]["MenuCoverPhoto"]["Row"][] =
-  //   [];
-
   const coverPhotosDB = await Promise.all(
     coverPhotos.map(async (coverPhoto) => {
       // coverPhoto = { ...coverPhoto, menuId: menuId };
@@ -244,19 +297,20 @@ const insertCoverPhotos = async (
 
       // upload image to supabase
       let error = false;
-      // if (!hasImagePath) {
-      //   console.log("Uploading image:", imageFilename, imagePath);
-      //   const { error: storageError } = await supabase.storage
-      //     .from("saigon")
-      //     .upload(imageFilename, coverPhoto.imageFile);
+      if (!hasImagePath) {
+        console.log("Uploading image:", imageFilename, imagePath);
 
-      //   if (storageError) {
-      //     console.log("Storage error", imageFilename);
-      //     error = true;
-      //   }
-      // } else {
-      //   console.log("Image already uploaded", imagePath);
-      // }
+        const { error: storageError } = await supabase.storage
+          .from("saigon")
+          .upload(imageFilename, coverPhoto.imageFile);
+
+        if (storageError) {
+          console.log("Storage error", imageFilename);
+          error = true;
+        }
+      } else {
+        console.log("Image already uploaded", imagePath);
+      }
 
       if (!error) {
         // store data to supabasse

@@ -1,5 +1,5 @@
 "use client";
-import { newMenuAction, State } from "@/utils/actions/newMenuAction";
+import { newMenuAction, State } from "@/utils/actions/menuActions";
 import { useFormState, useFormStatus } from "react-dom";
 import FormRow from "../form/FormRow";
 import {

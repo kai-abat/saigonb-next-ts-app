@@ -6,7 +6,7 @@ import {
 } from "@/utils/Helper";
 import useUploadImage from "@/utils/hooks/useUploadImage";
 import useZodClientValidation from "@/utils/hooks/useZodFormValidation";
-import { State } from "@/utils/actions/newMenuAction";
+import { State } from "@/utils/actions/menuActions";
 import { imageURLSchema } from "@/utils/zod/NewMenuSchema";
 import {
   Button,

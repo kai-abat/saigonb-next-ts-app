@@ -9,7 +9,7 @@ import { Divider } from "@nextui-org/react";
 import Title from "../Title";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { State, signIn } from "@/utils/actions/adminAction";
-import SubmitButton from "../ui/SubmitButton";
+import SubmitButton from "../form/SubmitButton";
 
 const LoginForm = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -83,7 +83,11 @@ const LoginForm = () => {
         )}
 
         <FormRow>
-          <SubmitButton label="Sign In" labelLoading="Signing In" />
+          <SubmitButton
+            label="Sign In"
+            labelLoading="Signing In"
+            className="w-full"
+          />
         </FormRow>
       </form>
     </section>

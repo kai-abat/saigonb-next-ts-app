@@ -11,7 +11,7 @@ import {
 import FormRow from "../form/FormRow";
 import LabeledSwitch from "../nextui/LabeledSwitch";
 import { useFormStatus } from "react-dom";
-import { State } from "@/utils/actions/newMenuAction";
+import { State } from "@/utils/actions/menuActions";
 import { Category } from "@/utils/types/Props";
 import ImageUpload from "../ui/ImageUpload";
 import PriceList from "../ui/PriceList";

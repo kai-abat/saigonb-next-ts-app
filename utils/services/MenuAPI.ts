@@ -70,14 +70,8 @@ export const fetchAllMenu = async (): Promise<Menu[] | undefined> => {
 
   if (!menuTbl) return;
 
-  // const { data, error } = await supabase.from("Menu").select("*");
   // Temporary add timeout to show loading indicator
   // await new Promise((resolve) => setTimeout(resolve, 5000));
-  // console.log("fetchAllMenu", data);
-  // if (error) {
-  //   console.log("fetchAllMenu", error);
-  //   throw new Error(error.message);
-  // }
 
   return extractMenuFromDB(menuTbl);
 };
@@ -148,5 +142,18 @@ export const fetchFeaturedMenu = async () => {
 };
 
 export async function fetchMenuById(id: number) {
-  return MENU.find((menu) => menu.id === id);
+  const supabase = createSupabaseServerClient();
+
+  const { data: menuTbl } = await supabase
+    .from("Menu")
+    .select("*, Category(*), MenuCoverPhoto(*), MenuPrice(*)")
+    .eq("id", id)
+    .single();
+
+  if (!menuTbl) return;
+
+  // Temporary add timeout to show loading indicator
+  // await new Promise((resolve) => setTimeout(resolve, 5000));
+
+  return (await extractMenuFromDB([menuTbl])).at(0);
 }

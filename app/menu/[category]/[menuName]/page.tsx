@@ -15,7 +15,7 @@ export async function generateStaticParams() {
   const menuNames = menus.map((menu) => {
     return { menuName: encodeURIComponent(menu.name) };
   });
-  console.log("Menu/[category][menuName] generateStaticParams...", menuNames);
+  // console.log("Menu/[category][menuName] generateStaticParams...", menuNames);
   return menuNames;
 }
 

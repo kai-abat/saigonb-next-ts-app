@@ -1,10 +1,10 @@
 "use client";
 
-import { Button } from "@nextui-org/react";
+import { Button, Link } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { VscNewFile } from "react-icons/vsc";
 
-const AddMenuButton = () => {
+const NewMenuButton = () => {
   const router = useRouter();
 
   return (
@@ -14,11 +14,12 @@ const AddMenuButton = () => {
         size="lg"
         className="max-w-[300px] w-full"
         startContent={<VscNewFile />}
-        onPress={() => router.push("/menu/new-menu")}
+        href="/menu/new-menu"
+        as={Link}
       >
         New Menu
       </Button>
     </div>
   );
 };
-export default AddMenuButton;
+export default NewMenuButton;

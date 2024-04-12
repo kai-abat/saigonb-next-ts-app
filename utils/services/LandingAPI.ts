@@ -1,5 +1,5 @@
 import { CarouselData } from "../types/Props";
-import { HomeData } from "./TempData";
+import { HomeData, HomeDataType } from "./TempData";
 
 export const fetchCarouselData = async () => {
   const carouselData: CarouselData[] = HomeData.carousel.map((car) => ({
@@ -7,4 +7,8 @@ export const fetchCarouselData = async () => {
     title: car.title,
   }));
   return carouselData;
+};
+
+export const fetchLandingData = async (): Promise<HomeDataType> => {
+  return HomeData;
 };

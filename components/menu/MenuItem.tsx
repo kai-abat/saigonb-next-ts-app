@@ -1,7 +1,7 @@
 import { ComponentProps } from "@/utils/types/Props";
 import MenuCard from "./MenuCard";
 import { Divider } from "@nextui-org/react";
-import Title from "../Title";
+import Title from "../ui/Title";
 import { getUserData } from "@/utils/services/UserAPI";
 
 // name: category name

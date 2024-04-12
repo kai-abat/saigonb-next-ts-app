@@ -11,7 +11,7 @@ import {
   Spinner,
   Textarea,
 } from "@nextui-org/react";
-import Title from "../Title";
+import Title from "../ui/Title";
 import LabeledSwitch from "../nextui/LabeledSwitch";
 import ImageUpload from "../ui/ImageUpload";
 import { useEffect, useState } from "react";

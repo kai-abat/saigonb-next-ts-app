@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ComponentProps } from "@/utils/types/Props";
 import Header from "@/components/layout/Header";
-import BreadCrumbs from "@/components/BreadCrumbs";
+import BreadCrumbs from "@/components/ui/BreadCrumbs";
 import Footer from "@/components/layout/Footer";
 import { Divider } from "@nextui-org/react";
 import { Providers } from "./providers";
 import { getUserData } from "@/utils/services/UserAPI";
-import Initializer from "@/components/Initializer";
+import Initializer from "@/components/ui/Initializer";
 
 // const inter = Inter({ subsets: ["latin"] });
 

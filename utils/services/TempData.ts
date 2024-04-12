@@ -13,9 +13,46 @@ export const HomeData = {
       coverPhoto: "/images/coffee-with-coffee-beans-4k.webp",
     },
   ],
+  whyUs: {
+    imageUrl: "/images/why-choose-us.jpg",
+    title: "Why choose our coffee",
+    details: "Lorem ipsum dolor sit amet consectetur adipisicing elit.",
+  },
+  content: [
+    {
+      imagePosition: "right",
+      imageUrl: "/images/jello-mangotea.jpg",
+      title: "Try our new Jell-o Mango Tea",
+      details: [
+        "Did someone say, beat the heat with a summer tropical drink? 🤔😎☀️",
+        "Our Jell-o Mango Tea is now avail for this season!🥭🍹Perfect to keep yourselves hydrated and refreshed in this scorching weather.🥵🔥",
+        "*this is only a seasonal drink so make sure to come see us before it runs out.😉",
+      ],
+    },
+    {
+      imagePosition: "left",
+      imageUrl: "/images/pandan-coconut-mochi-waffle.jpg",
+      title: "Pandan Coconut Mochi Waffle",
+      details: [
+        "Indulge in a symphony of flavors with our pandan coconut mochi waffle a tantalizing fusion that brings Vietnam's street food charm straight to your plate! 🍨🧇💚",
+        "This might be your new favorite so make to drop by and see us. 🤗",
+      ],
+    },
+    {
+      imagePosition: "right",
+      imageUrl: "/images/beat-the-heat-taste-of-vietname.jpg",
+      title: "Beat the summer heat with a taste of Vietnam!",
+      details: [
+        "Introducing our newest favorites inspired by the streets of the locals: refreshing iced egg coffee (cà phê trứng) and indulgent iced egg cacao (sô cô la trứng). 🥚☕️🍫",
+        "Perfectly crafted to cool you down, it is available in-store in both hot and iced versions. 🤎",
+        "What are you waiting for? Dive in with sweet goodness. 😎🛵.",
+      ],
+    },
+  ],
 };
 
-export const MENU = [
+export type HomeDataType = typeof HomeData;
+const MENU = [
   {
     id: 1,
     name: "Ca Phe Den Sua",
@@ -206,7 +243,7 @@ export const MENU = [
   },
 ];
 
-export const CATEGORY = [
+const CATEGORY = [
   {
     id: "1",
     name: "Ca Phe Series",

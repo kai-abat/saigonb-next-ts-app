@@ -1,6 +1,6 @@
 import { ComponentProps } from "@/utils/types/Props";
 import CardPrice from "./CardPrice";
-import ImageSlider from "../ImageSlider";
+import ImageSlider from "../ui/ImageSlider";
 
 const MenuDetails = ({ menuItem }: ComponentProps) => {
   const hotPrices = menuItem?.price.filter((p) => p.type === "Hot");

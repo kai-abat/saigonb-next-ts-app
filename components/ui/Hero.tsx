@@ -8,15 +8,15 @@ const Hero = () => {
     <>
       <div
         id="content1"
-        className="bg-primary-500/80 backdrop-blur-sm flex gap-3 items-center flex-col sm:flex-row justify-evenly p-4"
+        className="bg-primary/80 backdrop-blur-sm flex gap-3 flex-col sm:flex-row items-start justify-between p-4"
       >
         <div
           id="box-content"
-          className="sm:w-[30%] w-[100%] h-full flex flex-col gap-2"
+          className="sm:w-[30%] w-[100%] h-full flex flex-col justify-start gap-2"
         >
           <div
             id="box-content-title"
-            className="flex gap-2 items-center contentTitleWithIcon"
+            className="flex gap-2 h-ful items-center contentTitleWithIcon"
           >
             <CiCoffeeCup />
             <p>High Quality Coffee</p>
@@ -73,10 +73,10 @@ const Hero = () => {
       </div>
       <div
         id="content2"
-        className="bg-stone-800/70 backdrop-blur-sm flex flex-col sm:flex-row justify-center gap-4 items-center p-4"
+        className="bg-stone-800/60 backdrop-blur-sm flex flex-col sm:flex-row justify-center gap-4 items-center p-4"
       >
         <div className="flex flex-col gap-2 order-2 sm:order-none">
-          <p className="text-lg font-bold text-primary-500 textShadow ">
+          <p className="text-lg font-bold text-primary textShadow ">
             &quot;Savor the best with our coffee, where delicious meets quality
             in every cup&quot;
           </p>
@@ -91,17 +91,11 @@ const Hero = () => {
           <Image
             src="/images/menu-001.jpg"
             alt="random image"
-            width={200}
-            height={200}
+            width={300}
+            height={300}
             className="h-full rounded-lg"
           />
         </div>
-      </div>
-      <div
-        id="hot-products"
-        className="bg-primary-500/80 backdrop-blur-sm flex items-center justify-evenly p-4"
-      >
-        {/* <HotProducts /> */}
       </div>
     </>
   );

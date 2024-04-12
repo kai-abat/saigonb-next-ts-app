@@ -17,7 +17,7 @@ import {
   HiOutlinePhone,
   HiOutlineRocketLaunch,
 } from "react-icons/hi2";
-import { ThemeSwitcher } from "../ThemeSwitcher";
+import { ThemeSwitcher } from "../ui/ThemeSwitcher";
 import { usePathname } from "next/navigation";
 import { IoLogoFacebook, IoLogoInstagram } from "react-icons/io";
 import LogoHeader from "./LogoHeader";

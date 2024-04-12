@@ -14,14 +14,23 @@ const Carousel = ({ data }: { data: CarouselData[] }) => {
   const intervalTimeMS = 6000;
 
   useEffect(() => {
-    let elem = carouselRef.current as unknown as HTMLDivElement;
-    let { width, height } = elem.getBoundingClientRect();
-    if (carouselRef.current) {
-      setCarouselSize({
-        width,
-        height,
-      });
+    function getCarouselDimension() {
+      if (carouselRef.current) {
+        let elem = carouselRef.current as unknown as HTMLDivElement;
+        let { width, height } = elem.getBoundingClientRect();
+        return { width, height };
+      }
+      return { width: 0, height: 0 };
     }
+
+    function handleResize() {
+      setCarouselSize(getCarouselDimension());
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -68,7 +77,7 @@ const Carousel = ({ data }: { data: CarouselData[] }) => {
     >
       <div
         id="carousel-images"
-        className="w-full h-[70lvh] object-cover rounded-md overflow-hidden relative"
+        className="w-full aspect-square sm:aspect-video lg:aspect-[21/9] object-cover rounded-t-md overflow-hidden relative"
       >
         <div
           ref={carouselRef}
@@ -98,7 +107,7 @@ const Carousel = ({ data }: { data: CarouselData[] }) => {
           className="w-full h-full bg-transparent"
           onClick={handlePrevious}
         >
-          <BsChevronLeft className="h-[90px] w-[90px] fill-primary hover:fill-primary/80" />
+          <BsChevronLeft className="h-[30px] w-[30px] sm:h-[90px] sm:w-[90px] fill-primary hover:fill-primary/80" />
         </Button>
       </div>
       <div
@@ -111,15 +120,15 @@ const Carousel = ({ data }: { data: CarouselData[] }) => {
           className="w-full h-full bg-transparent"
           onClick={handleNext}
         >
-          <BsChevronRight className="h-[90px] w-[90px] fill-primary hover:fill-primary/80" />
+          <BsChevronRight className="h-[30px] w-[30px] sm:h-[90px] sm:w-[90px] fill-primary hover:fill-primary/80" />
         </Button>
       </div>
-      <div className="absolute bottom-5 left-0 w-full  p-4">
+      <div className="absolute bottom-1 left-0 w-full p-4">
         <div className="flex gap-x-3 justify-center items-center">
           {data.map((v, i) => (
             <div
               key={i}
-              className="rounded-full w-5 h-5 bg-primary/60 hover:bg-primary/90 cursor-pointer"
+              className="rounded-full w-2 h-2 sm:w-5 sm:h-5 bg-primary/60 hover:bg-primary/90 cursor-pointer"
               onMouseEnter={(e) => {
                 setAutoTranslate(false);
               }}

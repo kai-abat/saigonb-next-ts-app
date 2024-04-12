@@ -6,7 +6,7 @@ import { Input } from "@nextui-org/input";
 import { MdOutlineSupervisedUserCircle } from "react-icons/md";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Divider } from "@nextui-org/react";
-import Title from "../Title";
+import Title from "../ui/Title";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { State, signIn } from "@/utils/actions/adminAction";
 import SubmitButton from "../form/SubmitButton";

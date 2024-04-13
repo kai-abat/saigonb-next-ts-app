@@ -35,3 +35,8 @@ export const getUserData = async (): Promise<UserProfile | undefined> => {
 
   return userProfile;
 };
+
+export const isAuthenticated = async () => {
+  const userData = await getUserData();
+  return !userData ? false : true;
+};

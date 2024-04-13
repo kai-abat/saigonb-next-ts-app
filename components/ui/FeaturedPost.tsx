@@ -3,7 +3,11 @@ import Image from "next/image";
 import { Divider } from "@nextui-org/react";
 
 const FeaturedPost = ({ children }: { children: ReactNode }) => {
-  return <div className="relative py-4 gap-x-4 flex">{children}</div>;
+  return (
+    <div className="relative py-4 gap-x-4 flex bg-primary/80 p-4">
+      {children}
+    </div>
+  );
 };
 
 const ImageContent = ({ imageUrl }: { imageUrl: string }) => {
@@ -17,7 +21,7 @@ const ImageContent = ({ imageUrl }: { imageUrl: string }) => {
 const Content = ({ title, details }: { title: string; details: string[] }) => {
   return (
     <div className="  w-full flex flex-col gap-4">
-      <span className=" text-5xl font-semibold text-secondary capitalize">
+      <span className=" text-4xl font-semibold text-secondary capitalize">
         {title}
       </span>
       <Divider />

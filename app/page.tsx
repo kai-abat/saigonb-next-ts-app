@@ -7,6 +7,7 @@ import {
 import { getUserData } from "@/utils/services/UserAPI";
 import Carousel from "@/components/ui/Carousel";
 import FeaturedPost from "@/components/ui/FeaturedPost";
+import FeaturedMenu from "@/components/ui/FeaturedMenu";
 
 export default async function HomePage() {
   const userData = await getUserData();
@@ -46,6 +47,7 @@ export default async function HomePage() {
           )}
         </FeaturedPost>
       ))}
+      <FeaturedMenu />
     </div>
   );
 }

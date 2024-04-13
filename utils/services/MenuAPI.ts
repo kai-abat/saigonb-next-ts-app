@@ -1,6 +1,5 @@
 "use server";
 
-import { MENU } from "./TempData";
 import { SupaCategory, SupaMenu } from "../types/SupabaseCompProps";
 import { Category, CategoryWithMenu, Menu } from "../types/Props";
 import { createSupabaseServerClient } from "../supabase/server";
@@ -138,7 +137,15 @@ export const fetchCategoryByName = async (
 };
 
 export const fetchFeaturedMenu = async () => {
-  return MENU.filter((menu) => menu.isFeatured);
+  const supabase = createSupabaseServerClient();
+
+  const { data: menuTbl } = await supabase
+    .from("Menu")
+    .select("*, Category(*), MenuCoverPhoto(*), MenuPrice(*)")
+    .eq("isFeatured", true)
+    .order("created_at", { ascending: false });
+  if (!menuTbl) return;
+  return await extractMenuFromDB(menuTbl);
 };
 
 export async function fetchMenuById(id: number) {

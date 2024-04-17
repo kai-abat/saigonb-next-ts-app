@@ -73,7 +73,7 @@ module.exports = {
               200: "#3C1C54",
               100: "#291339",
               50: "#13091B",
-              DEFAULT: "#622F8A",
+              DEFAULT: "#A46ECE",
             },
           },
           // ... rest of the colors

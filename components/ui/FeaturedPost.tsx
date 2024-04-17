@@ -4,7 +4,7 @@ import { Divider } from "@nextui-org/react";
 
 const FeaturedPost = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="relative py-4 gap-x-4 flex bg-primary/80 p-4">
+    <div className="relative py-4 gap-x-4 flex bg-primary/60 p-4 rounded-xl h-max">
       {children}
     </div>
   );
@@ -12,7 +12,7 @@ const FeaturedPost = ({ children }: { children: ReactNode }) => {
 
 const ImageContent = ({ imageUrl }: { imageUrl: string }) => {
   return (
-    <div className=" aspect-square object-cover w-full max-w-[400px]">
+    <div className=" aspect-square object-cover w-full max-w-[400px] rounded-xl overflow-hidden">
       <Image src={imageUrl} alt="image content" width={500} height={400} />
     </div>
   );

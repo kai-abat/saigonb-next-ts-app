@@ -52,6 +52,7 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
       isBordered
       onMenuOpenChange={setIsMenuOpen}
       isMenuOpen={isMenuOpen}
+      className="z-[9999]"
       classNames={{
         base: ["justify-evenly"],
 

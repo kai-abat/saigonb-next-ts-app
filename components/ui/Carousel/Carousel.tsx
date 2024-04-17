@@ -100,11 +100,11 @@ const Carousel = ({
     <CarouselContext.Provider value={{ currentImg, carouselRef, carouselSize }}>
       <div
         id="carousel"
-        className="relative flex justify-center flex-col items-center overflow-hidden"
+        className="relative flex justify-center flex-col items-center overflow-hidden w-full h-full"
       >
         <div
           id="carousel-images"
-          className="w-full aspect-square sm:aspect-video lg:aspect-[21/9] object-cover rounded-t-md overflow-hidden relative"
+          className="w-full aspect-square sm:aspect-video lg:aspect-[21/9] "
         >
           {children}
         </div>

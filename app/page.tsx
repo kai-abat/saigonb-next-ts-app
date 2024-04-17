@@ -54,29 +54,8 @@ export default async function HomePage() {
       </Carousel>
       <WhyChooseUs />
       <Hero />
-      {data.content.map((content, index) => (
-        <FeaturedPost key={index}>
-          {content.imagePosition === "left" && (
-            <>
-              <FeaturedPost.ImageContent imageUrl={content.imageUrl} />
-              <FeaturedPost.Content
-                title={content.title}
-                details={content.details}
-              />
-            </>
-          )}
-          {content.imagePosition === "right" && (
-            <>
-              <FeaturedPost.Content
-                title={content.title}
-                details={content.details}
-              />
-              <FeaturedPost.ImageContent imageUrl={content.imageUrl} />
-            </>
-          )}
-        </FeaturedPost>
-      ))}
-      {/* <FeaturedMenu /> */}
+
+      <FeaturedMenu />
     </div>
   );
 }

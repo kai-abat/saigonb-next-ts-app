@@ -42,7 +42,7 @@ const NewMenuForm = ({ categories = [] }: NewMenuProps) => {
   return (
     <>
       <header>
-        <Title>New Menu</Title>
+        <Title capitalize>New Menu</Title>
       </header>
       <main className="">
         <form className="flex flex-col gap-3" action={formAction}>

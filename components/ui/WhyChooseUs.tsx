@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { GiCoffeeBeans, GiCoffeeCup } from "react-icons/gi";
 import { IoIosRibbon } from "react-icons/io";
 import { RiServiceFill } from "react-icons/ri";
+import Title from "./Title";
 
 const staticData = [
   {
@@ -62,14 +63,19 @@ const WhyChooseUs = ({
   }
   return (
     <div className="flex flex-col bg-primary/60 w-full transition-all duration-500 ease-in-out gap-4 p-4 rounded-xl">
-      <p className="text-4xl font-semibold drop-shadow-md text-secondary capitalize">
-        {title}
-      </p>
+      <Title capitalize>{title}</Title>
+
       <Divider />
-      <div className="flex flex-col sm:flex-row sm:justify-around  rounded-xl ">
-        <div className="flex flex-col gap-4 justify-center items-center sm:justify-start sm:items-center w-full md:w-96">
+      <div
+        id="why-choose-us-content"
+        className="flex flex-col justify-center items-center gap-y-6 md:gap-y-0 md:flex-row md:justify-around rounded-xl md:gap-x-4 "
+      >
+        <div
+          id="controls"
+          className="relative flex flex-col gap-4 justify-center items-center md:justify-start md:items-center w-full md:w-96"
+        >
           <p>{description}</p>
-          <div className="grid grid-cols-2 grid-rows-2 gap-10">
+          <div className="grid grid-cols-2 grid-rows-2 gap-6 md:gap-10">
             {data.map((items, index) => {
               return (
                 <div
@@ -88,10 +94,9 @@ const WhyChooseUs = ({
             })}
           </div>
         </div>
-
         <div
           id="image-slideshow"
-          className="relative overflow-hidden w-full max-w-80 max-h-80 bg-orange-600 rounded-full"
+          className="relative overflow-hidden md:w-full w-[300px] h-[300px] md:aspect-square md:max-w-80 md:max-h-80 rounded-full order-first md:order-none"
         >
           {data.map((item, index) => (
             <Image

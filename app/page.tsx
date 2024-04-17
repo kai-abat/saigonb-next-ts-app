@@ -55,7 +55,7 @@ export default async function HomePage() {
       <WhyChooseUs />
       <Hero />
 
-      <FeaturedMenu />
+      {/* <FeaturedMenu /> */}
     </div>
   );
 }

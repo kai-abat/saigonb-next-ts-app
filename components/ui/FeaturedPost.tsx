@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import Image from "next/image";
 import { Divider } from "@nextui-org/react";
+import Title from "./Title";
 
 const FeaturedPost = ({ children }: { children: ReactNode }) => {
   return (
@@ -21,9 +22,8 @@ const ImageContent = ({ imageUrl }: { imageUrl: string }) => {
 const Content = ({ title, details }: { title: string; details: string[] }) => {
   return (
     <div className="  w-full flex flex-col gap-4">
-      <span className=" text-4xl font-semibold text-secondary capitalize">
-        {title}
-      </span>
+      <Title capitalize>{title}</Title>
+
       <Divider />
 
       <span className="flex flex-col gap-4">

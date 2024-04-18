@@ -17,10 +17,14 @@ export default async function MenuLayout({
 }) {
   const categoriesTbl = await fetchAllCategories();
   return (
-    <Container>
-      <BreadCrumbs />
-      <Divider className='my-2' />
-      {children}
-    </Container>
+    <>
+      <Container className='pt-4'>
+        <div className='flex w-full justify-start'>
+          <BreadCrumbs />
+        </div>
+        <Divider className='my-2' />
+        {children}
+      </Container>
+    </>
   );
 }

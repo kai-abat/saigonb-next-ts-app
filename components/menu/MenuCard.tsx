@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { getFallbackImagePath } from "@/utils/Helper";
-import { ComponentProps, Menu } from "@/utils/types/Props";
+import { getFallbackImagePath } from '@/utils/Helper';
+import { ComponentProps, Menu } from '@/utils/types/Props';
 import {
   Card,
   CardBody,
@@ -14,19 +14,19 @@ import {
   cn,
   useDisclosure,
   Button as ButtonNUI,
-  Input,
-} from "@nextui-org/react";
-import Image from "next/image";
-import Button from "../ui/Button";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { MdOutlineArrowForwardIos } from "react-icons/md";
-import { LiaEditSolid, LiaTrashSolid } from "react-icons/lia";
-import { useState } from "react";
-import DeleteMenuModal from "./DeleteMenuModal";
+  Input
+} from '@nextui-org/react';
+import Image from 'next/image';
+import Button from '../ui/Button';
+import { HiOutlineDotsVertical } from 'react-icons/hi';
+import { MdOutlineArrowForwardIos } from 'react-icons/md';
+import { LiaEditSolid, LiaTrashSolid } from 'react-icons/lia';
+import { useState } from 'react';
+import DeleteMenuModal from './DeleteMenuModal';
 
 const MenuCard = ({
   menuItem,
-  isAuthenticated,
+  isAuthenticated
 }: {
   menuItem: Menu;
   isAuthenticated: boolean;
@@ -44,39 +44,39 @@ const MenuCard = ({
   return (
     <>
       <Card
-        shadow="sm"
-        className="  bg-primary hover:ring-2 transition-all duration-700 hover:ring-secondary"
+        shadow='sm'
+        className='  border-1 border-secondary bg-primary transition-all duration-700 hover:ring-2 hover:ring-secondary'
       >
         <CardHeader
-          id="card-body"
-          className="overflow-visible p-0 flex justify-center items-center flex-none"
+          id='card-body'
+          className='flex flex-none items-center justify-center overflow-visible p-0'
         >
-          <div className="w-full aspect-square bg-red-400">
+          <div className='aspect-square w-full bg-red-400'>
             <ImageUI
               isZoomed
               as={Image}
-              radius="none"
-              shadow="sm"
+              radius='none'
+              shadow='sm'
               width={400}
               height={400}
               alt={menuItem.name}
-              className="w-full aspect-square object-cover "
+              className='aspect-square w-full object-cover '
               src={menuItem.coverPhotos.at(0)?.image}
               fallbackSrc={getFallbackImagePath()}
               classNames={{
-                wrapper: cn("aspect-square bg-no-repeat bg-center bg-cover "),
+                wrapper: cn('aspect-square bg-no-repeat bg-center bg-cover ')
               }}
             />
           </div>
         </CardHeader>
-        <CardBody className="text-small flex-col w-full">
+        <CardBody className='w-full flex-col text-small'>
           <b>{menuItem.name}</b>
           <p>{menuItem.description}</p>
         </CardBody>
-        <CardFooter className=" gap-x-2">
+        <CardFooter className=' gap-x-2'>
           <Button
-            className="w-full"
-            color="secondary"
+            className='w-full'
+            color='secondary'
             endContent={<MdOutlineArrowForwardIos />}
             isLink
             href={menuDetailsLink}
@@ -86,39 +86,39 @@ const MenuCard = ({
 
           {isAuthenticated && (
             <Popover
-              placement="bottom"
+              placement='bottom'
               offset={20}
               showArrow
-              radius="md"
+              radius='md'
               shouldBlockScroll
               isOpen={isPopupOpen}
-              onOpenChange={(open) => setIsPopupOpen(open)}
+              onOpenChange={open => setIsPopupOpen(open)}
             >
               <PopoverTrigger>
                 <ButtonNUI
                   isIconOnly
-                  radius="md"
-                  variant="bordered"
-                  color="secondary"
+                  radius='md'
+                  variant='bordered'
+                  color='secondary'
                 >
                   <HiOutlineDotsVertical />
                 </ButtonNUI>
               </PopoverTrigger>
               <PopoverContent>
-                <div className="px-1 py-2 flex flex-col gap-y-3">
+                <div className='flex flex-col gap-y-3 px-1 py-2'>
                   <Button
                     startContent={<LiaEditSolid />}
-                    variant="light"
-                    className="flex justify-start"
-                    color="secondary"
+                    variant='light'
+                    className='flex justify-start'
+                    color='secondary'
                   >
                     Edit
                   </Button>
                   <Button
                     startContent={<LiaTrashSolid />}
-                    variant="light"
-                    color="danger"
-                    className="flex justify-start"
+                    variant='light'
+                    color='danger'
+                    className='flex justify-start'
                     onPress={() => {
                       setIsPopupOpen(false);
                       onOpen();

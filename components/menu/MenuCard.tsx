@@ -75,7 +75,7 @@ const MenuCard = ({
         </CardBody>
         <CardFooter className=' gap-x-2'>
           <Button
-            className='w-full'
+            className='w-full shrink grow-[3] basis-full'
             color='secondary'
             endContent={<MdOutlineArrowForwardIos />}
             isLink
@@ -100,6 +100,7 @@ const MenuCard = ({
                   radius='md'
                   variant='bordered'
                   color='secondary'
+                  className='basis-max shrink grow'
                 >
                   <HiOutlineDotsVertical />
                 </ButtonNUI>

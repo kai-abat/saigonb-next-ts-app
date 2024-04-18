@@ -1,24 +1,24 @@
-"use client";
-import { State, deleteMenuAction } from "@/utils/actions/menuActions";
-import { Menu } from "@/utils/types/Props";
+'use client';
+import { State, deleteMenuAction } from '@/utils/actions/menuActions';
+import { Menu } from '@/utils/types/Props';
 import {
   Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
-  ModalHeader,
-} from "@nextui-org/react";
-import { useEffect } from "react";
-import { useFormState } from "react-dom";
-import Button from "../ui/Button";
-import SubmitButton from "../form/SubmitButton";
+  ModalHeader
+} from '@nextui-org/react';
+import { useEffect } from 'react';
+import { useFormState } from 'react-dom';
+import Button from '../ui/Button';
+import SubmitButton from '../form/SubmitButton';
 
 function DeleteMenuModal({
   isOpen,
   onOpenChange,
   deleteMessage,
-  menuItem,
+  menuItem
 }: {
   isOpen: boolean;
   onOpenChange: () => void;
@@ -36,10 +36,10 @@ function DeleteMenuModal({
       return;
     }
     // In case our form action returns `error` we can now `setError`s
-    if (state.status === "error") {
-      console.log("ERRORS!:", state.errors);
+    if (state.status === 'error') {
+      console.log('ERRORS!:', state.errors);
     }
-    if (state.status === "success") {
+    if (state.status === 'success') {
       alert(JSON.stringify(state));
     }
   }, [state]);
@@ -53,31 +53,31 @@ function DeleteMenuModal({
       hideCloseButton={true}
     >
       <ModalContent>
-        {(onClose) => (
+        {onClose => (
           <>
-            <ModalHeader className="flex flex-col gap-1">Confirm</ModalHeader>
+            <ModalHeader className='flex flex-col gap-1'>Confirm</ModalHeader>
             <form action={formAction}>
               <ModalBody>
                 <p>{deleteMessage}</p>
                 <Input
-                  name="menu-id"
-                  type="text"
+                  name='menu-id'
+                  type='text'
                   isReadOnly
                   value={menuItem.id.toString()}
-                  className="hidden"
+                  className='hidden'
                 />
               </ModalBody>
               <ModalFooter>
                 <SubmitButton
-                  color="default"
-                  label="No"
-                  labelLoading=""
+                  color='default'
+                  label='No'
+                  labelLoading=''
                   onPressHandler={onClose}
                 />
                 <SubmitButton
-                  color="danger"
-                  label="Yes"
-                  labelLoading=""
+                  color='danger'
+                  label='Yes'
+                  labelLoading=''
                   modalCloseAfterActionHandler={() => {
                     onClose();
                   }}

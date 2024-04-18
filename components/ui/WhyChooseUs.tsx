@@ -1,34 +1,34 @@
-"use client";
+'use client';
 
-import { Divider } from "@nextui-org/react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import { GiCoffeeBeans, GiCoffeeCup } from "react-icons/gi";
-import { IoIosRibbon } from "react-icons/io";
-import { RiServiceFill } from "react-icons/ri";
-import Title from "./Title";
+import { Divider } from '@nextui-org/react';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import { GiCoffeeBeans, GiCoffeeCup } from 'react-icons/gi';
+import { IoIosRibbon } from 'react-icons/io';
+import { RiServiceFill } from 'react-icons/ri';
+import Title from './Title';
 
 const staticData = [
   {
-    label: "Awesome Aroma",
-    icon: <GiCoffeeCup className="w-full h-full" />,
-    images: "/images/aroma.jpg",
+    label: 'Awesome Aroma',
+    icon: <GiCoffeeCup className='h-full w-full' />,
+    images: '/images/aroma.jpg'
   },
   {
-    label: "Supreme Beans",
-    icon: <GiCoffeeBeans className="w-full h-full" />,
-    images: "/images/beans.jpg",
+    label: 'Supreme Beans',
+    icon: <GiCoffeeBeans className='h-full w-full' />,
+    images: '/images/beans.jpg'
   },
   {
-    label: "High Quality",
-    icon: <IoIosRibbon className="w-full h-full" />,
-    images: "/images/quality.jpg",
+    label: 'High Quality',
+    icon: <IoIosRibbon className='h-full w-full' />,
+    images: '/images/quality.jpg'
   },
   {
-    label: "Friendly Staff",
-    icon: <RiServiceFill className="w-full h-full" />,
-    images: "/images/good-service.jpg",
-  },
+    label: 'Friendly Staff',
+    icon: <RiServiceFill className='h-full w-full' />,
+    images: '/images/good-service.jpg'
+  }
 ];
 
 interface WhyChooseUsPropsType {
@@ -42,15 +42,15 @@ interface WhyChooseUsPropsType {
 }
 
 const WhyChooseUs = ({
-  title = "Why choose our coffee",
-  description = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel deserunt ea voluptates suscipit impedit quibusdam ipsam officiis fugiat? Recusandae aut qui id veniam itaque nisi ipmet dolor sit lorem vel.",
-  data = staticData,
+  title = 'Why choose our coffee',
+  description = 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel deserunt ea voluptates suscipit impedit quibusdam ipsam officiis fugiat? Recusandae aut qui id veniam itaque nisi ipmet dolor sit lorem vel.',
+  data = staticData
 }: WhyChooseUsPropsType) => {
   const [activeImage, setActiveImage] = useState<number>(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveImage((prevIndex) =>
+      setActiveImage(prevIndex =>
         prevIndex < data.length - 1 ? prevIndex + 1 : 0
       );
     }, 5000);
@@ -62,31 +62,31 @@ const WhyChooseUs = ({
     setActiveImage(index);
   }
   return (
-    <div className="flex flex-col bg-primary/60 w-full transition-all duration-500 ease-in-out gap-4 p-4 rounded-xl">
+    <div className='flex w-full flex-col gap-4 rounded-xl bg-primary/60 p-4 transition-all duration-500 ease-in-out'>
       <Title capitalize>{title}</Title>
 
       <Divider />
       <div
-        id="why-choose-us-content"
-        className="flex flex-col justify-center items-center gap-y-6 md:gap-y-0 md:flex-row md:justify-around rounded-xl md:gap-x-4 "
+        id='why-choose-us-content'
+        className='flex flex-col items-center justify-center gap-y-6 rounded-xl md:flex-row md:justify-around md:gap-x-4 md:gap-y-0 '
       >
         <div
-          id="controls"
-          className="relative flex flex-col gap-4 justify-center items-center md:justify-start md:items-center w-full md:w-96"
+          id='controls'
+          className='relative flex shrink grow basis-full flex-col items-center justify-center gap-4 md:items-center md:justify-start'
         >
           <p>{description}</p>
-          <div className="grid grid-cols-2 grid-rows-2 gap-6 md:gap-10">
+          <div className='grid  grid-cols-4 grid-rows-1 gap-4 lg:gap-x-8'>
             {data.map((items, index) => {
               return (
                 <div
                   key={items.label}
-                  className={`flex flex-col items-center justify-center gap-y-1-2 py-3 px-2 cursor-pointer rounded-xl h-24 w-24  hover:bg-primary shadow-lg ${
-                    index === activeImage ? "bg-primary" : "bg-content3"
+                  className={`gap-y-1-2 flex h-24 w-24 cursor-pointer flex-col items-center justify-center rounded-xl px-2 py-3  shadow-lg hover:bg-primary ${
+                    index === activeImage ? 'bg-primary' : 'bg-content3'
                   }`}
                   onClick={() => handleActiveImage(index)}
                 >
-                  <div className=" w-6 h-6 lg:w-8 lg:h-8">{items.icon}</div>
-                  <p className=" text-content3-foreground text-center text-wrap">
+                  <div className=' h-6 w-6 lg:h-8 lg:w-8'>{items.icon}</div>
+                  <p className=' text-wrap text-center text-sm font-semibold text-content3-foreground'>
                     {items.label}
                   </p>
                 </div>
@@ -95,8 +95,8 @@ const WhyChooseUs = ({
           </div>
         </div>
         <div
-          id="image-slideshow"
-          className="relative overflow-hidden md:w-full w-[300px] h-[300px] md:aspect-square md:max-w-80 md:max-h-80 rounded-full order-first md:order-none"
+          id='image-slideshow'
+          className='relative h-[300px] w-[300px] overflow-hidden rounded-full md:order-none md:aspect-square md:max-h-80 md:w-full md:max-w-80'
         >
           {data.map((item, index) => (
             <Image
@@ -105,11 +105,11 @@ const WhyChooseUs = ({
               alt={`${index.toString()}_${item.label}`}
               width={500}
               height={500}
-              className={`absolute top-1/2 left-1/2 scale-110  aspect-square w-full  object-cover transition-all duration-500 ease-in-out  -translate-y-1/2
+              className={`absolute left-1/2 top-1/2 aspect-square  w-full -translate-y-1/2  scale-110 object-cover transition-all duration-500  ease-in-out
                 ${
                   index === activeImage
-                    ? "z-10 opacity-100 -translate-x-1/2 rotate-0"
-                    : "z-0 opacity-0 -translate-x-2/3 -rotate-6 "
+                    ? 'z-10 -translate-x-1/2 rotate-0 opacity-100'
+                    : 'z-0 -translate-x-2/3 -rotate-6 opacity-0 '
                 }`}
             />
           ))}

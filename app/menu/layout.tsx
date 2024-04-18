@@ -1,21 +1,26 @@
-import FilterMenu from "@/components/menu/FilterMenu";
-import { fetchAllCategories } from "@/utils/services/MenuAPI";
-import { Metadata } from "next";
+import FilterMenu from '@/components/menu/FilterMenu';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
+import Container from '@/components/ui/Container';
+import { fetchAllCategories } from '@/utils/services/MenuAPI';
+import { Divider } from '@nextui-org/react';
+import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Saigon Brewers Menu",
-  description: "All available menu of Saigon Brewers Cafe.",
+  title: 'Saigon Brewers Menu',
+  description: 'All available menu of Saigon Brewers Cafe.'
 };
 
 export default async function MenuLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {
   const categoriesTbl = await fetchAllCategories();
   return (
-    <section id="menu-container" className="flex flex-col gap-4">
+    <Container>
+      <BreadCrumbs />
+      <Divider className='my-2' />
       {children}
-    </section>
+    </Container>
   );
 }

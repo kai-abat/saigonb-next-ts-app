@@ -1,33 +1,35 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { ComponentProps } from '@/utils/types/Props'
-import Header from '@/components/layout/Header'
-import BreadCrumbs from '@/components/ui/BreadCrumbs'
-import Footer from '@/components/layout/Footer'
-import { Divider } from '@nextui-org/react'
-import { Providers } from './providers'
-import { getUserData } from '@/utils/services/UserAPI'
-import Image from 'next/image'
-
-// const inter = Inter({ subsets: ["latin"] });
+import type { Metadata } from 'next';
+import './globals.css';
+import { ComponentProps } from '@/utils/types/Props';
+import Header from '@/components/layout/Header';
+import BreadCrumbs from '@/components/ui/BreadCrumbs';
+import Footer from '@/components/layout/Footer';
+import { Divider } from '@nextui-org/react';
+import { Providers } from './providers';
+import { getUserData } from '@/utils/services/UserAPI';
+import Image from 'next/image';
+import { borel, playfairDisplay, roboto_mono } from '@/utils/Font';
 
 export const metadata: Metadata = {
   title: 'Saigon Brewers',
   description:
     'Saigon Brewers, Legitimate brewers of vietnamese coffee beans and more'
-}
+};
 
 export default async function RootLayout({ children }: ComponentProps) {
-  const userData = await getUserData()
+  const userData = await getUserData();
 
   return (
-    <html lang='en'>
+    <html
+      lang='en'
+      className={`${roboto_mono.variable} ${borel.variable} ${playfairDisplay.variable} ${roboto_mono.className}`}
+    >
       <body>
         <Providers>
           {/* <Initializer userData={userData}> */}
           <section
             id='main-section'
-            className='min-w-420px relative flex flex-col gap-6 bg-primary-100 dark:bg-stone-950'
+            className='min-w-420px relative flex flex-col bg-primary-100 dark:bg-stone-950'
           >
             <Header userData={userData} />
             <div className='fixed z-0 min-h-lvh w-full opacity-10'>
@@ -46,18 +48,12 @@ export default async function RootLayout({ children }: ComponentProps) {
               />
             </div>
 
-            <main className=' z-40 flex'>
-              <section className=' m-auto w-[90vw] min-w-[300px] max-w-[1024px] sm:w-[80vw]'>
-                <BreadCrumbs />
-                <Divider className='my-2' />
-                {children}
-              </section>
-            </main>
+            <main className=' z-40 mb-4 flex flex-col gap-y-4'>{children}</main>
             <Footer />
           </section>
           {/* </Initializer> */}
         </Providers>
       </body>
     </html>
-  )
+  );
 }

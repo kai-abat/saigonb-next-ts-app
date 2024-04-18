@@ -1,21 +1,22 @@
-"use server";
+'use server';
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { ZodError, z } from "zod";
-import { createSupabaseServerClient } from "../supabase/server";
-import { FileBody, SupaCoverPhotoFile } from "../types/SupabaseCompProps";
-import { Database } from "../types/supabase";
-import { NewMenuSchema, imageURLSchema } from "../zod/NewMenuSchema";
-import { fetchMenuById } from "../services/MenuAPI";
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
+import { ZodError, z } from 'zod';
+import { createSupabaseServerClient } from '../supabase/server';
+import { FileBody, SupaCoverPhotoFile } from '../types/SupabaseCompProps';
+import { Database } from '../types/supabase';
+import { NewMenuSchema, imageURLSchema } from '../zod/NewMenuSchema';
+import { fetchMenuById } from '../services/MenuAPI';
+import { getErrorMessage } from '../ErrorHandling';
 
 export type State =
   | {
-      status: "success";
+      status: 'success';
       message: string;
     }
   | {
-      status: "error";
+      status: 'error';
       message: string;
       errors?: Array<{
         path: string;
@@ -29,11 +30,11 @@ export const deleteMenuAction = async (
   formData: FormData
 ): Promise<State> => {
   // we're gonna put a delay in here to simulate some kind of data processing like persisting data
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise(resolve => setTimeout(resolve, 2000));
 
-  console.log("deleteMenuAction", formData);
+  console.log('deleteMenuAction', formData);
   // menu-id
-  const menuId = Number(formData.get("menu-id") as string);
+  const menuId = Number(formData.get('menu-id') as string);
 
   // delete data from database
   const menu = await fetchMenuById(menuId);
@@ -46,35 +47,35 @@ export const deleteMenuAction = async (
     // console.log("DB priceList", priceList);
     // console.log("DB coverPhotos", coverPhotos);
 
-    const imageUrls = coverPhotos.map((cover) => cover.image);
+    const imageUrls = coverPhotos.map(cover => cover.image);
     const supabase = createSupabaseServerClient();
 
     // delete cover photos
-    await supabase.storage.from("saigon").remove(imageUrls);
+    await supabase.storage.from('saigon').remove(imageUrls);
     // delete cover photo db
     await Promise.all(
-      coverPhotos.map(async (cover) => {
+      coverPhotos.map(async cover => {
         const { error } = await supabase
-          .from("MenuCoverPhoto")
+          .from('MenuCoverPhoto')
           .delete()
-          .eq("id", cover.id);
+          .eq('id', cover.id);
       })
     );
     // delete price list db
     await Promise.all(
-      priceList.map(async (price) => {
+      priceList.map(async price => {
         const { error } = await supabase
-          .from("MenuPrice")
+          .from('MenuPrice')
           .delete()
-          .eq("id", price.id);
+          .eq('id', price.id);
       })
     );
     // delete menu db
-    await supabase.from("Menu").delete().eq("id", menu.id);
+    await supabase.from('Menu').delete().eq('id', menu.id);
   }
 
-  revalidatePath("/menu", "layout");
-  redirect("/menu/all");
+  revalidatePath('/menu', 'layout');
+  redirect('/menu/all');
 };
 
 export const newMenuAction = async (
@@ -84,27 +85,27 @@ export const newMenuAction = async (
 ): Promise<State> => {
   try {
     // we're gonna put a delay in here to simulate some kind of data processing like persisting data
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
-    console.log("newMenuAction formData:", formData);
+    console.log('newMenuAction formData:', formData);
 
     // Process Given Input/Select/Checked Components
-    const fdIsFeatured = formData.get("isFeatured") === null ? false : true;
-    const fdCategory = formData.get("category") as string;
-    let fdCategoryNum: string = fdCategory === null ? "" : fdCategory;
+    const fdIsFeatured = formData.get('isFeatured') === null ? false : true;
+    const fdCategory = formData.get('category') as string;
+    let fdCategoryNum: string = fdCategory === null ? '' : fdCategory;
 
     //
     let newMenu = {
-      menuName: formData.get("menuName") as string,
-      description: formData.get("description") as string,
+      menuName: formData.get('menuName') as string,
+      description: formData.get('description') as string,
       category: fdCategoryNum,
-      isFeatured: fdIsFeatured,
+      isFeatured: fdIsFeatured
     };
 
     // Process Dynamic Components
     // Cover Photo
 
-    const imageNumber: number = Number(formData.get("image-number-of-upload"));
+    const imageNumber: number = Number(formData.get('image-number-of-upload'));
     let coverPhotos: SupaCoverPhotoFile[] = [];
     let NewMenuSchemaExtended = z.object({});
     NewMenuSchemaExtended = NewMenuSchemaExtended.merge(NewMenuSchema);
@@ -128,7 +129,7 @@ export const newMenuAction = async (
       const imageDataSchema = z.object({
         [imageDataID_Key]: z.number(),
         [imageDataURL_Key]: imageURLSchema,
-        [imageDataOrder_Key]: z.number(),
+        [imageDataOrder_Key]: z.number()
       });
 
       // merge zod object to main schema
@@ -137,23 +138,23 @@ export const newMenuAction = async (
       const imageDataObj = {
         [imageDataID_Key]: imageDataID_Value,
         [imageDataURL_Key]: imageDataURL_Value,
-        [imageDataOrder_Key]: imageDataOrder_Value,
+        [imageDataOrder_Key]: imageDataOrder_Value
       };
 
       coverPhotos.push({
         imageUrl: imageDataURL_Value,
         imageFile: imageDataFile_Value,
-        orderNumber: imageDataOrder_Value,
+        orderNumber: imageDataOrder_Value
       });
 
       newMenu = {
         ...newMenu,
-        ...imageDataObj,
+        ...imageDataObj
       };
     }
 
     // Price List
-    let newPrices: Database["public"]["Tables"]["MenuPrice"]["Insert"][] = [];
+    let newPrices: Database['public']['Tables']['MenuPrice']['Insert'][] = [];
     for (let index = 0; index < imageNumber; index++) {
       const currentNumber = index + 1;
       // price-number
@@ -172,13 +173,13 @@ export const newMenuAction = async (
       const priceDataObj = {
         [priceType_Key]: priceType_Value,
         [priceSize_Key]: priceSize_Value,
-        [priceInput_Key]: priceInput_Value,
+        [priceInput_Key]: priceInput_Value
       };
 
       newPrices.push({
         type: priceType_Value,
         size: priceSize_Value,
-        price: priceInput_Value,
+        price: priceInput_Value
       });
     }
 
@@ -187,75 +188,78 @@ export const newMenuAction = async (
 
     // Save data to database
     // Menu
-    console.log("Menu data before saving to DB", newMenu);
+    console.log('Menu data before saving to DB', newMenu);
     const menuDB = await insertMenu({
       name: newMenu.menuName,
       description: newMenu.description,
       isFeatured: newMenu.isFeatured,
-      categoryId: newMenu.category === "" ? null : Number(newMenu.category),
+      categoryId: newMenu.category === '' ? null : Number(newMenu.category)
     });
-    console.log("Menu data after saving to DB", menuDB);
+    console.log('Menu data after saving to DB', menuDB);
 
     // Cover Photos
-    console.log("Cover Photos before saving to DB", coverPhotos);
+    console.log('Cover Photos before saving to DB', coverPhotos);
     const coverPhotosDB = await insertCoverPhotos(
       coverPhotos,
       newMenu.menuName,
       menuDB?.id
     );
-    console.log("Cover Photos saved to DB", coverPhotosDB);
+    console.log('Cover Photos saved to DB', coverPhotosDB);
 
     // Price List
-    console.log("Price List before saving to DB", newPrices);
+    console.log('Price List before saving to DB', newPrices);
     const pricesDB = await insertPriceList(newPrices, menuDB?.id);
-    console.log("Price List after saving to DB", pricesDB);
+    console.log('Price List after saving to DB', pricesDB);
+
+    revalidatePath('/menu', 'layout');
 
     return {
-      status: "success",
-      message: `New Menu: ${result}!`,
+      status: 'success',
+      message: `Menu ${menuDB?.name} successfully saved...`
     };
   } catch (e) {
-    console.log("SERVER ACTION ERROR!");
+    const errorMessage = getErrorMessage(e);
+    console.log('SERVER ACTION ERROR!', typeof e, errorMessage);
     // In case of a ZodError (caused by our validation) we're adding issues to our response
     if (e instanceof ZodError) {
-      e.issues.map((issue) =>
-        console.log("ZodError", issue.path.join("."), issue.message)
+      e.issues.map(issue =>
+        console.log('ZodError', issue.path.join('.'), issue.message)
       );
       return {
-        status: "error",
-        message: "Invalid form data",
-        errors: e.issues.map((issue) => ({
-          path: issue.path.join("."),
-          message: `SERVER: ${issue.message}`,
-        })),
+        status: 'error',
+        message: 'Invalid form data',
+        errors: e.issues.map(issue => ({
+          path: issue.path.join('.'),
+          message: `SERVER: ${issue.message}`
+        }))
       };
     }
     return {
-      status: "error",
-      message: "Something went wrong. Please try again.",
+      status: 'error',
+      message: 'Something went wrong. Please try again.'
     };
   }
 };
 
 const insertMenu = async (
-  menu: Database["public"]["Tables"]["Menu"]["Insert"]
+  menu: Database['public']['Tables']['Menu']['Insert']
 ) => {
   const supabase = createSupabaseServerClient();
-  let menuQuery = supabase.from("Menu").insert([menu]);
+  let menuQuery = supabase.from('Menu').insert([menu]);
   const { data } = await menuQuery.select().single();
 
   return data;
 };
 
 const insertPriceList = async (
-  menuPrices: Database["public"]["Tables"]["MenuPrice"]["Insert"][],
+  menuPrices: Database['public']['Tables']['MenuPrice']['Insert'][],
   menuId: number | null | undefined
 ) => {
-  menuPrices = menuPrices.map((price) => {
+  menuPrices = menuPrices.map(price => {
     return { ...price, menuId: menuId };
   });
   const supabase = createSupabaseServerClient();
-  let priceQuery = supabase.from("MenuPrice").insert([...menuPrices]);
+  let priceQuery = supabase.from('MenuPrice').insert([...menuPrices]);
   const { data } = await priceQuery.select();
   return data;
 };
@@ -271,10 +275,10 @@ const insertCoverPhotos = async (
   // upload cover photo to database
   if (!supabaseUrl) return null;
 
-  menuName = menuName.split(" ").join("-");
+  menuName = menuName.split(' ').join('-');
 
   const coverPhotosDB = await Promise.all(
-    coverPhotos.map(async (coverPhoto) => {
+    coverPhotos.map(async coverPhoto => {
       // coverPhoto = { ...coverPhoto, menuId: menuId };
       const hasImagePath: boolean =
         coverPhoto.imageUrl !== null &&
@@ -288,34 +292,34 @@ const insertCoverPhotos = async (
           ? coverPhoto.imageUrl
           : `${supabaseUrl}/storage/v1/object/public/saigon/${imageFilename}`;
 
-      const coverPhotoDB: Database["public"]["Tables"]["MenuCoverPhoto"]["Insert"] =
+      const coverPhotoDB: Database['public']['Tables']['MenuCoverPhoto']['Insert'] =
         {
           imageUrl: imagePath,
           menuId: menuId,
-          orderNumber: coverPhoto.orderNumber,
+          orderNumber: coverPhoto.orderNumber
         };
 
       // upload image to supabase
       let error = false;
       if (!hasImagePath) {
-        console.log("Uploading image:", imageFilename, imagePath);
+        console.log('Uploading image:', imageFilename, imagePath);
 
         const { error: storageError } = await supabase.storage
-          .from("saigon")
+          .from('saigon')
           .upload(imageFilename, coverPhoto.imageFile);
 
         if (storageError) {
-          console.log("Storage error", imageFilename);
+          console.log('Storage error', imageFilename);
           error = true;
         }
       } else {
-        console.log("Image already uploaded", imagePath);
+        console.log('Image already uploaded', imagePath);
       }
 
       if (!error) {
         // store data to supabasse
         let converPhotoQuery = supabase
-          .from("MenuCoverPhoto")
+          .from('MenuCoverPhoto')
           .insert([coverPhotoDB]);
         const { data } = await converPhotoQuery.select().single();
         return data;

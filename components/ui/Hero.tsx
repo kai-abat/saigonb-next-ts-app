@@ -1,103 +1,62 @@
-import Image from "next/image";
-import { CiCoffeeCup } from "react-icons/ci";
-import { MdCoffeeMaker } from "react-icons/md";
-import { RiShoppingCartLine } from "react-icons/ri";
+import Image from 'next/image';
+import SlideShow from './SlideShow';
+
+const slideShowData = [
+  { imageUrl: '/images/hero/1.jpg', alt: 'alt1' },
+  { imageUrl: '/images/hero/2.jpg', alt: 'alt2' },
+  { imageUrl: '/images/hero/3.jpg', alt: 'alt3' },
+  { imageUrl: '/images/hero/4.jpg', alt: 'alt4' },
+  { imageUrl: '/images/hero/5.jpg', alt: 'alt5' },
+  { imageUrl: '/images/hero/6.jpg', alt: 'alt6' },
+  { imageUrl: '/images/hero/7.jpg', alt: 'alt7' },
+  { imageUrl: '/images/hero/8.jpg', alt: 'alt8' }
+];
 
 const Hero = () => {
   return (
-    <>
-      <div
-        id="content1"
-        className="bg-primary/80 backdrop-blur-sm flex gap-3 flex-col sm:flex-row items-start justify-between p-4"
-      >
-        <div
-          id="box-content"
-          className="sm:w-[30%] w-[100%] h-full flex flex-col justify-start gap-2"
-        >
-          <div
-            id="box-content-title"
-            className="flex gap-2 h-ful items-center contentTitleWithIcon"
-          >
-            <CiCoffeeCup />
-            <p>High Quality Coffee</p>
-          </div>
-          <div>
-            <p className=" indent-3 text-stone-900">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
-              deserunt ea voluptates suscipit impedit quibusdam ipsam officiis
-              fugiat? Recusandae aut qui id veniam itaque nisi ipmet dolor sit
-              lorem vel.
-            </p>
+    <section className='h-[300px] w-full overflow-hidden bg-stone-800 sm:h-[400px] lg:h-[90dvh] '>
+      <div className='relative flex h-full w-full'>
+        <div className=' z-50 shrink grow-[2] basis-3/5'>
+          <div className=' font-playfair_display -mt-24 flex h-full w-full flex-col items-center justify-center gap-3 sm:gap-y-4 md:-mt-24 md:gap-y-6 lg:-mt-32 [&_p]:text-xl [&_p]:text-primary sm:[&_p]:text-3xl md:[&_p]:text-4xl lg:[&_p]:text-6xl '>
+            <p className='-ml-10 sm:-ml-32 md:-ml-40 '>More Coffee,</p>
+            <p className='ml-10'>More Progress</p>
           </div>
         </div>
-        <div
-          id="box-content"
-          className="sm:w-[30%] w-[100%] h-full flex flex-col gap-2"
-        >
-          <div
-            id="box-content-title"
-            className="flex gap-2 items-center contentTitleWithIcon"
-          >
-            <MdCoffeeMaker />
-            <p>Coffee Shops</p>
-          </div>
-          <div>
-            <p className=" indent-3 text-stone-900">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
-              deserunt ea voluptates suscipit impedit quibusdam ipsam officiis
-              fugiat? Recusandae aut qui id veniam itaque nisi voluptates
-              suscipit impedit quibusdam.
-            </p>
-          </div>
+        <div className=' z-50 shrink grow basis-2/5 overflow-hidden rounded-b-[15rem] bg-secondary'>
+          <SlideShow images={slideShowData} aspectRatio='9/16' />
         </div>
-        <div
-          id="box-content"
-          className="sm:w-[30%] w-[100%] h-full flex flex-col gap-2"
-        >
-          <div
-            id="box-content-title"
-            className="flex gap-2 items-center contentTitleWithIcon"
-          >
-            <RiShoppingCartLine />
-            <p>Shop Coffee Online</p>
-          </div>
-          <div>
-            <p className=" indent-3 text-stone-900">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel
-              deserunt ea voluptates suscipit impedit quibusdam ipsam officiis
-              fugiat? Recusandae aut qui id veniam itaque nisi dolor sit amet
-              consectetur adipisicing elit.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div
-        id="content2"
-        className="bg-stone-800/60 backdrop-blur-sm flex flex-col sm:flex-row justify-center gap-4 items-center p-4"
-      >
-        <div className="flex flex-col gap-2 order-2 sm:order-none">
-          <p className="text-lg font-bold text-primary textShadow ">
-            &quot;Savor the best with our coffee, where delicious meets quality
-            in every cup&quot;
-          </p>
-          <p className="text-primary-50 italic indent-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt
-            numquam, nobis fuga iusto animi mollitia labore voluptates quibusdam
-            veniam excepturi illo, consequuntur praesentium autem incidunt
-            blanditiis debitis obcaecati inventore omnis.
-          </p>
-        </div>
-        <div className=" flex items-center justify-center order-1 sm:order-none">
+        {/* rough wall background */}
+        <div className='z-10v absolute left-0 top-0 h-full w-full opacity-20'>
           <Image
-            src="/images/menu-001.jpg"
-            alt="random image"
-            width={300}
-            height={300}
-            className="h-full rounded-lg"
+            src='/images/bg/landing-bg.jpg'
+            width={1280}
+            height={1080}
+            alt='background landing'
+            className='h-full w-full object-cover '
+          />
+        </div>
+        {/* saigon cup */}
+        <div className='absolute bottom-[12%] left-0 z-40 aspect-square w-44 opacity-95 brightness-75 sm:bottom-[3%] sm:w-56 md:w-64 lg:w-80 '>
+          <Image
+            src='/images/bg/cup-bg.png'
+            height={320}
+            width={320}
+            alt='background bottom'
+            className='aspect-square w-full -rotate-2  object-fill grayscale'
+          />
+        </div>
+        {/* beans bottom */}
+        <div className='absolute bottom-0 left-0 z-20 h-[200px] w-full opacity-30 '>
+          <Image
+            src='/images/bg/bg-bot.png'
+            height={200}
+            width={1400}
+            alt='background bottom'
+            className='h-full w-full object-fill  grayscale'
           />
         </div>
       </div>
-    </>
+    </section>
   );
 };
 export default Hero;

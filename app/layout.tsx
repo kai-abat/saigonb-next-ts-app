@@ -8,7 +8,7 @@ import { Divider } from '@nextui-org/react';
 import { Providers } from './providers';
 import { getUserData } from '@/utils/services/UserAPI';
 import Image from 'next/image';
-import { borel, playfairDisplay, roboto_mono } from '@/utils/Font';
+import { montserrat, playfairDisplay, roboto_mono } from '@/utils/Font';
 
 export const metadata: Metadata = {
   title: 'Saigon Brewers',
@@ -22,7 +22,7 @@ export default async function RootLayout({ children }: ComponentProps) {
   return (
     <html
       lang='en'
-      className={`${roboto_mono.variable} ${borel.variable} ${playfairDisplay.variable} ${roboto_mono.className}`}
+      className={`${roboto_mono.variable} ${playfairDisplay.variable} ${montserrat.className}`}
     >
       <body>
         <Providers>

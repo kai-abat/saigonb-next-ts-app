@@ -1,12 +1,12 @@
-import { Avatar, Button, Spinner, Tooltip } from "@nextui-org/react";
-import { BsCamera } from "react-icons/bs";
-import { RiLogoutBoxRLine } from "react-icons/ri";
-import { signOut } from "@/utils/actions/adminAction";
-import { useTransition } from "react";
-import { UserProfile } from "@/utils/types/Props";
+import { Avatar, Button, Spinner, Tooltip } from '@nextui-org/react';
+import { BsCamera } from 'react-icons/bs';
+import { RiLogoutBoxRLine } from 'react-icons/ri';
+import { signOut } from '@/utils/actions/adminAction';
+import { useTransition } from 'react';
+import { UserProfile } from '@/utils/types/Props';
 
 const UserProfileHeader = ({
-  userData,
+  userData
 }: {
   userData: UserProfile | undefined;
 }) => {
@@ -19,38 +19,38 @@ const UserProfileHeader = ({
   };
 
   return (
-    <div className="flex gap-x-3 justify-end items-center font-medium">
+    <div className='flex items-center justify-end gap-x-3 font-medium'>
       <Avatar
         showFallback
-        src="https://images.unsplash.com/broken"
+        src='https://images.unsplash.com/broken'
         fallback={
           <BsCamera
-            className="animate-pulse w-6 h-6 text-default-500"
-            fill="currentColor"
+            className='h-6 w-6 animate-pulse text-default-500'
+            fill='currentColor'
             size={20}
           />
         }
       />
-      <div className="hidden lg:flex lg:flex-col lg:gap-0 lg:justify-center lg:items-start ">
-        <div className="capitalize font-medium text-sm">
+      <div className='hidden lg:flex lg:flex-col lg:items-start lg:justify-center lg:gap-0 '>
+        <div className='text-sm font-medium capitalize'>
           {userData.firstName}
         </div>
-        <div className="capitalize font-light align-text-top text-sm">
+        <div className='align-text-top text-xs font-light capitalize'>
           {userData.position}
         </div>
       </div>
-      <div className="hidden md:flex">
+      <div className='hidden md:flex'>
         <Tooltip
-          content="Logout"
+          content='Logout'
           showArrow
-          color="secondary"
-          radius="sm"
+          color='secondary'
+          radius='sm'
           disableAnimation
           closeDelay={200}
         >
           <Button
-            radius="sm"
-            color="secondary"
+            radius='sm'
+            color='secondary'
             disableRipple
             disableAnimation
             // startContent={<Spinner size="lg" color="current" />}

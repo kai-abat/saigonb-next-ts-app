@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import {
   Navbar,
   NavbarBrand,
@@ -10,19 +10,19 @@ import {
   Button,
   NavbarMenuToggle,
   NavbarMenu,
-  NavbarMenuItem,
-} from "@nextui-org/react";
+  NavbarMenuItem
+} from '@nextui-org/react';
 import {
   HiOutlineHome,
   HiOutlinePhone,
-  HiOutlineRocketLaunch,
-} from "react-icons/hi2";
-import { ThemeSwitcher } from "../ui/ThemeSwitcher";
-import { usePathname } from "next/navigation";
-import { IoLogoFacebook, IoLogoInstagram } from "react-icons/io";
-import LogoHeader from "./LogoHeader";
-import UserProfileHeader from "../ui/UserProfileHeader";
-import { UserProfile } from "@/utils/types/Props";
+  HiOutlineRocketLaunch
+} from 'react-icons/hi2';
+import { ThemeSwitcher } from '../ui/ThemeSwitcher';
+import { usePathname } from 'next/navigation';
+import { IoLogoFacebook, IoLogoInstagram } from 'react-icons/io';
+import LogoHeader from './LogoHeader';
+import UserProfileHeader from '../ui/UserProfileHeader';
+import { UserProfile } from '@/utils/types/Props';
 
 interface Menu {
   name: string;
@@ -31,10 +31,10 @@ interface Menu {
 }
 
 const menuItems: Menu[] = [
-  { name: "Home", to: "/", icon: <HiOutlineHome /> },
-  { name: "Menu", to: "/menu", icon: <HiOutlineRocketLaunch /> },
-  { name: "About Us", to: "/aboutus", icon: <HiOutlineRocketLaunch /> },
-  { name: "Contact Us", to: "/contactus", icon: <HiOutlinePhone /> },
+  { name: 'Home', to: '/', icon: <HiOutlineHome /> },
+  { name: 'Menu', to: '/menu', icon: <HiOutlineRocketLaunch /> },
+  { name: 'About', to: '/aboutus', icon: <HiOutlineRocketLaunch /> },
+  { name: 'Contact', to: '/contactus', icon: <HiOutlinePhone /> }
 ];
 
 const Header = ({ userData }: { userData: UserProfile | undefined }) => {
@@ -42,8 +42,8 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function isLinkActive(currentPath: string): boolean {
-    const paths: string[] = asPath.split("/");
-    const startPath = "/" + paths.at(1);
+    const paths: string[] = asPath.split('/');
+    const startPath = '/' + paths.at(1);
     return currentPath === startPath;
   }
 
@@ -52,25 +52,25 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
       isBordered
       onMenuOpenChange={setIsMenuOpen}
       isMenuOpen={isMenuOpen}
-      className="z-[9999]"
+      className='z-[9999]'
       classNames={{
-        base: ["justify-evenly"],
+        base: ['justify-evenly'],
 
         item: [
-          "flex",
-          "relative",
-          "h-full",
-          "items-center",
+          'flex',
+          'relative',
+          'h-full',
+          'items-center',
           "data-[active=true]:after:content-['']",
-          "data-[active=true]:after:absolute",
-          "data-[active=true]:after:bottom-0",
-          "data-[active=true]:after:left-0",
-          "data-[active=true]:after:right-0",
-          "data-[active=true]:after:h-[2px]",
-          "data-[active=true]:after:rounded-[2px]",
-          "data-[active=true]:after:bg-primary",
+          'data-[active=true]:after:absolute',
+          'data-[active=true]:after:bottom-0',
+          'data-[active=true]:after:left-0',
+          'data-[active=true]:after:right-0',
+          'data-[active=true]:after:h-[2px]',
+          'data-[active=true]:after:rounded-[2px]',
+          'data-[active=true]:after:bg-primary'
         ],
-        wrapper: ["px-4"],
+        wrapper: ['px-4']
       }}
     >
       <NavbarContent>
@@ -78,31 +78,31 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
           <LogoHeader />
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+      <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
         {menuItems.map((item, index) => (
           <NavbarItem key={index} isActive={isLinkActive(item.to)}>
-            <Link color="foreground" href={item.to}>
+            <Link color='foreground' href={item.to}>
               {item.name}
             </Link>
           </NavbarItem>
         ))}
       </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem className="hidden lg:flex">
+      <NavbarContent justify='end'>
+        <NavbarItem className='hidden lg:flex'>
           <Link
-            href="#"
-            className=" text-3xl text-stone-900 dark:text-stone-200"
+            href='#'
+            className=' text-3xl text-stone-900 dark:text-stone-200'
           >
             <IoLogoFacebook />
           </Link>
           <Link
-            href="#"
-            className=" text-3xl text-stone-900 dark:text-stone-200"
+            href='#'
+            className=' text-3xl text-stone-900 dark:text-stone-200'
           >
             <IoLogoInstagram />
           </Link>
         </NavbarItem>
-        <NavbarItem className="hidden sm:flex">
+        <NavbarItem className='hidden sm:flex'>
           <ThemeSwitcher />
         </NavbarItem>
         <NavbarItem>
@@ -117,24 +117,24 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
           </Button>
         </NavbarItem> */}
         <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
+          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+          className='sm:hidden'
         />
       </NavbarContent>
-      <NavbarMenu className=" gap-4">
+      <NavbarMenu className=' gap-4'>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.name}-${index}`}>
             <Link
-              className="w-full flex gap-2"
+              className='flex w-full gap-2'
               color={
                 index === 2
-                  ? "warning"
+                  ? 'warning'
                   : index === menuItems.length - 1
-                  ? "danger"
-                  : "foreground"
+                    ? 'danger'
+                    : 'foreground'
               }
               href={item.to}
-              size="lg"
+              size='lg'
               onPress={() => {
                 setIsMenuOpen(false);
               }}
@@ -147,9 +147,9 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
         <NavbarMenuItem>
           <Button
             as={Link}
-            color="secondary"
-            href="#"
-            variant="flat"
+            color='secondary'
+            href='#'
+            variant='flat'
             fullWidth
             onPress={() => setIsMenuOpen(false)}
           >
@@ -159,9 +159,9 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
         <NavbarMenuItem>
           <Button
             as={Link}
-            color="primary"
-            href="#"
-            variant="flat"
+            color='primary'
+            href='#'
+            variant='flat'
             fullWidth
             onPress={() => setIsMenuOpen(false)}
           >

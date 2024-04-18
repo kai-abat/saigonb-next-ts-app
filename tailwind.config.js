@@ -12,7 +12,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-borel)'],
+        sans: ['var(--font-montserrat)'],
         mono: ['var(--font-roboto-mono)'],
         playfair_display: ['var(--font-playfair-display)']
       }

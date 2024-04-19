@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   Divider,
@@ -6,30 +6,30 @@ import {
   Select,
   SelectItem,
   Spinner,
-  Textarea,
-} from "@nextui-org/react";
-import FormRow from "../form/FormRow";
-import LabeledSwitch from "../nextui/LabeledSwitch";
-import { useFormStatus } from "react-dom";
-import { State } from "@/utils/actions/menuActions";
-import { Category } from "@/utils/types/Props";
-import ImageUpload from "../ui/ImageUpload";
-import PriceList from "../ui/PriceList";
-import useZodFormValidation from "@/utils/hooks/useZodFormValidation";
+  Textarea
+} from '@nextui-org/react';
+import FormRow from '../form/FormRow';
+import LabeledSwitch from '../nextui/LabeledSwitch';
+import { useFormStatus } from 'react-dom';
+import { State } from '@/utils/actions/menuActions';
+import { Category } from '@/utils/types/Props';
+import ImageUpload from '../ui/ImageUpload';
+import PriceList from '../ui/PriceList';
+import useZodFormValidation from '@/utils/hooks/useZodFormValidation';
 import {
   categorySchema,
   descriptionSchema,
   isFeaturedSchema,
-  menuNameSchema,
-} from "@/utils/zod/NewMenuSchema";
-import { useState } from "react";
-import { extractErrorMessge } from "@/utils/Helper";
-import SelectDropDown from "../ui/SelectDropDown";
-import Button from "../ui/Button";
+  menuNameSchema
+} from '@/utils/zod/NewMenuSchema';
+import { useState } from 'react';
+import { extractErrorMessge } from '@/utils/Helper';
+import SelectDropDown from '../ui/SelectDropDown';
+import Button from '../ui/Button';
 
 const NewMenuFormContent = ({
   categories,
-  formState,
+  formState
 }: {
   categories: Category[];
   formState: State;
@@ -43,18 +43,18 @@ const NewMenuFormContent = ({
     valid: validMenuName,
     message: messageMenuName,
     onChangeEvent: onChangeMenuName,
-    name: nameMenuName,
-  } = useZodFormValidation("menuName", menuNameSchema, "input", formState);
+    name: nameMenuName
+  } = useZodFormValidation('menuName', menuNameSchema, 'input', formState);
 
   const {
     valid: validDescription,
     message: messageDescription,
     onChangeEvent: onChangeDescription,
-    name: nameDescription,
+    name: nameDescription
   } = useZodFormValidation(
-    "description",
+    'description',
     descriptionSchema,
-    "input",
+    'input',
     formState
   );
 
@@ -62,23 +62,23 @@ const NewMenuFormContent = ({
     valid: validCategory,
     message: messageCategory,
     onChangeSelectEvent: onChangeCategory,
-    name: nameCategory,
-  } = useZodFormValidation("category", categorySchema, "select", formState);
+    name: nameCategory
+  } = useZodFormValidation('category', categorySchema, 'select', formState);
 
   const {
     valid: validIsFeatured,
     message: messageIsFeatured,
     onChangeEvent: onChangeIsFeatured,
-    name: nameIsFeatured,
+    name: nameIsFeatured
   } = useZodFormValidation(
-    "isFeatured",
+    'isFeatured',
     isFeaturedSchema,
-    "checkbox",
+    'checkbox',
     formState
   );
 
   let allValid = true;
-  let formErrorMessage = "";
+  let formErrorMessage = '';
   if (
     !validMenuName ||
     !validIsFeatured ||
@@ -86,20 +86,20 @@ const NewMenuFormContent = ({
     !validCategory
   ) {
     allValid = false;
-    formErrorMessage = "Please fill-up the missing menu details";
+    formErrorMessage = 'Please fill-up the missing menu details';
   }
 
   return (
     <>
       <FormRow>
         <Input
-          color="default"
+          color='default'
           name={nameMenuName}
           id={nameMenuName}
-          type="text"
-          label="Menu Name"
-          radius="sm"
-          className=" max-w-[500px] min-w-[300px]"
+          type='text'
+          label='Menu Name'
+          radius='sm'
+          className=' min-w-[300px] max-w-[500px]'
           onChange={onChangeMenuName}
           errorMessage={messageMenuName}
           isInvalid={!validMenuName}
@@ -111,13 +111,13 @@ const NewMenuFormContent = ({
       </FormRow>
       <FormRow>
         <Textarea
-          color="default"
+          color='default'
           name={nameDescription}
           id={nameDescription}
           minRows={3}
-          label="Description"
-          radius="sm"
-          className=" max-w-[500px] min-w-[300px]"
+          label='Description'
+          radius='sm'
+          className=' min-w-[300px] max-w-[500px]'
           onChange={onChangeDescription}
           errorMessage={messageDescription}
           isInvalid={!validDescription}
@@ -125,31 +125,31 @@ const NewMenuFormContent = ({
       </FormRow>
       <FormRow>
         <Select
-          color="default"
+          color='default'
           name={nameCategory}
           id={nameCategory}
           items={categories}
-          label="Category"
-          className=" max-w-[500px] min-w-[300px]"
+          label='Category'
+          className=' min-w-[300px] max-w-[500px]'
           onChange={onChangeCategory}
           errorMessage={messageCategory}
           isInvalid={!validCategory}
-          placeholder="-- Select --"
+          placeholder='-- Select --'
           // disableAnimation
         >
-          {(category) => (
+          {category => (
             <SelectItem key={category.id}>{category.altName}</SelectItem>
           )}
         </Select>
       </FormRow>
       <FormRow>
-        <span className=" font-semibold">Cover Photos</span>
+        <span className=' font-semibold'>Cover Photos</span>
       </FormRow>
       <FormRow>
         <ImageUpload formState={formState} />
       </FormRow>
       <FormRow>
-        <span className=" font-semibold">Price List</span>
+        <span className=' font-semibold'>Price List</span>
       </FormRow>
       <FormRow>
         <PriceList />
@@ -157,41 +157,41 @@ const NewMenuFormContent = ({
 
       <FormRow errorMessage={messageIsFeatured}>
         <LabeledSwitch
-          title="Featured Menu"
+          title='Featured Menu'
           name={nameIsFeatured}
           onChangeIsFeatured={onChangeIsFeatured}
-          description="Featured menu will be posted in featured section."
+          description='Featured menu will be posted in featured section.'
         />
       </FormRow>
 
       <FormRow>
-        <Divider className="w-full" />
+        <Divider className='w-full' />
       </FormRow>
 
       {!allValid && <p>{formErrorMessage}</p>}
 
       <FormRow>
-        <div className="flex gap-4 flex-col sm:flex-row w-full ">
+        <div className='flex w-full flex-col gap-4 sm:flex-row '>
           <Button
-            color="secondary"
-            type="submit"
-            className="w-full max-w-full sm:max-w-[200px] lg:max-w-[300px] min-w-[100px]"
+            color='secondary'
+            type='submit'
+            className='w-full min-w-[100px] max-w-full sm:max-w-[200px] lg:max-w-[300px]'
             isDisabled={pending || !allValid}
           >
             {!pending ? (
-              "Save"
+              'Save'
             ) : (
               <>
-                <Spinner color="default" size="sm" />
+                <Spinner color='default' size='sm' />
                 <p>Saving...</p>
               </>
             )}
           </Button>
           <Button
-            type="reset"
-            color="secondary"
-            className="w-full max-w-full sm:max-w-[200px] lg:max-w-[300px] min-w-[100px]"
-            variant="bordered"
+            type='reset'
+            color='secondary'
+            className='w-full min-w-[100px] max-w-full sm:max-w-[200px] lg:max-w-[300px]'
+            variant='bordered'
             isDisabled={pending}
           >
             Clear

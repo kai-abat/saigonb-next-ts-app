@@ -11,7 +11,7 @@ const Footer = () => {
       <div className='flex flex-col items-center justify-center gap-x-8'>
         <p className=' text-center'>{copyright}</p>
         <p>
-          <Link href='/brand' className='transition-all hover:text-stone-300'>
+          <Link href='/brand' className='transition-all hover:text-blue-600'>
             Trademark Policy
           </Link>
         </p>

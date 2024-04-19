@@ -149,7 +149,7 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
             </Link>
           </NavbarMenuItem>
         ))}
-        <NavbarMenuItem className={`${userData && 'hidden'}`}>
+        {/* <NavbarMenuItem className={`${userData && 'hidden'}`}>
           <Button
             as={Link}
             color='secondary'
@@ -158,10 +158,10 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
             fullWidth
             onPress={() => setIsMenuOpen(false)}
           >
-            Login
+            Sign In
           </Button>
-        </NavbarMenuItem>
-        <NavbarMenuItem>
+        </NavbarMenuItem> */}
+        <NavbarMenuItem className={`${!userData && 'hidden'}`}>
           <ButtonSignOut showLabel />
         </NavbarMenuItem>
       </NavbarMenu>

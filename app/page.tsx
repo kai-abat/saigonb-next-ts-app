@@ -28,34 +28,44 @@ export default async function HomePage() {
     <>
       <Hero />
       <Container>
-        <Carousel data={dataContentImages}>
+        {/* <Carousel data={dataContentImages}>
           <CarouselContent>
             {data.content.map((content, index) => (
-              <FeaturedPost key={index}>
+              <FeaturedPost title={content.title} key={index}>
                 {content.imagePosition === 'left' && (
                   <>
                     <FeaturedPost.ImageContent imageUrl={content.imageUrl} />
-                    <FeaturedPost.Content
-                      title={content.title}
-                      details={content.details}
-                    />
+                    <FeaturedPost.Content details={content.details} />
                   </>
                 )}
                 {content.imagePosition === 'right' && (
                   <>
-                    <FeaturedPost.Content
-                      title={content.title}
-                      details={content.details}
-                    />
+                    <FeaturedPost.Content details={content.details} />
                     <FeaturedPost.ImageContent imageUrl={content.imageUrl} />
                   </>
                 )}
               </FeaturedPost>
             ))}
           </CarouselContent>
-        </Carousel>
-        <WhyChooseUs />
-        <FeaturedMenu />
+        </Carousel> */}
+        {data.content.map((content, index) => (
+          <FeaturedPost title={content.title} key={index}>
+            {content.imagePosition === 'left' && (
+              <>
+                <FeaturedPost.ImageContent imageUrl={content.imageUrl} />
+                <FeaturedPost.Content details={content.details} />
+              </>
+            )}
+            {content.imagePosition === 'right' && (
+              <>
+                <FeaturedPost.Content details={content.details} />
+                <FeaturedPost.ImageContent imageUrl={content.imageUrl} />
+              </>
+            )}
+          </FeaturedPost>
+        ))}
+        {/* <WhyChooseUs /> */}
+        {/* <FeaturedMenu /> */}
       </Container>
     </>
   );

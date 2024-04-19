@@ -75,18 +75,18 @@ const WhyChooseUs = ({
           className='relative flex shrink grow basis-full flex-col items-center justify-center gap-4 md:items-center md:justify-start'
         >
           <p>{description}</p>
-          <div className='grid  grid-cols-4 grid-rows-1 gap-4 lg:gap-x-8'>
+          <div className='grid grid-cols-2 grid-rows-2 gap-4 sm:grid-cols-4 sm:grid-rows-1 lg:gap-x-8'>
             {data.map((items, index) => {
               return (
                 <div
                   key={items.label}
-                  className={`gap-y-1-2 flex h-24 w-24 cursor-pointer flex-col items-center justify-center rounded-xl px-2 py-3  shadow-lg hover:bg-primary ${
+                  className={`flex cursor-pointer items-center justify-center gap-x-3 rounded-xl px-10 py-3 shadow-lg hover:bg-primary sm:flex-col sm:gap-x-0 sm:gap-y-2 sm:px-2 sm:py-3 ${
                     index === activeImage ? 'bg-primary' : 'bg-content3'
                   }`}
                   onClick={() => handleActiveImage(index)}
                 >
                   <div className=' h-6 w-6 lg:h-8 lg:w-8'>{items.icon}</div>
-                  <p className=' text-wrap text-center text-sm font-semibold text-content3-foreground'>
+                  <p className=' text-nowrap text-center text-xs font-semibold text-content3-foreground sm:text-wrap lg:text-sm'>
                     {items.label}
                   </p>
                 </div>

@@ -1,34 +1,40 @@
-import { ReactNode } from "react";
-import Image from "next/image";
-import { Divider } from "@nextui-org/react";
-import Title from "./Title";
+import { ReactNode } from 'react';
+import Image from 'next/image';
+import { Divider } from '@nextui-org/react';
+import Title from './Title';
 
-const FeaturedPost = ({ children }: { children: ReactNode }) => {
+const FeaturedPost = ({
+  children,
+  title
+}: {
+  title: string;
+  children: ReactNode;
+}) => {
   return (
-    <div className="relative py-4 gap-x-4 flex bg-primary/60 p-4 rounded-xl h-max">
-      {children}
-    </div>
+    <section className='flex h-max flex-col gap-4 rounded-xl bg-primary/60 p-4'>
+      <Title capitalize>{title}</Title>
+      <Divider />
+      <div className='flex h-full w-full flex-col items-center justify-start   gap-4 sm:justify-around lg:flex-row lg:items-start'>
+        {children}
+      </div>
+    </section>
   );
 };
 
 const ImageContent = ({ imageUrl }: { imageUrl: string }) => {
   return (
-    <div className=" aspect-square object-cover w-full max-w-[400px] rounded-xl overflow-hidden">
-      <Image src={imageUrl} alt="image content" width={500} height={400} />
+    <div className=' order-1 aspect-square w-full max-w-[400px] overflow-hidden rounded-xl object-cover lg:order-none'>
+      <Image src={imageUrl} alt='image content' width={500} height={400} />
     </div>
   );
 };
 
-const Content = ({ title, details }: { title: string; details: string[] }) => {
+const Content = ({ details }: { details: string[] }) => {
   return (
-    <div className="  w-full flex flex-col gap-4">
-      <Title capitalize>{title}</Title>
-
-      <Divider />
-
-      <span className="flex flex-col gap-4">
+    <div className=' order-2 flex w-full flex-col gap-4 lg:order-none'>
+      <span className='flex flex-col gap-4 lg:mt-2'>
         {details.map((detail, i) => (
-          <p key={i} className=" text-lg text-foreground">
+          <p key={i} className=' text-lg text-foreground'>
             {detail}
           </p>
         ))}

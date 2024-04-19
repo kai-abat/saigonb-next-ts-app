@@ -11,6 +11,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: '380px'
+      },
       fontFamily: {
         sans: ['var(--font-montserrat)'],
         mono: ['var(--font-roboto-mono)'],

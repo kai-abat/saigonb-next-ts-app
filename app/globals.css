@@ -73,4 +73,15 @@ body {
 
     @apply bg-primary shadow-2xl drop-shadow-lg;
   }
+
+  .mySwiper {
+    @apply rounded-xl;
+    --swiper-pagination-color: theme(colors.secondary);
+    --swiper-navigation-color: theme(colors.secondary);
+  }
+
+  .mySwiper .swiper-button-prev,
+  .mySwiper .swiper-button-next {
+    @apply opacity-20 hover:opacity-85;
+  }
 }

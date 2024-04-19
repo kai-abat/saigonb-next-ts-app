@@ -80,10 +80,11 @@ export declare interface ComponentProps {
   category?: CategoryWithMenu;
   categories?: CategoryWithMenu[];
   showBrand?: boolean;
-  align?: "left" | "right" | "center";
+  align?: 'left' | 'right' | 'center';
   className?: string;
   images?: MenuCoverPhoto[];
   capitalize?: boolean;
+  showLabel?: boolean;
   id?: string;
   userData?: UserProfile;
 }

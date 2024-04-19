@@ -52,6 +52,7 @@ export const HomeData = {
 };
 
 export type HomeDataType = typeof HomeData;
+export type PostsType = HomeDataType['content'];
 const MENU = [
   {
     id: 1,

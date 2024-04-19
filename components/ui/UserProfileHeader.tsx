@@ -4,19 +4,14 @@ import { RiLogoutBoxRLine } from 'react-icons/ri';
 import { signOut } from '@/utils/actions/adminAction';
 import { useTransition } from 'react';
 import { UserProfile } from '@/utils/types/Props';
+import ButtonSignOut from './ButtonSignOut';
 
 const UserProfileHeader = ({
   userData
 }: {
   userData: UserProfile | undefined;
 }) => {
-  const [isPending, startTransition] = useTransition();
-
   if (!userData) return;
-
-  const handleLogout = async () => {
-    startTransition(async () => await signOut());
-  };
 
   return (
     <div className='flex items-center justify-end gap-x-3 font-medium'>
@@ -41,25 +36,14 @@ const UserProfileHeader = ({
       </div>
       <div className='hidden md:flex'>
         <Tooltip
-          content='Logout'
+          content='Sign Out'
           showArrow
           color='secondary'
           radius='sm'
           disableAnimation
           closeDelay={200}
         >
-          <Button
-            radius='sm'
-            color='secondary'
-            disableRipple
-            disableAnimation
-            // startContent={<Spinner size="lg" color="current" />}
-            isLoading={isPending}
-            startContent={!isPending && <RiLogoutBoxRLine />}
-            isIconOnly
-            onClick={handleLogout}
-            // isDisabled={isPending}
-          ></Button>
+          <ButtonSignOut />
         </Tooltip>
       </div>
     </div>

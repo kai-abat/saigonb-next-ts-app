@@ -7,6 +7,7 @@ import { GiCoffeeBeans, GiCoffeeCup } from 'react-icons/gi';
 import { IoIosRibbon } from 'react-icons/io';
 import { RiServiceFill } from 'react-icons/ri';
 import Title from './Title';
+import { IconBase } from 'react-icons';
 
 const staticData = [
   {
@@ -61,32 +62,41 @@ const WhyChooseUs = ({
   function handleActiveImage(index: number) {
     setActiveImage(index);
   }
-  return (
-    <div className='flex w-full flex-col gap-4 rounded-xl bg-primary/60 p-4 transition-all duration-500 ease-in-out'>
-      <Title capitalize>{title}</Title>
 
+  return (
+    <div className='flex w-full flex-col gap-4 rounded-xl bg-primary/60 p-4'>
+      <Title capitalize>{title}</Title>
       <Divider />
       <div
         id='why-choose-us-content'
-        className='flex flex-col items-center justify-center gap-y-6 rounded-xl md:flex-row md:justify-around md:gap-x-4 md:gap-y-0 '
+        className='flex flex-col items-center justify-center gap-y-6 rounded-xl md:flex-row md:items-stretch md:justify-around md:gap-x-4 md:gap-y-0 '
       >
         <div
           id='controls'
-          className='relative flex shrink grow basis-full flex-col items-center justify-center gap-4 md:items-center md:justify-start'
+          className='relative flex shrink grow basis-full flex-col justify-start gap-4'
         >
-          <p>{description}</p>
-          <div className='grid grid-cols-2 grid-rows-2 gap-4 sm:grid-cols-4 sm:grid-rows-1 lg:gap-x-8'>
+          <p className=' align-top'>{description}</p>
+          <div className='grid grid-cols-2 grid-rows-2 gap-4 sm:grid-cols-4 sm:grid-rows-1 lg:grid-cols-2 lg:grid-rows-2 lg:gap-x-8'>
             {data.map((items, index) => {
               return (
                 <div
                   key={items.label}
-                  className={`flex cursor-pointer items-center justify-center gap-x-3 rounded-xl px-10 py-3 shadow-lg hover:bg-primary sm:flex-col sm:gap-x-0 sm:gap-y-2 sm:px-2 sm:py-3 ${
-                    index === activeImage ? 'bg-primary' : 'bg-content3'
+                  className={` flex cursor-pointer items-center justify-center gap-x-2 rounded-xl px-1 py-3 shadow-lg transition-colors duration-250 ease-in-out hover:bg-secondary *:hover:text-foreground-100 xs:gap-x-3 sm:flex-col sm:gap-x-0 sm:gap-y-2 sm:px-2 sm:py-3 ${
+                    index === activeImage ? 'bg-secondary' : 'bg-primary/70'
                   }`}
                   onClick={() => handleActiveImage(index)}
                 >
-                  <div className=' h-6 w-6 lg:h-8 lg:w-8'>{items.icon}</div>
-                  <p className=' text-nowrap text-center text-xs font-semibold text-content3-foreground sm:text-wrap lg:text-sm'>
+                  <div
+                    className={`h-6 w-6 hover:text-foreground-100 lg:h-8 lg:w-8
+                  ${index === activeImage && ' text-foreground-100'}`}
+                  >
+                    {items.icon}
+                  </div>
+                  <p
+                    className={`text-nowrap text-center text-[0.625rem]/[0.75rem] font-semibold xs:text-xs  sm:text-wrap lg:text-sm
+                    ${index === activeImage && ' text-foreground-100'}
+                  `}
+                  >
                     {items.label}
                   </p>
                 </div>
@@ -105,7 +115,8 @@ const WhyChooseUs = ({
               alt={`${index.toString()}_${item.label}`}
               width={500}
               height={500}
-              className={`absolute left-1/2 top-1/2 aspect-square  w-full -translate-y-1/2  scale-110 object-cover transition-all duration-500  ease-in-out
+              className={`-all absolute left-1/2 top-1/2  aspect-square w-full  -translate-y-1/2 scale-110 
+              object-cover duration-500  ease-in-out
                 ${
                   index === activeImage
                     ? 'z-10 -translate-x-1/2 rotate-0 opacity-100'

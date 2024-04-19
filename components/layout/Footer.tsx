@@ -1,23 +1,23 @@
-import Link from "next/link";
-import Brand from "./Brand";
-import Logo from "./Logo";
+import Link from 'next/link';
+import Brand from './Brand';
+import Logo from './Logo';
 
 const Footer = () => {
   const year = new Date().getFullYear();
   const copyright = `Copyright © ${year} Saigon Brewers. All rights reserved.`;
   return (
-    <div className="bg-primary gap-10 flex flex-col sm:flex-row justify-center items-center py-6 px-3 sm:justify-between z-40">
+    <div className='z-40 flex flex-col items-center justify-center gap-10 bg-primary px-3 py-6 sm:flex-row sm:justify-between'>
       <Logo />
-      <div className="flex flex-wrap gap-x-8 justify-center items-center">
-        <p>{copyright}</p>
+      <div className='flex flex-col items-center justify-center gap-x-8'>
+        <p className=' text-center'>{copyright}</p>
         <p>
-          <Link href="/brand" className="hover:text-stone-300 transition-all">
+          <Link href='/brand' className='transition-all hover:text-stone-300'>
             Trademark Policy
           </Link>
         </p>
       </div>
 
-      <div className=" text-center sm:text-right">
+      <div className=' text-center sm:text-right'>
         <Brand />
         <p>More Coffee, More Progress</p>
         <p>Quality, Traceability, Sustainability</p>

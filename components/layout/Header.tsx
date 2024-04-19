@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { startTransition, useState, useTransition } from 'react';
 import {
   Navbar,
   NavbarBrand,
@@ -23,6 +23,8 @@ import { IoLogoFacebook, IoLogoInstagram } from 'react-icons/io';
 import LogoHeader from './LogoHeader';
 import UserProfileHeader from '../ui/UserProfileHeader';
 import { UserProfile } from '@/utils/types/Props';
+import { signOut } from '@/utils/actions/adminAction';
+import ButtonSignOut from '../ui/ButtonSignOut';
 
 interface Menu {
   name: string;
@@ -87,6 +89,8 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
           </NavbarItem>
         ))}
       </NavbarContent>
+
+      {/* facebook, instagrag link/logo */}
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
           <Link
@@ -121,7 +125,8 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
           className='sm:hidden'
         />
       </NavbarContent>
-      <NavbarMenu className=' gap-4'>
+      {/* mobile toggle menu content */}
+      <NavbarMenu className=' z-[9999] gap-4'>
         {menuItems.map((item, index) => (
           <NavbarMenuItem key={`${item.name}-${index}`}>
             <Link
@@ -144,11 +149,11 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
             </Link>
           </NavbarMenuItem>
         ))}
-        <NavbarMenuItem>
+        <NavbarMenuItem className={`${userData && 'hidden'}`}>
           <Button
             as={Link}
             color='secondary'
-            href='#'
+            href='/admin/login'
             variant='flat'
             fullWidth
             onPress={() => setIsMenuOpen(false)}
@@ -157,16 +162,7 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
           </Button>
         </NavbarMenuItem>
         <NavbarMenuItem>
-          <Button
-            as={Link}
-            color='primary'
-            href='#'
-            variant='flat'
-            fullWidth
-            onPress={() => setIsMenuOpen(false)}
-          >
-            Sign Up
-          </Button>
+          <ButtonSignOut showLabel />
         </NavbarMenuItem>
       </NavbarMenu>
     </Navbar>

@@ -82,7 +82,7 @@ const Carousel = ({
 
     //Clearing the interval
     return () => clearInterval(interval);
-  }, [imagesLength, autoTranslate]);
+  }, [imagesLength, autoTranslate, intervalTimeMS]);
 
   function getImageIndex(computedIndex: number): number {
     if (computedIndex < 0) return imagesLength - 1;

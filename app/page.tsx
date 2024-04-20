@@ -1,37 +1,33 @@
-import Hero from '@/components/ui/Hero';
-import { CarouselData } from '@/utils/types/Props';
-import {
-  fetchCarouselData,
-  fetchLandingData
-} from '@/utils/services/LandingAPI';
-import { getUserData } from '@/utils/services/UserAPI';
-import Carousel from '@/components/ui/Carousel/Carousel';
-import FeaturedPost from '@/components/ui/FeaturedPost';
-import FeaturedMenu from '@/components/ui/FeaturedMenu';
-import CarouselContent from '@/components/ui/Carousel/CarouselContent';
-import WhyChooseUs from '@/components/ui/WhyChooseUs';
+import FacebookFeedsLoader from '@/components/loaders/FacebookFeedsLoader';
+import FeaturedMenuLoader from '@/components/loaders/FeaturedMenuLoader';
+import HeroLoader from '@/components/loaders/HeroLoader';
+import WhyChooseUsLoader from '@/components/loaders/WhyChooseUsLoader';
 import Container from '@/components/ui/Container';
-import FeaturedPostSlides from '@/components/ui/FeaturedPostSlides';
+import FacebookFeeds from '@/components/ui/FacebookFeeds';
+import FeaturedMenu from '@/components/ui/FeaturedMenu';
+import Hero from '@/components/ui/Hero';
+import WhyChooseUs from '@/components/ui/WhyChooseUs';
+import { Suspense } from 'react';
 
 export default async function HomePage() {
-  const userData = await getUserData();
-
-  const carouselData: CarouselData[] = await fetchCarouselData();
-
-  const data = await fetchLandingData();
-
-  const dataContentImages = data.content.map(content => content.imageUrl);
-
-  console.log(carouselData);
-
   return (
     <>
       <Hero />
+      {/* <HeroLoader /> */}
+      {/* <Suspense fallback={<HeroLoader />}>
+        <Hero />
+      </Suspense>
       <Container>
-        <FeaturedPostSlides posts={data.content} />
-        <WhyChooseUs />
-        <FeaturedMenu />
-      </Container>
+        <Suspense fallback={<FacebookFeedsLoader />}>
+          <FacebookFeeds />
+        </Suspense>
+        <Suspense fallback={<WhyChooseUsLoader />}>
+          <WhyChooseUs />
+        </Suspense>
+        <Suspense fallback={<FeaturedMenuLoader />}>
+          <FeaturedMenu />
+        </Suspense>
+      </Container> */}
     </>
   );
 }

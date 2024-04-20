@@ -93,7 +93,7 @@ const WhyChooseUs = ({
                     {items.icon}
                   </div>
                   <p
-                    className={`text-nowrap text-center text-[0.625rem]/[0.75rem] font-semibold xs:text-xs  sm:text-wrap lg:text-sm
+                    className={`  text-nowrap text-center text-[0.625rem]/[0.75rem] font-semibold xs:text-xs  sm:text-wrap lg:text-sm
                     ${index === activeImage && ' text-foreground-100'}
                   `}
                   >

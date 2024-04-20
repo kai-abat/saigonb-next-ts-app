@@ -9,6 +9,7 @@ import { Providers } from './providers';
 import { getUserData } from '@/utils/services/UserAPI';
 import Image from 'next/image';
 import { montserrat, playfairDisplay, roboto_mono } from '@/utils/Font';
+import layoutBackgroundImage from '@/public/images/bg/bg-top.png';
 
 export const metadata: Metadata = {
   title: 'Saigon Brewers',
@@ -34,18 +35,20 @@ export default async function RootLayout({ children }: ComponentProps) {
             <Header userData={userData} />
             <div className='fixed z-0 min-h-lvh w-full opacity-10'>
               <Image
-                src='/images/bg/bg-top.png'
-                fill
+                src={layoutBackgroundImage}
                 alt='background top'
-                className='z-10 h-full w-full object-fill grayscale'
+                className='z-10 h-full w-full object-cover grayscale'
+                placeholder='blur'
+                quality={100}
               />
-              <Image
+              {/* Requested to remove this background */}
+              {/* <Image
                 src='/images/bg/bg-top-2.jpg'
                 width={200}
                 height={200}
                 alt='background top 2'
                 className='absolute left-32 top-[18%] z-10 h-[300px] w-[300px] rounded-full object-fill grayscale'
-              />
+              /> */}
             </div>
 
             <main className=' z-40 mb-4 flex flex-col gap-y-4'>{children}</main>

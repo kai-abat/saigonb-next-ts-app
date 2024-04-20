@@ -4,7 +4,6 @@ import heroMainBackgroundImage from '@/public/images/bg/landing-bg.jpg';
 import heroSaigonCupImage from '@/public/images/bg/cup-bg.png';
 import heroBeansImage from '@/public/images/bg/bg-bot.png';
 import { fetchLoadingTimeout } from '@/utils/services/PageLoadingAPI';
-import Typography from './Typography';
 
 const slideShowData = [
   { imageUrl: '/images/hero/1.jpg', alt: 'alt1' },
@@ -20,16 +19,14 @@ const slideShowData = [
 const Hero = async () => {
   await fetchLoadingTimeout(10000);
   return (
-    <section className='aspect-video w-full overflow-hidden bg-stone-800 lg:aspect-auto lg:h-[90dvh]'>
+    <section className='h-[300px] w-full overflow-hidden bg-stone-800 sm:h-[400px] lg:h-[90dvh] '>
       <div className='relative flex h-full w-full'>
-        {/* Slogan */}
-        <div className=' z-50 flex shrink grow-[2] basis-3/5 flex-col justify-start gap-y-1 font-playfair_display tracking-wider text-primary *:drop-shadow-md first:mt-5 *:xs:ml-3 sm:gap-y-3 sm:tracking-widest *:sm:ml-8 *:md:ml-12'>
-          <Typography variant='h1'>More Coffee,</Typography>
-          <Typography variant='h1' className=' indent-6 md:indent-12'>
-            More Progress
-          </Typography>
+        <div className=' z-50 shrink grow-[2] basis-3/5'>
+          <div className=' -mt-24 flex h-full w-full flex-col items-center justify-center gap-3 font-playfair_display sm:gap-y-4 md:-mt-24 md:gap-y-6 lg:-mt-32 [&_p]:text-xl [&_p]:text-primary sm:[&_p]:text-3xl md:[&_p]:text-4xl lg:[&_p]:text-6xl '>
+            <p className='-ml-10 sm:-ml-32 md:-ml-40 '>More Coffee,</p>
+            <p className='ml-10'>More Progress</p>
+          </div>
         </div>
-        {/* Slideshow */}
         <div className=' z-50 shrink grow basis-2/5 overflow-hidden rounded-b-[15rem] bg-secondary'>
           <SlideShow images={slideShowData} aspectRatio='9/16' />
         </div>
@@ -44,11 +41,11 @@ const Hero = async () => {
           />
         </div>
         {/* saigon cup */}
-        <div className='absolute -left-4 bottom-[1%] z-40 aspect-square h-[60%] opacity-95 brightness-75 '>
+        <div className='absolute bottom-[12%] left-0 z-40 aspect-square w-44 opacity-95 brightness-75 sm:bottom-[3%] sm:w-56 md:w-64 lg:w-80 '>
           <Image
             src={heroSaigonCupImage}
             alt='Saigon cup'
-            className='aspect-square w-full -rotate-2 object-fill grayscale'
+            className='aspect-square w-full -rotate-2  object-fill grayscale'
             placeholder='blur'
           />
         </div>
@@ -57,7 +54,7 @@ const Hero = async () => {
           <Image
             src={heroBeansImage}
             alt='beans bottom'
-            className='h-full w-full object-cover  grayscale'
+            className='h-full w-full object-fill  grayscale'
             placeholder='blur'
             priority
           />

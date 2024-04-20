@@ -3,7 +3,6 @@ import SlideShow from './SlideShow';
 import heroMainBackgroundImage from '@/public/images/bg/landing-bg.jpg';
 import heroSaigonCupImage from '@/public/images/bg/cup-bg.png';
 import heroBeansImage from '@/public/images/bg/bg-bot.png';
-import { fetchLoadingTimeout } from '@/utils/services/PageLoadingAPI';
 import Typography from './Typography';
 
 const slideShowData = [
@@ -17,8 +16,7 @@ const slideShowData = [
   { imageUrl: '/images/hero/8.jpg', alt: 'alt8' }
 ];
 
-const Hero = async () => {
-  await fetchLoadingTimeout(10000);
+const Hero = () => {
   return (
     <section className='aspect-video w-full overflow-hidden bg-stone-800 lg:aspect-auto lg:h-[90dvh]'>
       <div className='relative flex h-full w-full'>

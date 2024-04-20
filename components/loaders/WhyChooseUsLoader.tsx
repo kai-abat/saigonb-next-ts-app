@@ -1,4 +1,11 @@
+import CommonContainerLoader from './CommonContainerLoader';
+import PostsLoader from './PostsLoader';
+
 const WhyChooseUsLoader = () => {
-  return <div>Loading why choose us...</div>;
+  return (
+    <CommonContainerLoader>
+      <PostsLoader />
+    </CommonContainerLoader>
+  );
 };
 export default WhyChooseUsLoader;

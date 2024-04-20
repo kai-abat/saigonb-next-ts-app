@@ -1,4 +1,11 @@
+import CommonContainerLoader from './CommonContainerLoader';
+import PostsLoader from './PostsLoader';
+
 const FacebookFeedsLoader = () => {
-  return <div>Loading facebook feeds</div>;
+  return (
+    <CommonContainerLoader>
+      <PostsLoader />
+    </CommonContainerLoader>
+  );
 };
 export default FacebookFeedsLoader;

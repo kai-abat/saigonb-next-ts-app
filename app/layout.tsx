@@ -23,9 +23,9 @@ export default async function RootLayout({ children }: ComponentProps) {
   return (
     <html
       lang='en'
-      className={`${roboto_mono.variable} ${playfairDisplay.variable} ${montserrat.className}`}
+      className={`${roboto_mono.variable} ${playfairDisplay.variable} ${montserrat.className} `}
     >
-      <body>
+      <body className='bg-primary-100 dark:bg-stone-950'>
         <Providers>
           {/* <Initializer userData={userData}> */}
           <section
@@ -33,7 +33,7 @@ export default async function RootLayout({ children }: ComponentProps) {
             className='min-w-420px relative flex flex-col bg-primary-100 dark:bg-stone-950'
           >
             <Header userData={userData} />
-            <div className='fixed z-0 min-h-lvh w-full opacity-10'>
+            <div className='fixed right-0 top-0 z-0 h-full min-h-[80dvh] w-full opacity-10 lg:min-h-dvh'>
               <Image
                 src={layoutBackgroundImage}
                 alt='background top'

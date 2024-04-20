@@ -1,3 +1,4 @@
+import CardsLoader from '@/components/loaders/CardsLoader';
 import FacebookFeedsLoader from '@/components/loaders/FacebookFeedsLoader';
 import FeaturedMenuLoader from '@/components/loaders/FeaturedMenuLoader';
 import HeroLoader from '@/components/loaders/HeroLoader';
@@ -19,12 +20,12 @@ export default async function HomePage() {
         <Suspense fallback={<FacebookFeedsLoader />}>
           <FacebookFeeds />
         </Suspense>
-        {/* <Suspense fallback={<WhyChooseUsLoader />}>
+        <Suspense fallback={<WhyChooseUsLoader />}>
           <WhyChooseUs />
         </Suspense>
         <Suspense fallback={<FeaturedMenuLoader />}>
           <FeaturedMenu />
-        </Suspense> */}
+        </Suspense>
       </Container>
     </>
   );

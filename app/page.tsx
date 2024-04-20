@@ -12,22 +12,20 @@ import { Suspense } from 'react';
 export default async function HomePage() {
   return (
     <>
-      <Hero />
-      {/* <HeroLoader /> */}
-      {/* <Suspense fallback={<HeroLoader />}>
+      <Suspense fallback={<HeroLoader />}>
         <Hero />
       </Suspense>
       <Container>
         <Suspense fallback={<FacebookFeedsLoader />}>
           <FacebookFeeds />
         </Suspense>
-        <Suspense fallback={<WhyChooseUsLoader />}>
+        {/* <Suspense fallback={<WhyChooseUsLoader />}>
           <WhyChooseUs />
         </Suspense>
         <Suspense fallback={<FeaturedMenuLoader />}>
           <FeaturedMenu />
-        </Suspense>
-      </Container> */}
+        </Suspense> */}
+      </Container>
     </>
   );
 }

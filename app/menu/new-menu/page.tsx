@@ -8,6 +8,7 @@ const NewMenuPage = async (props: PageProps) => {
 
   let { id } = searchParams;
   let menuId = extractNumberFromURLParams(id);
+  // add fetch menu data here
   const categories = await fetchCategoriesOnly();
   return (
     <div className='flex w-full flex-col gap-4'>

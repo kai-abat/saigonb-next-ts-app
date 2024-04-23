@@ -44,6 +44,5 @@ export const extractNumberFromURLParams = (
     const idFound = param.find(value => value.match(`^[0-9]+$`));
     paramFinal = Number(idFound);
   }
-  // console.log('id value:', param, paramFinal);
   return paramFinal;
 };

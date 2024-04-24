@@ -47,7 +47,8 @@ const MenuFormV2 = ({ categories = [], menu }: NewMenuProps) => {
       menuName: '',
       description: '',
       // category: category1st,
-      isFeatured: true
+      isFeatured: true,
+      imageUpload: [{ imageId: 0, imageUrl: '' }]
     },
     resolver: clientSideValidation
       ? zodResolver(NewMenuFormDataSchema)

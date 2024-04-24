@@ -44,17 +44,6 @@ const ImageUploadCardV2 = ({
   const { handlePickClick, handleImageChange, imageInputRef, selectedFile } =
     useUploadImage();
 
-  // temporary boolean for error message validation
-  const validImageURL = true;
-
-  // if (errors.imageUpload[index] && errors.imageUpload.length >= index + 1) {
-  //   imageUrlErrorMsg = errors.imageUpload.at(index)?.imageUrl?.message;
-  // }
-
-  useEffect(() => {
-    console.log('Client: imageUrlErrorMsg:', imageUrlErrorMsg);
-  }, [imageUrlErrorMsg]);
-
   useEffect(() => {
     if (!selectedFile) {
       return;
@@ -80,7 +69,7 @@ const ImageUploadCardV2 = ({
   // className={`h-96 w-60 gap-y-4 rounded-xl border-2 bg-content3 p-3
   const imageUploadCard = (
     <Card
-      className={`h-[35rem] w-60 gap-y-4 rounded-xl border-2 bg-content3 p-3
+      className={`h-[32rem] w-60 gap-y-4 rounded-xl border-2 bg-content3 p-3
 ${
   !imageUrlErrorMsg
     ? 'border-primary hover:border-secondary'

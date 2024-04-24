@@ -3,7 +3,8 @@ import {
   FieldErrors,
   useForm,
   UseFormRegister,
-  FieldPath
+  FieldPath,
+  useFieldArray
 } from 'react-hook-form';
 import { newMenuAction, State } from '@/utils/actions/menuActions';
 import { useFormState } from 'react-dom';
@@ -21,6 +22,10 @@ export interface FormValues {
   description: string;
   category: number;
   isFeatured: boolean;
+  imageUpload: {
+    imageId: number;
+    imageUrl: string;
+  }[];
 }
 
 const MenuFormV2 = ({ categories = [], menu }: NewMenuProps) => {
@@ -34,7 +39,8 @@ const MenuFormV2 = ({ categories = [], menu }: NewMenuProps) => {
     formState: { isValid, errors },
     setError,
     reset,
-    control
+    control,
+    setValue
   } = useForm<FormValues>({
     mode: 'all',
     defaultValues: {
@@ -46,6 +52,11 @@ const MenuFormV2 = ({ categories = [], menu }: NewMenuProps) => {
     resolver: clientSideValidation
       ? zodResolver(NewMenuFormDataSchema)
       : undefined
+  });
+
+  const imageUploadFieldArray = useFieldArray({
+    control,
+    name: 'imageUpload'
   });
 
   // useFormState
@@ -90,6 +101,8 @@ const MenuFormV2 = ({ categories = [], menu }: NewMenuProps) => {
             errors={errors}
             reset={reset}
             control={control}
+            imageUploadFieldArray={imageUploadFieldArray}
+            setValue={setValue}
           />
         </form>
       </main>

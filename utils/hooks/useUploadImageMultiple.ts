@@ -1,23 +1,23 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
-export default function useUploadImage() {
-  const [selectedFile, setSelectedFile] = useState<any>();
+export default function useUploadImageMultiple() {
+  const [imageFiles, setImageFiles] = useState<File[]>([]);
   // const [imagePreviewUrl, setImagePreviewUrl] = useState<string | undefined>();
   const imageInputRef = useRef<HTMLInputElement>(null);
 
   // create a preview as a side effect, whenever selected file is changed
   // useEffect(() => {
-  //   if (!selectedFile) {
+  //   if (!imageFiles) {
   //     setImagePreviewUrl(undefined);
   //     return;
   //   }
 
-  //   const objectUrl = URL.createObjectURL(selectedFile);
+  //   const objectUrl = URL.createObjectURL(imageFiles);
   //   setImagePreviewUrl(objectUrl);
 
   //   // free memory when ever this component is unmounted
   //   return () => URL.revokeObjectURL(objectUrl);
-  // }, [selectedFile]);
+  // }, [imageFiles]);
 
   function handlePickClick() {
     imageInputRef.current?.click();
@@ -26,19 +26,27 @@ export default function useUploadImage() {
   function handleImageChange(event: ChangeEvent<HTMLInputElement>) {
     event.preventDefault();
     if (!event.target.files || event.target.files.length === 0) {
-      setSelectedFile(undefined);
+      // setImageFiles([]);
       return;
     }
 
-    const file = event.target.files[0];
+    const uploadedFiles = Array.from(event.target.files);
 
-    setSelectedFile(event.target.files[0]);
+    const files = uploadedFiles.map(file => file);
+    setImageFiles(files);
+
+    // const file = event.target.files.setImageFiles(event.target.files[0]);
+  }
+
+  function resetFiles() {
+    setImageFiles([]);
   }
 
   return {
     handlePickClick,
     handleImageChange,
     imageInputRef,
-    selectedFile
+    imageFiles,
+    resetFiles
   };
 }

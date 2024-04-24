@@ -1,13 +1,13 @@
-"use client";
+'use client';
 import {
   extractErrorMessge,
   extractServerErrorMessage,
-  getFallbackImagePath,
-} from "@/utils/Helper";
-import useUploadImage from "@/utils/hooks/useUploadImage";
-import useZodClientValidation from "@/utils/hooks/useZodFormValidation";
-import { State } from "@/utils/actions/menuActions";
-import { imageURLSchema } from "@/utils/zod/NewMenuSchema";
+  getFallbackImagePath
+} from '@/utils/Helper';
+import useUploadImage from '@/utils/hooks/useUploadImage';
+import useZodClientValidation from '@/utils/hooks/useZodFormValidation';
+import { State } from '@/utils/actions/menuActions';
+import { imageURLSchema } from '@/utils/zod/NewMenuSchema';
 import {
   Button,
   Card,
@@ -17,16 +17,16 @@ import {
   Image as ImageUI,
   Input,
   Tooltip,
-  cn,
-} from "@nextui-org/react";
-import Image from "next/image";
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
+  cn
+} from '@nextui-org/react';
+import Image from 'next/image';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
 
 const ImageUploadCard = ({
   imageData,
   setImageURLList,
   formState,
-  disabledRemoveBtn,
+  disabledRemoveBtn
 }: {
   imageData: {
     id: number;
@@ -56,8 +56,8 @@ const ImageUploadCard = ({
   const {
     valid: validImageURL,
     message: messageImageURL,
-    onBrowseImageStateRender,
-  } = useZodClientValidation(nameImageURL, imageURLSchema, "inpu", formState);
+    onBrowseImageStateRender
+  } = useZodClientValidation(nameImageURL, imageURLSchema, 'inpu', formState);
 
   let servMessageImageURL = extractServerErrorMessage(
     extractErrorMessge(formState, nameImageURL)
@@ -69,8 +69,8 @@ const ImageUploadCard = ({
     }
 
     const objectUrl = URL.createObjectURL(selectedFile);
-    setImageURLList((prevState) =>
-      prevState.map((state) =>
+    setImageURLList(prevState =>
+      prevState.map(state =>
         state.id === imageData.id ? { ...state, imageUrl: objectUrl } : state
       )
     );
@@ -85,29 +85,14 @@ const ImageUploadCard = ({
     }
   }, [imageData.imageUrl, onBrowseImageStateRender]);
 
-  // useEffect(() => {
-  //   if (
-  //     typeof imagePreviewUrl === "string" &&
-  //     imageData.imageUrl !== imagePreviewUrl
-  //   ) {
-  //     setImageURLList((prevState) =>
-  //       prevState.map((state) =>
-  //         state.id === imageData.id
-  //           ? { ...state, imageUrl: imagePreviewUrl }
-  //           : state
-  //       )
-  //     );
-  //   }
-  // }, [imagePreviewUrl, imageData.imageUrl, imageData.id, setImageURLList]);
-
   function handleCloseCard() {
-    setImageURLList((prevState) =>
+    setImageURLList(prevState =>
       prevState
-        .filter((state) => state.id !== imageData.id)
+        .filter(state => state.id !== imageData.id)
         .map((state, index) => ({
           ...state,
           id: index + 1,
-          orderNumber: index + 1,
+          orderNumber: index + 1
         }))
     );
   }
@@ -120,8 +105,8 @@ const ImageUploadCard = ({
   function handleOrderByChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     const newOrderBy = e.target.value;
-    setImageURLList((prevState) =>
-      prevState.map((state) =>
+    setImageURLList(prevState =>
+      prevState.map(state =>
         state.id === imageData.id
           ? { ...state, orderNumber: Number(newOrderBy) }
           : state
@@ -131,91 +116,90 @@ const ImageUploadCard = ({
 
   const imageUploadCard = (
     <Card
-      className={`p-3 bg-content3 border-2 gap-y-4 rounded-xl w-60 h-96
+      className={`h-96 w-60 gap-y-4 rounded-xl border-2 bg-content3 p-3
 ${
   validImageURL
-    ? "border-primary hover:border-secondary"
-    : "border-danger hover:border-danger/70"
+    ? 'border-primary hover:border-secondary'
+    : 'border-danger hover:border-danger/70'
 } `}
     >
-      <CardHeader className=" p-2">
-        <div className=" w-full aspect-square flex justify-center items-center text-center border-2 border-secondary overflow-hidden rounded-xl ">
+      <CardHeader className=' p-2'>
+        <div className=' flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border-2 border-secondary text-center '>
           {!imageData.imageUrl && (
             <Image
               src={getFallbackImagePath()}
-              alt="No image selected yet."
+              alt='No image selected yet.'
               width={250}
               height={250}
-              className="w-full aspect-square object-cover object-center"
+              className='aspect-square w-full object-cover object-center'
             />
           )}
           {imageData.imageUrl && (
             <Image
               src={imageData.imageUrl}
-              alt="The image selected by the user."
+              alt='The image selected by the user.'
               width={250}
               height={250}
-              className="aspect-square object-cover object-center"
+              className='aspect-square object-cover object-center'
             />
           )}
         </div>
       </CardHeader>
-      <CardFooter className="p-2 flex flex-col gap-4 w-full">
+      <CardFooter className='flex w-full flex-col gap-4 p-2'>
         {/* <div className="flex flex-col gap-4 w-full"> */}
         <Input
-          type="number"
+          type='number'
           readOnly
           value={imageData.id.toString()}
           name={nameImageID}
-          className="hidden"
+          className='hidden'
         />
+        {/* Image Url will be use to check if already uploaded to the server and for validation 
+        for client and server side */}
         <Input
-          type="text"
+          type='text'
           value={imageData.imageUrl}
-          // onChange={onChangeImageURL}
-          // onInput={onChangeImageURL}
           readOnly
           name={nameImageURL}
-          className="hidden"
-          // label={nameImageURL}
+          className='hidden'
         />
-
         {/* nextui Input has bug in select file */}
+        {/* Image FILE type is required in formdata in order to upload new image */}
         <input
-          className="w-full hidden"
-          type="file"
-          accept="image/png, image/jpeg"
+          className='hidden w-full'
+          type='file'
+          accept='image/png, image/jpeg'
           id={`image-file-${imageData.id}`}
           name={nameImageFile}
           ref={imageInputRef}
           onChange={handleSelectFile}
         />
         <Input
-          type="number"
-          label="Order By"
+          type='number'
+          label='Order By'
           isReadOnly
-          radius="sm"
+          radius='sm'
           name={nameImageOrder}
           value={imageData.orderNumber.toString()}
           onChange={handleOrderByChange}
-          min="1"
-          max="10"
-          className="hidden"
+          min='1'
+          max='10'
+          className='hidden'
         />
         <Button
-          className="w-full rounded-xl"
-          color="primary"
+          className='w-full rounded-xl'
+          color='primary'
           name={`select-image-btn-${imageData.id}`}
           onPress={handlePickClick}
-          radius="none"
+          radius='none'
         >
           Browse
         </Button>
         <Button
-          color="danger"
+          color='danger'
           name={`delete-btn-${imageData.id}`}
           onPress={handleCloseCard}
-          className="w-full rounded-xl"
+          className='w-full rounded-xl'
           isDisabled={disabledRemoveBtn}
         >
           Remove
@@ -230,9 +214,9 @@ ${
       <Tooltip
         content={messageImageURL}
         showArrow={true}
-        color="danger"
+        color='danger'
         classNames={{
-          content: cn("p-3"),
+          content: cn('p-3')
         }}
       >
         {imageUploadCard}

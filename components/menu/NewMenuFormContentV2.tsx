@@ -5,7 +5,6 @@ import {
   Input,
   Select,
   SelectItem,
-  Selection,
   Spinner,
   Switch,
   Textarea,
@@ -19,11 +18,14 @@ import {
   Control,
   Controller,
   FieldErrors,
+  UseFieldArrayReturn,
   UseFormRegister,
-  UseFormReset
+  UseFormReset,
+  UseFormSetValue
 } from 'react-hook-form';
 import { FormValues } from './MenuFormV2';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
+import ImageUploadV2 from './ImageUploadV2';
 
 const NewMenuFormContentV2 = ({
   categories,
@@ -31,7 +33,9 @@ const NewMenuFormContentV2 = ({
   isValid,
   errors,
   reset,
-  control
+  control,
+  imageUploadFieldArray,
+  setValue
 }: {
   categories: Category[];
   register: UseFormRegister<FormValues>;
@@ -39,6 +43,8 @@ const NewMenuFormContentV2 = ({
   errors: FieldErrors<FormValues>;
   reset: UseFormReset<FormValues>;
   control: Control<FormValues, any>;
+  imageUploadFieldArray: UseFieldArrayReturn<FormValues, 'imageUpload', 'id'>;
+  setValue: UseFormSetValue<FormValues>;
 }) => {
   // const categoryId = categories.at(0)?.id ?? 0;
   // const [selectedCategory, setSelectedCategory] = useState<number>(categoryId);
@@ -124,13 +130,19 @@ const NewMenuFormContentV2 = ({
           }}
         />
       </FormRow>
-      {/* <FormRow>
+      <FormRow>
         <span className=' font-semibold'>Cover Photos</span>
       </FormRow>
       <FormRow>
-        <ImageUpload formState={formState} />
+        <ImageUploadV2
+          imageUploadFieldArray={imageUploadFieldArray}
+          register={register}
+          setValue={setValue}
+          control={control}
+          errors={errors}
+        />
       </FormRow>
-      <FormRow>
+      {/* <FormRow>
         <span className=' font-semibold'>Price List</span>
       </FormRow>
       <FormRow>

@@ -95,7 +95,7 @@ export const newMenuAction = async (
     console.log('newMenuAction formData:', formData);
 
     const { menuName, description, category, isFeatured } =
-      NewMenuFormDataSchema.parse(formData);
+      await NewMenuFormDataSchema.parseAsync(formData);
 
     console.log(
       'newMenuAction data:',
@@ -110,12 +110,16 @@ export const newMenuAction = async (
       message: `New Menu is in development mpde...`
     };
   } catch (e) {
-    const errorMessage = getErrorMessage(e);
-    console.log('SERVER ACTION ERROR!', typeof e, errorMessage);
+    // const errorMessage = getErrorMessage(e);
+    console.log('SERVER ACTION ERROR!');
     // In case of a ZodError (caused by our validation) we're adding issues to our response
     if (e instanceof ZodError) {
-      e.issues.map(issue =>
-        console.log('ZodError', issue.path.join('.'), issue.message)
+      e.issues.map((issue, index) =>
+        console.log(
+          `ZodError ${index + 1}`,
+          issue.path.join('.'),
+          issue.message
+        )
       );
       return {
         status: 'error',

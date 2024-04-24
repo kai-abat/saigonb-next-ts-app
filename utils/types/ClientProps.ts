@@ -1,9 +1,9 @@
-import { Category } from './Props';
+import { Category, Menu } from './Props';
 
 export declare interface NewMenuProps {
   categories?: Category[];
   category?: Category;
-  id?: number;
+  menu?: Menu;
 }
 
 export declare interface NewMenuValuesProps {}

@@ -7,11 +7,10 @@ import { NewMenuProps } from '@/utils/types/ClientProps';
 import NewMenuFormContent from './NewMenuFormContent';
 import { useRouter } from 'next/navigation';
 
-const NewMenuForm = ({ categories = [] }: NewMenuProps) => {
-  const [state, formAction] = useFormState<State, FormData>(
-    newMenuAction,
-    null
-  );
+const MenuForm = ({ categories = [], menu }: NewMenuProps) => {
+  const menuId = menu?.id;
+  const menuAction = newMenuAction.bind(null, menuId);
+  const [state, formAction] = useFormState<State, FormData>(menuAction, null);
   const router = useRouter();
 
   // Show the return value/state of server action newMenuAction
@@ -25,7 +24,8 @@ const NewMenuForm = ({ categories = [] }: NewMenuProps) => {
     }
     if (state.status === 'success') {
       alert(JSON.stringify(state));
-      router.push('/menu/all');
+      // Todo: uncomment this after development
+      // router.push('/menu/all');
     }
   }, [state, router]);
 
@@ -42,4 +42,4 @@ const NewMenuForm = ({ categories = [] }: NewMenuProps) => {
     </>
   );
 };
-export default NewMenuForm;
+export default MenuForm;

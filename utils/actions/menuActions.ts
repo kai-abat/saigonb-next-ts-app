@@ -6,7 +6,11 @@ import { ZodError, z } from 'zod';
 import { createSupabaseServerClient } from '../supabase/server';
 import { FileBody, SupaCoverPhotoFile } from '../types/SupabaseCompProps';
 import { Database } from '../types/supabase';
-import { NewMenuSchema, imageURLSchema } from '../zod/NewMenuSchema';
+import {
+  NewMenuFormDataSchema,
+  NewMenuSchema,
+  imageURLSchema
+} from '../zod/NewMenuSchema';
 import { fetchMenuById } from '../services/MenuAPI';
 import { getErrorMessage } from '../ErrorHandling';
 
@@ -79,9 +83,60 @@ export const deleteMenuAction = async (
 };
 
 export const newMenuAction = async (
+  menuId: number | undefined,
   prevState: State,
-  formData: FormData,
-  menuId?: number
+  formData: FormData
+): Promise<State> => {
+  try {
+    // we're gonna put a delay in here to simulate some kind of data processing like persisting data
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    console.log('Menu ID:', menuId);
+    console.log('newMenuAction formData:', formData);
+
+    const { menuName, description, category, isFeatured } =
+      NewMenuFormDataSchema.parse(formData);
+
+    console.log(
+      'newMenuAction data:',
+      menuName,
+      description,
+      category,
+      isFeatured
+    );
+
+    return {
+      status: 'success',
+      message: `New Menu is in development mpde...`
+    };
+  } catch (e) {
+    const errorMessage = getErrorMessage(e);
+    console.log('SERVER ACTION ERROR!', typeof e, errorMessage);
+    // In case of a ZodError (caused by our validation) we're adding issues to our response
+    if (e instanceof ZodError) {
+      e.issues.map(issue =>
+        console.log('ZodError', issue.path.join('.'), issue.message)
+      );
+      return {
+        status: 'error',
+        message: 'Invalid form data',
+        errors: e.issues.map(issue => ({
+          path: issue.path.join('.'),
+          message: `SERVER: ${issue.message}`
+        }))
+      };
+    }
+    return {
+      status: 'error',
+      message: 'Something went wrong. Please try again.'
+    };
+  }
+};
+
+export const newMenuAction2 = async (
+  menuId: number | undefined,
+  prevState: State,
+  formData: FormData
 ): Promise<State> => {
   try {
     // we're gonna put a delay in here to simulate some kind of data processing like persisting data

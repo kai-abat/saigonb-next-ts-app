@@ -22,9 +22,6 @@ import {
   isFeaturedSchema,
   menuNameSchema
 } from '@/utils/zod/NewMenuSchema';
-import { useState } from 'react';
-import { extractErrorMessge } from '@/utils/Helper';
-import SelectDropDown from '../ui/SelectDropDown';
 import Button from '../ui/Button';
 
 const NewMenuFormContent = ({

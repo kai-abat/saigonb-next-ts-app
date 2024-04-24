@@ -1,9 +1,9 @@
-import MenuForm from '@/components/menu/MenuForm';
+import MenuFormV2 from '@/components/menu/MenuFormV2';
 import { extractNumberFromURLParams } from '@/utils/Helper';
 import { fetchCategoriesOnly, fetchMenuById } from '@/utils/services/MenuAPI';
 import { Menu, PageProps } from '@/utils/types/Props';
 
-const NewMenuPage = async (props: PageProps) => {
+const MenuFormPage = async (props: PageProps) => {
   const { searchParams } = props;
 
   let { id } = searchParams;
@@ -14,12 +14,12 @@ const NewMenuPage = async (props: PageProps) => {
     menu = await fetchMenuById(menuId);
   }
 
-  console.log('NewMenuPage:', menu);
+  console.log('MenuFormPage:', menu);
   const categories = await fetchCategoriesOnly();
   return (
     <div className='flex w-full flex-col gap-4'>
-      <MenuForm categories={categories} menu={menu} />
+      <MenuFormV2 categories={categories} menu={menu} />
     </div>
   );
 };
-export default NewMenuPage;
+export default MenuFormPage;

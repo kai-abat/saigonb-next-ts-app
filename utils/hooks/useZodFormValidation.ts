@@ -1,7 +1,7 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { SafeParseReturnType, z } from "zod";
-import { State } from "../actions/menuActions";
-import { extractErrorMessge, extractServerErrorMessage } from "../Helper";
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { SafeParseReturnType, z } from 'zod';
+import { State } from '../actions/menuActions';
+import { extractErrorMessge, extractServerErrorMessage } from '../Helper';
 
 const useZodClientValidation = (
   name: string,
@@ -10,7 +10,7 @@ const useZodClientValidation = (
   formState: State
 ) => {
   const [valid, setValid] = useState<boolean>(true);
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<string>('');
   const nameRef = useRef<string>(name);
   const schemaRef = useRef(schema);
   const componentTypeRef = useRef(componentType);
@@ -23,7 +23,7 @@ const useZodClientValidation = (
       if (errMessage) {
         setValid(false);
         setMessage(errMessage);
-        console.log("servMessageMenuName", servMessageMenuName);
+        console.log('servMessageMenuName', servMessageMenuName);
       }
     }
   }, [formState, name]);
@@ -45,7 +45,7 @@ const useZodClientValidation = (
 
     switch (componentTypeRef.current.toLowerCase()) {
       // checkbox / switch
-      case "checkbox":
+      case 'checkbox':
         checkSchema(name, event.target.checked);
         break;
 
@@ -60,7 +60,7 @@ const useZodClientValidation = (
     let res: any;
     res = schemaRef.current.safeParse(value);
 
-    console.log("checkSchema", field, value);
+    console.log('checkSchema', field, value);
     if (res.error != undefined) {
       var obj = JSON.parse(res.error);
 
@@ -68,7 +68,7 @@ const useZodClientValidation = (
       setMessage(obj[0].message);
     } else {
       setValid(true);
-      setMessage("");
+      setMessage('');
     }
   };
 
@@ -78,7 +78,7 @@ const useZodClientValidation = (
     onChangeEvent,
     onChangeSelectEvent,
     name,
-    onBrowseImageStateRender,
+    onBrowseImageStateRender
   };
 };
 

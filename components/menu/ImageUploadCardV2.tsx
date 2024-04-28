@@ -45,6 +45,7 @@ const ImageUploadCardV2 = ({
 
   const imageUrlName = `imageUpload.${index}.imageUrl`;
   const orderNumberName = `imageUpload.${index}.orderNumber`;
+  const imageUploadFileName = `imageUpload.${index}.file`;
 
   const imageUrlFieldState = getFieldState(imageUrlName);
 
@@ -180,7 +181,8 @@ ${
           className='hidden w-full'
           type='file'
           accept='image/png, image/jpeg'
-          multiple
+          name={imageUploadFileName}
+          multiple={false}
           ref={imageInputRef}
           onChange={handleSelectFile}
         />

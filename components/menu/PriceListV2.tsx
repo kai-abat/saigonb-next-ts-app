@@ -19,7 +19,7 @@ const PriceListV2 = () => {
 
   // react hook form useFieldArray
   const { fields, append, remove } = priceListFieldArray;
-  const defaultValues = { id: 1, type: 'Hot', size: '8oz', price: 100 };
+  const defaultValues = { priceId: 0, type: 'Hot', size: '8oz', price: 100 };
 
   return (
     <div
@@ -39,7 +39,7 @@ const PriceListV2 = () => {
 
       <div
         className='flex h-80 w-60 cursor-pointer items-center justify-center rounded-xl border-2 border-primary bg-content3 hover:border-secondary'
-        onClick={() => append({ type: 'Hot', size: '12oz', price: 100 })}
+        onClick={() => append(defaultValues)}
       >
         <MdAdd className='h-full w-full fill-stone-300' />
       </div>

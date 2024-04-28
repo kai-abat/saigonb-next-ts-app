@@ -118,23 +118,41 @@ export const newMenuAction = async (
       }
     }
 
-    console.log(
-      'newMenuAction data:',
-      menuName,
-      description,
-      category,
-      isFeatured,
-      imageUpload,
-      priceList
-    );
+    // console.log(
+    //   'newMenuAction data:',
+    //   menuName,
+    //   description,
+    //   category,
+    //   isFeatured,
+    //   imageUpload,
+    //   priceList
+    // );
 
     // Save data to database
     // Menu
-    // insertMenu(menuId, {
-    //   name: menuName,
-    //   description: description,
-    //   categoryId: category
-    // });
+    const menuDB = await insertMenu(menuId, {
+      name: menuName,
+      description: description,
+      categoryId: category,
+      isFeatured: isFeatured
+    });
+
+    console.log('menuDB', menuDB);
+
+    let newPrices: Database['public']['Tables']['MenuPrice']['Insert'][] = [];
+    priceList.forEach(price =>
+      newPrices.push({
+        id: price.priceId > 0 ? price.priceId : undefined,
+        type: price.type,
+        size: price.size,
+        price: price.price
+      })
+    );
+
+    console.log('newPrices', newPrices);
+    const priceDB = await insertPriceList(menuId, newPrices);
+
+    console.log('priceDB', priceDB);
 
     return {
       status: 'success',
@@ -350,19 +368,53 @@ const insertMenu = async (
 };
 
 const insertPriceList = async (
-  menuPrices: Database['public']['Tables']['MenuPrice']['Insert'][],
-  menuId: number | null | undefined
+  menuId: number | undefined,
+  menuPrices: Database['public']['Tables']['MenuPrice']['Insert'][]
 ) => {
+  if (!menuId || menuId < 1) return;
+
   menuPrices = menuPrices.map(price => {
     return { ...price, menuId: menuId };
   });
   const supabase = createSupabaseServerClient();
-  let priceQuery = supabase.from('MenuPrice').insert([...menuPrices]);
-  const { data } = await priceQuery.select();
-  return data;
-};
 
-const updatePriceList = async () => {};
+  const { data: priceListDBBeforeAlter } = await supabase
+    .from('MenuPrice')
+    .select('id')
+    .eq('menuId', menuId)
+    .select();
+
+  const priceListDB = await Promise.all(
+    menuPrices.map(async price => {
+      if (price.id && price.id > 0) {
+        let priceQuery = supabase
+          .from('MenuPrice')
+          .update(price)
+          .eq('id', price.id);
+        const { data } = await priceQuery.select().single();
+        if (data) {
+          return data;
+        }
+      } else {
+        let priceQuery = supabase.from('MenuPrice').insert(price);
+        const { data } = await priceQuery.select().single();
+        if (data) {
+          return data;
+        }
+      }
+    })
+  );
+
+  // delete not existing database menu from menuPrices
+  priceListDBBeforeAlter?.map(async priceDB => {
+    const found = menuPrices.find(menuPrice => menuPrice.id === priceDB.id);
+    if (!found) {
+      await supabase.from('MenuPrice').delete().eq('id', priceDB.id);
+    }
+  });
+
+  return priceListDB;
+};
 
 const insertCoverPhotos = async (
   coverPhotos: SupaCoverPhotoFile[],
@@ -406,7 +458,7 @@ const insertCoverPhotos = async (
 
         const { error: storageError } = await supabase.storage
           .from('saigon')
-          .upload(imageFilename, coverPhoto.imageFile);
+          .upload(imageFilename, coverPhoto.imageFile, { upsert: true });
 
         if (storageError) {
           console.log('Storage error', imageFilename);

@@ -59,7 +59,8 @@ export const NewMenuFormDataSchema = zfd.formData({
   imageUpload: z.array(
     zfd.formData({
       imageId: zfd.numeric(z.number()),
-      imageUrl: zfd.text(imageURLSchema)
+      imageUrl: zfd.text(imageURLSchema),
+      orderNumber: zfd.numeric(z.number())
     })
   ),
   priceList: z

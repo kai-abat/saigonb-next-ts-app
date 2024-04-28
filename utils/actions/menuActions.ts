@@ -108,6 +108,13 @@ export const newMenuAction = async (
       priceList
     } = await NewMenuFormDataSchema.parseAsync(formData);
 
+    let coverPhotosFromFormData = imageUpload.map((item, index) => ({
+      imageId: item.imageId,
+      imageUrl: item.imageUrl,
+      orderNumber: item.orderNumber,
+      imageFile: formData.get(`imageUpload.${index}.file`) as File
+    }));
+
     if (!menuId) {
       // Database Validation
       const menuDBFromName = await fetchMenuByName(menuName);
@@ -118,15 +125,7 @@ export const newMenuAction = async (
       }
     }
 
-    // console.log(
-    //   'newMenuAction data:',
-    //   menuName,
-    //   description,
-    //   category,
-    //   isFeatured,
-    //   imageUpload,
-    //   priceList
-    // );
+    console.log('newMenuAction data:', menuName, coverPhotosFromFormData);
 
     // Save data to database
     // Menu
@@ -154,13 +153,32 @@ export const newMenuAction = async (
 
     console.log('priceDB', priceDB);
 
+    let coverPhotos: SupaCoverPhotoFile[] = [];
+    coverPhotosFromFormData.map(item => {
+      coverPhotos.push({
+        menuId: menuId,
+        id: item.imageId,
+        imageUrl: item.imageUrl,
+        imageFile: item.imageFile,
+        orderNumber: item.orderNumber
+      });
+    });
+
+    const coverPhotosDB = await insertCoverPhotos(
+      coverPhotos,
+      menuName,
+      menuId
+    );
+
+    console.log('coverPhotosDB', coverPhotosDB);
+
     return {
       status: 'success',
       message: `New Menu is in development mode...`
     };
   } catch (e: any) {
-    // const errorMessage = getErrorMessage(e);
-    console.log('SERVER ACTION ERROR!');
+    const errorMessage = getErrorMessage(e);
+    console.log('SERVER ACTION ERROR!', errorMessage);
     // In case of a ZodError (caused by our validation) we're adding issues to our response
     if (e instanceof ZodError) {
       e.issues.map((issue, index) =>
@@ -175,6 +193,8 @@ export const newMenuAction = async (
         }))
       };
     }
+    revalidatePath('/menu', 'layout');
+
     return {
       status: 'error',
       message: 'Something went wrong. Please try again.',
@@ -421,11 +441,20 @@ const insertCoverPhotos = async (
   menuName: string,
   menuId: number | null | undefined
 ) => {
+  // no changes in cover photos if no menuId passed
+  if (!menuId || menuId < 1) return;
+
   const supabase = createSupabaseServerClient();
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 
   // upload cover photo to database
   if (!supabaseUrl) return null;
+
+  const { data: menuCoverPhotoDBBeforeAlter } = await supabase
+    .from('MenuCoverPhoto')
+    .select('id')
+    .eq('menuId', menuId)
+    .select();
 
   menuName = menuName.split(' ').join('-');
 
@@ -446,6 +475,7 @@ const insertCoverPhotos = async (
 
       const coverPhotoDB: Database['public']['Tables']['MenuCoverPhoto']['Insert'] =
         {
+          id: coverPhoto.id && coverPhoto.id > 0 ? coverPhoto.id : undefined,
           imageUrl: imagePath,
           menuId: menuId,
           orderNumber: coverPhoto.orderNumber
@@ -470,14 +500,38 @@ const insertCoverPhotos = async (
 
       if (!error) {
         // store data to supabasse
-        let converPhotoQuery = supabase
-          .from('MenuCoverPhoto')
-          .insert([coverPhotoDB]);
-        const { data } = await converPhotoQuery.select().single();
-        return data;
+
+        // insert
+        if (!coverPhotoDB.id) {
+          let converPhotoQuery = supabase
+            .from('MenuCoverPhoto')
+            .insert(coverPhotoDB);
+          const { data } = await converPhotoQuery.select().single();
+          return data;
+        } else {
+          let converPhotoQuery = supabase
+            .from('MenuCoverPhoto')
+            .update({
+              imageUrl: coverPhotoDB.imageUrl,
+              menuId: menuId,
+              orderNumber: coverPhotoDB.orderNumber
+            })
+            .eq('id', coverPhotoDB.id);
+          const { data } = await converPhotoQuery.select().single();
+          return data;
+        }
       }
     })
   );
+
+  // delete not existing database menu from menuPrices
+  menuCoverPhotoDBBeforeAlter?.map(async db => {
+    const found = coverPhotosDB.find(cover => cover?.id === db.id);
+    if (!found) {
+      await supabase.storage.from('saigon').remove([db.imageUrl]);
+      await supabase.from('MenuCoverPhoto').delete().eq('id', db.id);
+    }
+  });
 
   return coverPhotosDB;
 };

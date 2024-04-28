@@ -89,9 +89,9 @@ const MenuFormV2 = ({ categories = [], menu }: NewMenuProps) => {
     }
 
     if (state.status === 'success') {
-      alert(JSON.stringify(state));
+      // alert(JSON.stringify(state));
       // Todo: uncomment this after development
-      // router.push('/menu/all');
+      router.push('/menu/all');
     }
   }, [state, setError, router]);
 

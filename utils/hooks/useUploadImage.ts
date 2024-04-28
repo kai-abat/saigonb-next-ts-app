@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 export default function useUploadImage() {
-  const [selectedFile, setSelectedFile] = useState<any>();
+  const [selectedFile, setSelectedFile] = useState<File>();
   // const [imagePreviewUrl, setImagePreviewUrl] = useState<string | undefined>();
   const imageInputRef = useRef<HTMLInputElement>(null);
 
@@ -31,8 +31,7 @@ export default function useUploadImage() {
     }
 
     const file = event.target.files[0];
-
-    setSelectedFile(event.target.files[0]);
+    setSelectedFile(file);
   }
 
   return {

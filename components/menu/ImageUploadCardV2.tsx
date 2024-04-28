@@ -41,7 +41,8 @@ const ImageUploadCardV2 = ({
   >();
   const { handlePickClick, handleImageChange, imageInputRef, selectedFile } =
     useUploadImage();
-  const { setValue, getFieldState, clearErrors, getValues } = useFormContext();
+  const { setValue, getFieldState, clearErrors, getValues, register } =
+    useFormContext();
 
   const imageUrlName = `imageUpload.${index}.imageUrl`;
   const orderNumberName = `imageUpload.${index}.orderNumber`;
@@ -147,7 +148,7 @@ ${
           type='number'
           label='Image ID'
           isReadOnly
-          className='hidden'
+          // className='hidden'
         />
         {/* Image Url will be use to check if already uploaded to the server and for validation 
         for client and server side */}
@@ -156,7 +157,7 @@ ${
           type='text'
           label={`Image Url ${index + 1}`}
           isReadOnly
-          className='hidden'
+          // className='hidden'
         />
 
         {/* order number */}
@@ -178,7 +179,7 @@ ${
         {/* nextui Input has bug in select file */}
         {/* Image FILE type is required in formdata in order to upload new image */}
         <input
-          className='hidden w-full'
+          // className='hidden w-full'
           type='file'
           accept='image/png, image/jpeg'
           name={imageUploadFileName}

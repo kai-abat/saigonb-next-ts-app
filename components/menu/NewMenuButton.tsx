@@ -14,7 +14,7 @@ const NewMenuButton = () => {
         size='lg'
         className='w-full max-w-[300px]'
         startContent={<VscNewFile />}
-        href='/menu/new-menu'
+        href='/menu/menu-form'
         as={Link}
       >
         New Menu

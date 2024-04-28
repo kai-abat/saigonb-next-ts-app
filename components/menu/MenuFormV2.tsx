@@ -1,11 +1,5 @@
 'use client';
-import {
-  FieldErrors,
-  useForm,
-  UseFormRegister,
-  FieldPath,
-  useFieldArray
-} from 'react-hook-form';
+import { useForm, FieldPath, FormProvider } from 'react-hook-form';
 import { newMenuAction, State } from '@/utils/actions/menuActions';
 import { useFormState } from 'react-dom';
 import Title from '../ui/Title';
@@ -15,50 +9,58 @@ import { useRouter } from 'next/navigation';
 import NewMenuFormContentV2 from './NewMenuFormContentV2';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { NewMenuFormDataSchema } from '@/utils/zod/NewMenuSchema';
-import { Category } from '@/utils/types/Props';
+import { Menu } from '@/utils/types/Props';
+import { extractServerErrorMessage } from '@/utils/Helper';
 
 export interface FormValues {
   menuName: string;
   description: string;
-  category: number;
+  category: string;
   isFeatured: boolean;
   imageUpload: {
     imageId: number;
     imageUrl: string;
+    orderNumber: number;
+  }[];
+  priceList: {
+    priceId: number;
+    type: string;
+    size: string;
+    price: number;
   }[];
 }
 
 const MenuFormV2 = ({ categories = [], menu }: NewMenuProps) => {
   const [clientSideValidation, setClientSideValidation] = useState(true);
+  const isEditSession = !menu;
+
+  console.log('MenuFormV2 Props', isEditSession, menu);
 
   // get 1st category
-  const category1st = categories[0].id;
+  const category1st = categories[0]?.id.toString();
   // react hook form
-  const {
-    register,
-    formState: { isValid, errors },
-    setError,
-    reset,
-    control,
-    setValue
-  } = useForm<FormValues>({
+  const methods = useForm<FormValues>({
     mode: 'all',
-    defaultValues: {
-      menuName: '',
-      description: '',
-      // category: category1st,
-      isFeatured: true,
-      imageUpload: [{ imageId: 0, imageUrl: '' }]
-    },
+    defaultValues: getDefaultValues(menu),
     resolver: clientSideValidation
       ? zodResolver(NewMenuFormDataSchema)
       : undefined
   });
 
-  const imageUploadFieldArray = useFieldArray({
-    control,
-    name: 'imageUpload'
-  });
+  const {
+    formState: { isValid, errors },
+    setError
+  } = methods;
+
+  // const imageUploadFieldArray = useFieldArray({
+  //   control,
+  //   name: 'imageUpload'
+  // });
+
+  // const priceListFieldArray = useFieldArray({
+  //   control,
+  //   name: 'priceList'
+  // });
 
   // useFormState
   const menuId = menu?.id;
@@ -75,8 +77,13 @@ const MenuFormV2 = ({ categories = [], menu }: NewMenuProps) => {
     if (state.status === 'error') {
       console.log('ERRORS!:', state.errors);
       state.errors?.forEach(error => {
-        setError(error.path as FieldPath<FormValues>, {
-          message: error.message
+        let path = error.path;
+        if (path.match('@')) {
+          const paths = path.split('@');
+          path = paths[1];
+        }
+        setError(path as FieldPath<FormValues>, {
+          message: extractServerErrorMessage(error.message)
         });
       });
     }
@@ -88,26 +95,47 @@ const MenuFormV2 = ({ categories = [], menu }: NewMenuProps) => {
     }
   }, [state, setError, router]);
 
+  function getDefaultValues(menu: NewMenuProps['menu']): FormValues {
+    if (menu) {
+      return {
+        menuName: menu.name,
+        description: !menu.description ? '' : menu.description,
+        category: menu.category?.id.toString() ?? category1st,
+        isFeatured: menu.isFeatured,
+        imageUpload: menu.coverPhotos.map(coverPhoto => ({
+          imageId: coverPhoto.id,
+          imageUrl: coverPhoto.image,
+          orderNumber: coverPhoto.orderNumber
+        })),
+        priceList: menu.price.map(item => ({
+          priceId: item.id,
+          type: item.type,
+          size: item.size,
+          price: item.price ?? 0
+        }))
+      };
+    }
+    return {
+      menuName: '',
+      description: '',
+      category: category1st,
+      isFeatured: true,
+      imageUpload: [{ imageId: 0, imageUrl: '', orderNumber: 1 }],
+      priceList: [{ priceId: 0, type: 'Hot', size: '12oz', price: 100 }]
+    };
+  }
+
   return (
-    <>
+    <FormProvider {...methods}>
       <header>
         <Title capitalize>New Menu</Title>
       </header>
       <main className=''>
         <form className='flex flex-col gap-3' action={formAction}>
-          <NewMenuFormContentV2
-            categories={categories}
-            register={register}
-            isValid={isValid}
-            errors={errors}
-            reset={reset}
-            control={control}
-            imageUploadFieldArray={imageUploadFieldArray}
-            setValue={setValue}
-          />
+          <NewMenuFormContentV2 categories={categories} />
         </form>
       </main>
-    </>
+    </FormProvider>
   );
 };
 export default MenuFormV2;

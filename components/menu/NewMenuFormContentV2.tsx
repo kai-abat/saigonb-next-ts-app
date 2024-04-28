@@ -3,8 +3,6 @@
 import {
   Divider,
   Input,
-  Select,
-  SelectItem,
   Spinner,
   Switch,
   Textarea,
@@ -14,150 +12,128 @@ import FormRow from '../form/FormRow';
 import { useFormStatus } from 'react-dom';
 import { Category } from '@/utils/types/Props';
 import Button from '../ui/Button';
-import {
-  Control,
-  Controller,
-  FieldErrors,
-  UseFieldArrayReturn,
-  UseFormRegister,
-  UseFormReset,
-  UseFormSetValue
-} from 'react-hook-form';
-import { FormValues } from './MenuFormV2';
-import { ChangeEvent } from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import ImageUploadV2 from './ImageUploadV2';
+import PriceListV2 from './PriceListV2';
+import SelectController, {
+  SelectControllerItems
+} from '../nextui/controllers-react-hook-form/SelectController';
+import InputController from '../nextui/controllers-react-hook-form/InputController';
+import { useEffect, useState } from 'react';
+import { error } from 'console';
+import TextAreaController from '../nextui/controllers-react-hook-form/TextAreaController';
 
-const NewMenuFormContentV2 = ({
-  categories,
-  register,
-  isValid,
-  errors,
-  reset,
-  control,
-  imageUploadFieldArray,
-  setValue
-}: {
-  categories: Category[];
-  register: UseFormRegister<FormValues>;
-  isValid: boolean;
-  errors: FieldErrors<FormValues>;
-  reset: UseFormReset<FormValues>;
-  control: Control<FormValues, any>;
-  imageUploadFieldArray: UseFieldArrayReturn<FormValues, 'imageUpload', 'id'>;
-  setValue: UseFormSetValue<FormValues>;
-}) => {
+const NewMenuFormContentV2 = ({ categories }: { categories: Category[] }) => {
+  const [isSubmit, setIsSubmit] = useState(false);
+  const { pending } = useFormStatus();
+  const {
+    register,
+    formState: { errors, isValid, disabled, touchedFields },
+    control,
+    reset,
+    clearErrors
+  } = useFormContext();
+
   // const categoryId = categories.at(0)?.id ?? 0;
   // const [selectedCategory, setSelectedCategory] = useState<number>(categoryId);
   // const [isValid, setIsValid] = useState<boolean>(false);
   // Pending reflects the loading state of our form
-  const { pending } = useFormStatus();
+
+  const categoryControllerItems: SelectControllerItems[] = categories.map(
+    category => ({
+      value: category.id.toString(),
+      label: category.altName ?? category.name
+    })
+  );
+
+  useEffect(() => {
+    if (!isSubmit && pending) {
+      setIsSubmit(true);
+      clearErrors();
+    }
+
+    if (!pending && isSubmit) {
+      setIsSubmit(false);
+    }
+  }, [pending, isSubmit, clearErrors]);
 
   return (
     <>
       <FormRow>
-        <Input
+        <InputController
+          controllerName={`menuName`}
+          label='Menu Name'
+          type='text'
+          className=' min-w-[300px] max-w-[500px]'
+          isAutoFocus
+          showError
+        />
+        {/* <Input
           color='default'
           type='text'
           label='Menu Name'
           radius='sm'
           className=' min-w-[300px] max-w-[500px]'
           {...register('menuName')}
-          errorMessage={errors.menuName?.message}
-          // isInvalid={errors.menuName?.message}
-          autoFocus
-          // errorMessage={
-          //   servMessageMenuName ? servMessageMenuName : messageMenuName
-          // }
-          // isInvalid={!validMenuName || servMessageMenuName !== null}
-        />
+          errorMessage={errors.menuName?.message?.toString()}
+        /> */}
       </FormRow>
       <FormRow>
-        <Textarea
+        <TextAreaController
+          controllerName='description'
+          label='Description'
+          className=' min-w-[300px] max-w-[500px]'
+          showError
+        />
+        {/* <Textarea
           color='default'
           minRows={3}
           label='Description'
           radius='sm'
           className=' min-w-[300px] max-w-[500px]'
           {...register('description')}
-          errorMessage={errors.description?.message}
+          errorMessage={errors.description?.message?.toString()}
           // isInvalid={}
-        />
+        /> */}
       </FormRow>
       <FormRow>
-        <Controller
-          control={control}
-          name='category'
-          render={({ field: { onBlur, name, ref, onChange, value } }) => {
-            const handleSelectionChange = (
-              e: ChangeEvent<HTMLSelectElement>
-            ) => {
-              onChange(e.target.value);
-              // setSelectedCategory(e.target.value);
-            };
-
-            return (
-              <Select
-                ref={ref}
-                onBlur={onBlur}
-                name={name}
-                onChange={handleSelectionChange}
-                label='Select Category'
-                className=' min-w-[300px] max-w-[500px]'
-                errorMessage={errors.category?.message}
-                items={categories}
-                selectedKeys={[value]}
-                // onSelectionChange={setSelectedCategory}
-                // defaultSelectedKeys={[value]}
-                // {...register('category')}
-              >
-                {/* {category => (
-              <SelectItem key={category.id} value={category.name}>
-                {category.altName}
-              </SelectItem>
-            )} */}
-                {category => (
-                  <SelectItem key={category.id} value={category.id}>
-                    {category.name}
-                  </SelectItem>
-                )}
-                {/* {categories.map(category => (
-                  <SelectItem key={category.name} value={category.name}>
-                    {category.altName}
-                  </SelectItem>
-                ))} */}
-              </Select>
-            );
-          }}
+        <SelectController
+          controllerName='category'
+          items={categoryControllerItems}
+          label='Select Category'
+          className=' min-w-[300px] max-w-[500px]'
+          showError
         />
       </FormRow>
+
       <FormRow>
         <span className=' font-semibold'>Cover Photos</span>
       </FormRow>
       <FormRow>
-        <ImageUploadV2
-          imageUploadFieldArray={imageUploadFieldArray}
-          register={register}
-          setValue={setValue}
-          control={control}
-          errors={errors}
-        />
+        <ImageUploadV2 />
       </FormRow>
-      {/* <FormRow>
+      <FormRow>
         <span className=' font-semibold'>Price List</span>
       </FormRow>
       <FormRow>
-        <PriceList />
-      </FormRow> */}
+        <PriceListV2 />
+      </FormRow>
 
       <FormRow>
         <Controller
           control={control}
           name='isFeatured'
-          render={({ field: { onChange, onBlur, value, ref } }) => (
+          defaultValue={true}
+          render={({
+            field: { onChange, onBlur, value, ref, name, disabled }
+          }) => (
             <Switch
-              onChange={onChange} // send value to hook form
+              onChange={e => onChange(e.target.checked)} // send value to hook form
               onBlur={onBlur} // notify when input is touched/blur
               isSelected={value}
+              ref={ref}
+              name={name}
+              isDisabled={disabled}
               classNames={{
                 base: cn(
                   'inline-flex flex-row-reverse w-full max-w-md bg-content2 hover:bg-content3 items-center',
@@ -197,7 +173,7 @@ const NewMenuFormContentV2 = ({
             color='secondary'
             type='submit'
             className='w-full min-w-[100px] max-w-full sm:max-w-[200px] lg:max-w-[300px]'
-            isDisabled={pending}
+            isDisabled={pending || isValid}
           >
             {!pending ? (
               'Save'
@@ -216,7 +192,7 @@ const NewMenuFormContentV2 = ({
             isDisabled={pending}
             onPress={reset}
           >
-            Clear
+            Reset
           </Button>
         </div>
       </FormRow>

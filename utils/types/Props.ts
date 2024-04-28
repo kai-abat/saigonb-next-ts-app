@@ -37,6 +37,7 @@ export declare interface Menu {
 export declare interface MenuCoverPhoto {
   id: number;
   image: string;
+  orderNumber: number;
 }
 
 export declare interface Price {

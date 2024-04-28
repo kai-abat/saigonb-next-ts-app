@@ -14,7 +14,7 @@ const MenuFormPage = async (props: PageProps) => {
     menu = await fetchMenuById(menuId);
   }
 
-  console.log('MenuFormPage:', menu);
+  // console.log('MenuFormPage:', menu);
   const categories = await fetchCategoriesOnly();
   return (
     <div className='flex w-full flex-col gap-4'>

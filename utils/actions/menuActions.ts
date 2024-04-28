@@ -11,7 +11,7 @@ import {
   NewMenuSchema,
   imageURLSchema
 } from '../zod/NewMenuSchema';
-import { fetchMenuById } from '../services/MenuAPI';
+import { fetchMenuById, fetchMenuByName } from '../services/MenuAPI';
 import { getErrorMessage } from '../ErrorHandling';
 
 export type State =
@@ -91,48 +91,76 @@ export const newMenuAction = async (
     // we're gonna put a delay in here to simulate some kind of data processing like persisting data
     await new Promise(resolve => setTimeout(resolve, 2000));
 
+    if (formData.get('isFeatured') === '') {
+      formData.set('isFeatured', 'true');
+    }
+    console.clear();
     console.log('Menu ID:', menuId);
     console.log('newMenuAction formData:', formData);
 
-    const { menuName, description, category, isFeatured } =
-      await NewMenuFormDataSchema.parseAsync(formData);
+    // Zod Validation
+    const {
+      menuName,
+      description,
+      category,
+      isFeatured,
+      imageUpload,
+      priceList
+    } = await NewMenuFormDataSchema.parseAsync(formData);
+
+    if (!menuId) {
+      // Database Validation
+      const menuDBFromName = await fetchMenuByName(menuName);
+      if (menuDBFromName) {
+        let err = new Error(`SERVER: Menu ${menuName} already exists`);
+        err.name = 'menuName';
+        throw err;
+      }
+    }
 
     console.log(
       'newMenuAction data:',
       menuName,
       description,
       category,
-      isFeatured
+      isFeatured,
+      imageUpload,
+      priceList
     );
+
+    // Save data to database
+    // Menu
+    // insertMenu(menuId, {
+    //   name: menuName,
+    //   description: description,
+    //   categoryId: category
+    // });
 
     return {
       status: 'success',
-      message: `New Menu is in development mpde...`
+      message: `New Menu is in development mode...`
     };
-  } catch (e) {
+  } catch (e: any) {
     // const errorMessage = getErrorMessage(e);
     console.log('SERVER ACTION ERROR!');
     // In case of a ZodError (caused by our validation) we're adding issues to our response
     if (e instanceof ZodError) {
       e.issues.map((issue, index) =>
-        console.log(
-          `ZodError ${index + 1}`,
-          issue.path.join('.'),
-          issue.message
-        )
+        console.log(`ZodError #${index + 1}:`, issue.path, issue.message)
       );
       return {
         status: 'error',
         message: 'Invalid form data',
         errors: e.issues.map(issue => ({
-          path: issue.path.join('.'),
+          path: issue.path.join('@'),
           message: `SERVER: ${issue.message}`
         }))
       };
     }
     return {
       status: 'error',
-      message: 'Something went wrong. Please try again.'
+      message: 'Something went wrong. Please try again.',
+      errors: [{ path: e.name, message: e.message }]
     };
   }
 };
@@ -245,36 +273,40 @@ export const newMenuAction2 = async (
     // Validate our data
     const result = NewMenuSchemaExtended.parse(newMenu);
 
-    // Save data to database
-    // Menu
-    console.log('Menu data before saving to DB', newMenu);
-    const menuDB = await insertMenu({
-      name: newMenu.menuName,
-      description: newMenu.description,
-      isFeatured: newMenu.isFeatured,
-      categoryId: newMenu.category === '' ? null : Number(newMenu.category)
-    });
-    console.log('Menu data after saving to DB', menuDB);
+    // // Save data to database
+    // // Menu
+    // console.log('Menu data before saving to DB', newMenu);
+    // const menuDB = await insertMenu({
+    //   name: newMenu.menuName,
+    //   description: newMenu.description,
+    //   isFeatured: newMenu.isFeatured,
+    //   categoryId: newMenu.category === '' ? null : Number(newMenu.category)
+    // });
+    // console.log('Menu data after saving to DB', menuDB);
 
-    // Cover Photos
-    console.log('Cover Photos before saving to DB', coverPhotos);
-    const coverPhotosDB = await insertCoverPhotos(
-      coverPhotos,
-      newMenu.menuName,
-      menuDB?.id
-    );
-    console.log('Cover Photos saved to DB', coverPhotosDB);
+    // // Cover Photos
+    // console.log('Cover Photos before saving to DB', coverPhotos);
+    // const coverPhotosDB = await insertCoverPhotos(
+    //   coverPhotos,
+    //   newMenu.menuName,
+    //   menuDB?.id
+    // );
+    // console.log('Cover Photos saved to DB', coverPhotosDB);
 
-    // Price List
-    console.log('Price List before saving to DB', newPrices);
-    const pricesDB = await insertPriceList(newPrices, menuDB?.id);
-    console.log('Price List after saving to DB', pricesDB);
+    // // Price List
+    // console.log('Price List before saving to DB', newPrices);
+    // const pricesDB = await insertPriceList(newPrices, menuDB?.id);
+    // console.log('Price List after saving to DB', pricesDB);
 
     revalidatePath('/menu', 'layout');
 
+    // return {
+    //   status: 'success',
+    //   message: `Menu ${menuDB?.name} successfully saved...`
+    // };
     return {
       status: 'success',
-      message: `Menu ${menuDB?.name} successfully saved...`
+      message: `Menu successfully saved...`
     };
   } catch (e) {
     const errorMessage = getErrorMessage(e);
@@ -301,10 +333,17 @@ export const newMenuAction2 = async (
 };
 
 const insertMenu = async (
+  menuId: number | undefined,
   menu: Database['public']['Tables']['Menu']['Insert']
 ) => {
   const supabase = createSupabaseServerClient();
-  let menuQuery = supabase.from('Menu').insert([menu]);
+
+  let menuQuery;
+  if (!menuId) {
+    menuQuery = supabase.from('Menu').insert(menu);
+  } else {
+    menuQuery = supabase.from('Menu').update(menu).eq('id', menuId);
+  }
   const { data } = await menuQuery.select().single();
 
   return data;
@@ -322,6 +361,8 @@ const insertPriceList = async (
   const { data } = await priceQuery.select();
   return data;
 };
+
+const updatePriceList = async () => {};
 
 const insertCoverPhotos = async (
   coverPhotos: SupaCoverPhotoFile[],

@@ -13,29 +13,27 @@ import {
 import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 import {
-  Control,
   Controller,
-  FieldErrors,
+  UseFieldArrayMove,
   UseFieldArrayRemove,
-  UseFormRegister,
-  UseFormSetValue
+  useFormContext
 } from 'react-hook-form';
-import { FormValues } from './MenuFormV2';
+import InputController from '../nextui/controllers-react-hook-form/InputController';
+import { TbArrowMoveLeft, TbArrowMoveRight } from 'react-icons/tb';
+import { LuMoveLeft, LuMoveRight } from 'react-icons/lu';
+import { LiaTrashSolid } from 'react-icons/lia';
+import { RiDeleteBin2Line, RiDeleteBin5Line } from 'react-icons/ri';
 
 const ImageUploadCardV2 = ({
   index,
-  register,
-  setValue,
   remove,
-  control,
-  errors
+  move,
+  lastIndex
 }: {
   index: number;
-  register: UseFormRegister<FormValues>;
-  setValue: UseFormSetValue<FormValues>;
   remove: UseFieldArrayRemove;
-  control: Control<FormValues, any>;
-  errors: FieldErrors<FormValues>;
+  move: UseFieldArrayMove;
+  lastIndex: number;
 }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>();
   const [imageUrlErrorMsg, setImageUrlErrorMsg] = useState<
@@ -43,6 +41,42 @@ const ImageUploadCardV2 = ({
   >();
   const { handlePickClick, handleImageChange, imageInputRef, selectedFile } =
     useUploadImage();
+  const { setValue, getFieldState, clearErrors, getValues } = useFormContext();
+
+  const imageUrlName = `imageUpload.${index}.imageUrl`;
+  const orderNumberName = `imageUpload.${index}.orderNumber`;
+
+  const imageUrlFieldState = getFieldState(imageUrlName);
+
+  // remove button
+  const isDisabledRemove = index === lastIndex && index === 0;
+
+  // move left button
+  const isDisabledMoveLeft = index === 0 ? true : false;
+  function handleMoveLeft() {
+    const orderNumberIndexSwapping = index - 1;
+    const orderNumberNameSwapping = `imageUpload.${orderNumberIndexSwapping}.orderNumber`;
+    setValue(orderNumberName, index);
+    setValue(orderNumberNameSwapping, index + 1);
+    move(index, index - 1);
+  }
+
+  // move right button
+  const isDisabledMoveRight = index === lastIndex ? true : false;
+  function handleMoveRight() {
+    const orderNumberIndexSwapping = index + 1;
+    const orderNumberNameSwapping = `imageUpload.${orderNumberIndexSwapping}.orderNumber`;
+    setValue(orderNumberName, index + 2);
+    setValue(orderNumberNameSwapping, index + 1);
+    move(index, index + 1);
+  }
+
+  useEffect(() => {
+    const imageUrlValue: string = getValues(imageUrlName);
+    if (imageUrlValue.includes('.supabase.co')) {
+      setImageUrl(imageUrlValue);
+    }
+  }, [getValues, imageUrlName]);
 
   useEffect(() => {
     if (!selectedFile) {
@@ -51,14 +85,17 @@ const ImageUploadCardV2 = ({
 
     const objectUrl = URL.createObjectURL(selectedFile);
     setImageUrl(objectUrl);
-    setValue(`imageUpload.${index}.imageUrl`, objectUrl);
+    setValue(imageUrlName, objectUrl);
 
     // free memory when ever this component is unmounted
     return () => URL.revokeObjectURL(objectUrl);
-  }, [selectedFile, index, setValue]);
+  }, [selectedFile, index, setValue, imageUrlName]);
 
   function handleSelectFile(e: ChangeEvent<HTMLInputElement>) {
     handleImageChange(e);
+    if (imageUrlFieldState.invalid) {
+      clearErrors(imageUrlName);
+    }
     // if (servMessageImageURL) servMessageImageURL = undefined;
   }
 
@@ -67,11 +104,13 @@ const ImageUploadCardV2 = ({
   }
 
   // className={`h-96 w-60 gap-y-4 rounded-xl border-2 bg-content3 p-3
+  // debug/dev mode update the height
+  //className={`h-[32rem] w-60 gap-y-4 rounded-xl border-2 bg-content3 p-3
   const imageUploadCard = (
     <Card
-      className={`h-[32rem] w-60 gap-y-4 rounded-xl border-2 bg-content3 p-3
+      className={`min-h-96 w-60 gap-y-4 rounded-xl border-2 bg-content3 p-3
 ${
-  !imageUrlErrorMsg
+  !imageUrlFieldState.invalid
     ? 'border-primary hover:border-secondary'
     : 'border-danger hover:border-danger/70'
 } `}
@@ -102,50 +141,30 @@ ${
       </CardHeader>
       <CardFooter className='flex w-full flex-col gap-4 p-2'>
         {/* id */}
-        <Controller
-          control={control}
-          name={`imageUpload.${index}.imageId`}
-          render={({ field, fieldState }) => {
-            return (
-              <Input
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                name={field.name}
-                value={field.value.toString()}
-                ref={field.ref}
-                isDisabled={field.disabled}
-                type='number'
-                // readOnly
-                label='Image ID'
-                // {...register(`imageUpload.${index}.id`, { valueAsNumber: true })}
-                // className='hidden'
-              />
-            );
-          }}
+        <InputController
+          controllerName={`imageUpload.${index}.imageId`}
+          type='number'
+          label='Image ID'
+          isReadOnly
+          className='hidden'
         />
         {/* Image Url will be use to check if already uploaded to the server and for validation 
         for client and server side */}
-        <Controller
-          control={control}
-          name={`imageUpload.${index}.imageUrl`}
-          render={({ field, fieldState }) => {
-            setImageUrlErrorMsg(fieldState.error?.message);
-            return (
-              <Input
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                name={field.name}
-                value={field.value}
-                ref={field.ref}
-                isDisabled={field.disabled}
-                type='text'
-                // readOnly
-                label={`Image Url ${index + 1}`}
-                // {...register(`imageUpload.${index}.id`, { valueAsNumber: true })}
-                // className='hidden'
-              />
-            );
-          }}
+        <InputController
+          controllerName={imageUrlName}
+          type='text'
+          label={`Image Url ${index + 1}`}
+          isReadOnly
+          className='hidden'
+        />
+
+        {/* order number */}
+        <InputController
+          controllerName={orderNumberName}
+          type='number'
+          label='Order by'
+          isReadOnly
+          // className='hidden'
         />
         {/* <Input
           type='text'
@@ -165,7 +184,6 @@ ${
           ref={imageInputRef}
           onChange={handleSelectFile}
         />
-
         <Button
           className='w-full rounded-xl'
           color='primary'
@@ -174,25 +192,43 @@ ${
         >
           Browse
         </Button>
-        <Button
-          color='danger'
-          className='w-full rounded-xl'
-          onPress={handleRemove}
-          // isDisabled={disabledRemoveBtn}
-        >
-          Remove {index}
-        </Button>
+        <div className='flex w-full gap-x-3'>
+          <Button
+            color='secondary'
+            isIconOnly
+            startContent={<LuMoveLeft />}
+            isDisabled={isDisabledMoveLeft}
+            className=' disabled:hidden'
+            onPress={handleMoveLeft}
+          ></Button>
+          <Button
+            color='danger'
+            className='w-full rounded-xl'
+            onPress={handleRemove}
+            isDisabled={isDisabledRemove}
+            startContent={<RiDeleteBin5Line className='h-[50%] w-full' />}
+            isIconOnly
+          ></Button>
+          <Button
+            color='secondary'
+            isIconOnly
+            startContent={<LuMoveRight />}
+            isDisabled={isDisabledMoveRight}
+            className=' disabled:hidden'
+            onPress={handleMoveRight}
+          ></Button>
+        </div>
         {/* </div> */}
       </CardFooter>
     </Card>
   );
 
-  if (!imageUrlErrorMsg) {
+  if (!imageUrlFieldState.invalid) {
     return imageUploadCard;
   } else {
     return (
       <Tooltip
-        content={imageUrlErrorMsg}
+        content={imageUrlFieldState.error?.message}
         showArrow={true}
         color='danger'
         classNames={{

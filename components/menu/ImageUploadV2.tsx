@@ -1,34 +1,27 @@
 'use client';
 
-import useUploadImageMultiple from '@/utils/hooks/useUploadImageMultiple';
-import { Button } from '@nextui-org/react';
-import { ChangeEvent, useEffect } from 'react';
-import {
-  Control,
-  FieldErrors,
-  UseFieldArrayReturn,
-  UseFormRegister,
-  UseFormSetValue
-} from 'react-hook-form';
-import { FormValues } from './MenuFormV2';
+import { useEffect } from 'react';
+import { useFieldArray, useFormContext } from 'react-hook-form';
 import ImageUploadCardV2 from './ImageUploadCardV2';
 import ImageUploadEmptyCard from '../ui/ImageUploadEmptyCard';
 
-const ImageUploadV2 = ({
-  imageUploadFieldArray,
-  register,
-  setValue,
-  control,
-  errors
-}: {
-  imageUploadFieldArray: UseFieldArrayReturn<FormValues, 'imageUpload', 'id'>;
-  register: UseFormRegister<FormValues>;
-  setValue: UseFormSetValue<FormValues>;
-  control: Control<FormValues, any>;
-  errors: FieldErrors<FormValues>;
-}) => {
+const ImageUploadV2 = () => {
+  const { control, setValue } = useFormContext();
+
+  const imageUploadFieldArray = useFieldArray({
+    control,
+    name: 'imageUpload'
+  });
+
   // react hook form useFieldArray
-  const { fields, append, remove } = imageUploadFieldArray;
+  const { fields, append, remove, move } = imageUploadFieldArray;
+  // move()
+
+  useEffect(() => {
+    fields.forEach((field, index) =>
+      setValue(`imageUpload.${index}.orderNumber`, index + 1)
+    );
+  }, [remove, fields, setValue]);
 
   return (
     <section
@@ -40,11 +33,9 @@ const ImageUploadV2 = ({
           <ImageUploadCardV2
             key={field.id}
             index={index}
-            register={register}
-            setValue={setValue}
             remove={remove}
-            control={control}
-            errors={errors}
+            move={move}
+            lastIndex={fields.length - 1}
           />
         );
       })}
@@ -53,7 +44,8 @@ const ImageUploadV2 = ({
         handler={() =>
           append({
             imageId: 0,
-            imageUrl: ''
+            imageUrl: '',
+            orderNumber: fields.length + 1
           })
         }
       />

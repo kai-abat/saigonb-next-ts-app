@@ -41,13 +41,14 @@ export declare interface SupaMenu {
     created_at: string;
     id: number;
     imageUrl: string;
-    menuId: number;
+    menuId: number | null;
+    orderNumber: number;
   }[];
   MenuPrice: {
     created_at: string;
     id: number;
-    menuId: number;
-    price: number | null;
+    menuId: number | null;
+    price: number;
     size: string;
     type: string;
   }[];

@@ -1,7 +1,7 @@
 'use client';
 
 import { getFallbackImagePath } from '@/utils/Helper';
-import { ComponentProps, Menu } from '@/utils/types/Props';
+import { Menu } from '@/utils/types/Props';
 import {
   Card,
   CardBody,
@@ -13,8 +13,7 @@ import {
   PopoverTrigger,
   cn,
   useDisclosure,
-  Button as ButtonNUI,
-  Input
+  Button as ButtonNUI
 } from '@nextui-org/react';
 import Image from 'next/image';
 import Button from '../ui/Button';
@@ -23,6 +22,8 @@ import { MdOutlineArrowForwardIos } from 'react-icons/md';
 import { LiaEditSolid, LiaTrashSolid } from 'react-icons/lia';
 import { useState } from 'react';
 import DeleteMenuModal from './DeleteMenuModal';
+import fallbackImage from '/images/saigonbrewers-fallback-loader-w400.png';
+import FallbackImage from '../ui/FallbackImage';
 
 const MenuCard = ({
   menuItem,
@@ -51,7 +52,7 @@ const MenuCard = ({
           id='card-body'
           className='flex flex-none items-center justify-center overflow-visible p-0'
         >
-          <div className='aspect-square w-full bg-red-400'>
+          <div className='aspect-square w-full bg-content3'>
             <ImageUI
               isZoomed
               as={Image}
@@ -62,7 +63,7 @@ const MenuCard = ({
               alt={menuItem.name}
               className='aspect-square w-full object-cover '
               src={menuItem.coverPhotos.at(0)?.image}
-              fallbackSrc={getFallbackImagePath()}
+              fallbackSrc={<FallbackImage />}
               classNames={{
                 wrapper: cn('aspect-square bg-no-repeat bg-center bg-cover ')
               }}
@@ -112,6 +113,8 @@ const MenuCard = ({
                     variant='light'
                     className='flex justify-start'
                     color='secondary'
+                    isLink
+                    href={`/menu/menu-form?id=${menuItem.id}`}
                   >
                     Edit
                   </Button>

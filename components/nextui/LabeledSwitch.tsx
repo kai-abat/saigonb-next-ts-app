@@ -1,12 +1,12 @@
-import { ComponentProps } from "@/utils/types/Props";
-import { Switch, cn } from "@nextui-org/react";
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
+import { ComponentProps } from '@/utils/types/Props';
+import { Switch, cn } from '@nextui-org/react';
+import { ChangeEvent, ChangeEventHandler, useState } from 'react';
 
 function LabeledSwitch({
-  title = "",
-  description = "",
+  title = '',
+  description = '',
   name,
-  onChangeIsFeatured,
+  onChangeIsFeatured
 }: {
   title: string;
   description: string;
@@ -22,29 +22,29 @@ function LabeledSwitch({
       id={id}
       isSelected={isSelected}
       // onChange={handleChange}
-      onChange={(e) => onChangeIsFeatured(e)}
+      onChange={e => onChangeIsFeatured(e)}
       onValueChange={setIsSelected}
       classNames={{
         base: cn(
-          "inline-flex flex-row-reverse w-full max-w-md bg-content2 hover:bg-content3 items-center",
-          "justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent",
-          "data-[selected=true]:border-primary"
+          'inline-flex flex-row-reverse w-full max-w-md bg-content2 hover:bg-content3 items-center',
+          'justify-between cursor-pointer rounded-lg gap-2 p-4 border-2 border-transparent',
+          'data-[selected=true]:border-primary'
         ),
-        wrapper: "p-0 h-4 overflow-visible",
+        wrapper: 'p-0 h-4 overflow-visible',
         thumb: cn(
-          "w-6 h-6 border-2 shadow-lg",
-          "group-data-[hover=true]:border-primary",
+          'w-6 h-6 border-2 shadow-lg',
+          'group-data-[hover=true]:border-primary',
           //selected
-          "group-data-[selected=true]:ml-6",
+          'group-data-[selected=true]:ml-6',
           // pressed
-          "group-data-[pressed=true]:w-7",
-          "group-data-[selected]:group-data-[pressed]:ml-4"
-        ),
+          'group-data-[pressed=true]:w-7',
+          'group-data-[selected]:group-data-[pressed]:ml-4'
+        )
       }}
     >
-      <div className="flex flex-col gap-1">
-        <p className="text-medium">{title}</p>
-        <p className="text-tiny text-default-400">{description}</p>
+      <div className='flex flex-col gap-1'>
+        <p className='text-medium'>{title}</p>
+        <p className='text-tiny text-default-400'>{description}</p>
       </div>
     </Switch>
   );

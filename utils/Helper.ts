@@ -46,3 +46,30 @@ export const extractNumberFromURLParams = (
   }
   return paramFinal;
 };
+
+export const getDupelicateIndexFromArrayList = (
+  arrayList: string[]
+): number[] => {
+  const duplicateIndices: number[] = [];
+
+  const duplicates = arrayList.filter(
+    (item, index) => arrayList.indexOf(item) !== index
+  );
+
+  duplicates.forEach(itemDupe => {
+    arrayList.forEach((item, index) => {
+      item === itemDupe && duplicateIndices.push(index);
+    });
+  });
+
+  return duplicateIndices.sort();
+};
+
+export const getFilenames = (paths: string[]): string[] => {
+  const imageFilenames: string[] = [];
+  paths.forEach(path => {
+    const fileName = path.split('/').pop();
+    if (fileName) imageFilenames.push(fileName);
+  });
+  return imageFilenames;
+};

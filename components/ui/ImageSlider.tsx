@@ -1,11 +1,12 @@
-"use client";
+'use client';
 
-import { getFallbackImagePath } from "@/utils/Helper";
-import { MenuCoverPhoto } from "@/utils/types/Props";
-import { Button, Image as ImageUI, cn } from "@nextui-org/react";
-import Image from "next/image";
-import { useRef, useState } from "react";
-import { GrNext, GrPrevious } from "react-icons/gr";
+import { getFallbackImagePath } from '@/utils/Helper';
+import { MenuCoverPhoto } from '@/utils/types/Props';
+import { Button, Image as ImageUI, cn } from '@nextui-org/react';
+import Image from 'next/image';
+import { useRef, useState } from 'react';
+import { GrNext, GrPrevious } from 'react-icons/gr';
+import FallbackImage from './FallbackImage';
 
 export function ImageSlider({ images }: { images: MenuCoverPhoto[] }) {
   const [imagesStore, setImagesStore] = useState<MenuCoverPhoto[]>(images);
@@ -25,34 +26,34 @@ export function ImageSlider({ images }: { images: MenuCoverPhoto[] }) {
 
   return (
     // grid-cols-3
-    <div className="w-full flex flex-col gap-y-2 justify-center items-center">
-      <div className=" flex justify-center items-center max-w-[400px]">
+    <div className='flex w-full flex-col items-center justify-center gap-y-2'>
+      <div className=' flex max-w-[400px] items-center justify-center'>
         <ImageUI
           as={Image}
-          className="aspect-square rounded-md object-cover object-center"
+          className='aspect-square rounded-md object-cover object-center'
           src={active}
-          alt=""
+          alt=''
           width={600}
           height={600}
-          radius="sm"
-          fallbackSrc={getFallbackImagePath()}
+          radius='sm'
+          fallbackSrc={<FallbackImage />}
           classNames={{
             wrapper: cn(
-              "aspect-square bg-no-repeat bg-center bg-cover w-full h-full "
-            ),
+              'aspect-square bg-no-repeat bg-center bg-cover w-full h-full '
+            )
           }}
         />
       </div>
-      <div className="relative flex gap-x-1 items-center justify-center shrink max-w-[400px] min-w-[200px] w-full">
+      <div className='relative flex w-full min-w-[200px] max-w-[400px] shrink items-center justify-center gap-x-1'>
         {images.length > 1 && (
           <Button
             isIconOnly
-            variant="light"
-            color="primary"
-            size="lg"
+            variant='light'
+            color='primary'
+            size='lg'
             fullWidth={true}
-            radius="full"
-            className="absolute left-0 top-1/4 h-[50px] z-50 focus:z-50 focus:bg-red-600"
+            radius='full'
+            className='absolute left-0 top-1/4 z-50 h-[50px] focus:z-50 focus:bg-red-600'
             onPress={handlePrevPress}
           >
             <GrPrevious />
@@ -60,27 +61,27 @@ export function ImageSlider({ images }: { images: MenuCoverPhoto[] }) {
         )}
         <div
           ref={sliderRef}
-          className="w-full flex gap-2 overflow-x-hidden snap-mandatory shrink z-20"
+          className='z-20 flex w-full shrink snap-mandatory gap-2 overflow-x-hidden'
         >
           {images &&
             images.map(({ id, image }, index) => (
               <div key={index}>
-                <div className="w-[100px] h-[100px] ">
+                <div className='h-[100px] w-[100px] '>
                   <ImageUI
                     as={Image}
                     onClick={() => setActive(image)}
                     src={image}
                     className={`aspect-square cursor-pointer rounded-lg object-cover object-center hover:contrast-100
-                  ${active === image ? "contrast-100" : "contrast-50"}`}
-                    alt="gallery-image"
+                  ${active === image ? 'contrast-100' : 'contrast-50'}`}
+                    alt='gallery-image'
                     width={150}
                     height={150}
-                    radius="sm"
+                    radius='sm'
                     fallbackSrc={getFallbackImagePath()}
                     classNames={{
                       wrapper: cn(
-                        "aspect-square bg-no-repeat bg-center bg-cover "
-                      ),
+                        'aspect-square bg-no-repeat bg-center bg-cover '
+                      )
                     }}
                   />
                 </div>
@@ -90,11 +91,11 @@ export function ImageSlider({ images }: { images: MenuCoverPhoto[] }) {
         {images.length > 1 && (
           <Button
             isIconOnly
-            variant="light"
-            color="primary"
-            size="lg"
-            radius="full"
-            className="absolute right-0 top-1/4 h-[50px] z-50"
+            variant='light'
+            color='primary'
+            size='lg'
+            radius='full'
+            className='absolute right-0 top-1/4 z-50 h-[50px]'
             onPress={handlePrevNext}
           >
             <GrNext />

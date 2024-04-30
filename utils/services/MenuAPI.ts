@@ -42,14 +42,14 @@ export const extractMenuFromDB = async (supaMenu: SupaMenu[]) => {
             id: price.id,
             type: price.type,
             size: price.size,
-            price: price.price ? price.price : null
+            price: price.price
           };
         }),
         coverPhotos: item.MenuCoverPhoto.map(coverPhoto => {
           return {
             id: coverPhoto.id,
             image: coverPhoto.imageUrl,
-            orderNumber: coverPhoto.orderNumber ? coverPhoto.orderNumber : 0
+            orderNumber: coverPhoto.orderNumber
           };
         })
       };
@@ -81,7 +81,8 @@ export const fetchAllCategories = async (): Promise<
 
   const { data: categories, error } = await supabase
     .from('Category')
-    .select('*, Menu(*, Category(*),MenuCoverPhoto(*), MenuPrice(*))');
+    .select('*, Menu(*, Category(*),MenuCoverPhoto(*), MenuPrice(*))')
+    .order('name');
 
   if (!categories) return;
 

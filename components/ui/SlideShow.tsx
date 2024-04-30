@@ -10,7 +10,7 @@ interface Images {
 const SlideShow = ({
   images,
   aspectRatio,
-  timeInterval = 2000
+  timeInterval = 5000
 }: {
   images: Images[];
   aspectRatio?: 'square' | 'video' | '9/16';

@@ -1,6 +1,6 @@
 'use client';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -16,8 +16,15 @@ const FeaturedPostSlides = ({ posts }: { posts: PostsType }) => {
           navigation
           rewind
           pagination={{ type: 'bullets' }}
-          modules={[Navigation, Pagination]}
-          onSwiper={swiper => console.log(swiper)}
+          modules={[Navigation, Pagination, Autoplay]}
+          // onSwiper={swiper => console.log(swiper)}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: false,
+            stopOnLastSlide: false,
+            waitForTransition: true
+          }}
           className='mySwiper h-max w-full'
         >
           {posts.map((post, index) => (

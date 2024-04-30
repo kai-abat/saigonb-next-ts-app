@@ -23,6 +23,7 @@ import { TbArrowMoveLeft, TbArrowMoveRight } from 'react-icons/tb';
 import { LuMoveLeft, LuMoveRight } from 'react-icons/lu';
 import { LiaTrashSolid } from 'react-icons/lia';
 import { RiDeleteBin2Line, RiDeleteBin5Line } from 'react-icons/ri';
+import fallbackImage from '@/public/images/saigonbrewers-fallback-loader-w400.png';
 
 const ImageUploadCardV2 = ({
   index,
@@ -122,10 +123,8 @@ ${
         <div className=' flex aspect-square w-full items-center justify-center overflow-hidden rounded-xl border-2 border-secondary text-center '>
           {!imageUrl && (
             <Image
-              src={getFallbackImagePath()}
+              src={fallbackImage}
               alt='No image selected yet.'
-              width={250}
-              height={250}
               className='aspect-square w-full object-cover object-center'
             />
           )}
@@ -148,7 +147,7 @@ ${
           type='number'
           label='Image ID'
           isReadOnly
-          // className='hidden'
+          className='hidden'
         />
         {/* Image Url will be use to check if already uploaded to the server and for validation 
         for client and server side */}
@@ -157,7 +156,7 @@ ${
           type='text'
           label={`Image Url ${index + 1}`}
           isReadOnly
-          // className='hidden'
+          className='hidden'
         />
 
         {/* order number */}
@@ -166,7 +165,7 @@ ${
           type='number'
           label='Order by'
           isReadOnly
-          // className='hidden'
+          className='hidden'
         />
         {/* <Input
           type='text'
@@ -179,9 +178,9 @@ ${
         {/* nextui Input has bug in select file */}
         {/* Image FILE type is required in formdata in order to upload new image */}
         <input
-          // className='hidden w-full'
+          className='hidden w-full'
           type='file'
-          accept='image/png, image/jpeg'
+          accept='image/png, image/jpeg, image/webp'
           name={imageUploadFileName}
           multiple={false}
           ref={imageInputRef}

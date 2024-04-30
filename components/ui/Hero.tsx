@@ -4,8 +4,10 @@ import heroMainBackgroundImage from '@/public/images/bg/landing-bg.jpg';
 import heroSaigonCupImage from '@/public/images/bg/cup-bg.png';
 import heroBeansImage from '@/public/images/bg/bg-bot.png';
 import Typography from './Typography';
+import { fetchHeroSlides } from '@/utils/services/LandingAPI';
+import { getFilenames } from '@/utils/Helper';
 
-const slideShowData = [
+const slideShowDataFixed = [
   { imageUrl: '/images/hero/1.jpg', alt: 'alt1' },
   { imageUrl: '/images/hero/2.jpg', alt: 'alt2' },
   { imageUrl: '/images/hero/3.jpg', alt: 'alt3' },
@@ -16,7 +18,16 @@ const slideShowData = [
   { imageUrl: '/images/hero/8.jpg', alt: 'alt8' }
 ];
 
-const Hero = () => {
+const Hero = async () => {
+  const imageUrls = await fetchHeroSlides();
+  let slideShowData = slideShowDataFixed;
+  if (imageUrls) {
+    slideShowData = imageUrls.map(url => {
+      const altTxt = getFilenames([url]).at(0) ?? 'slideshow image';
+      return { imageUrl: url, alt: altTxt };
+    });
+  }
+
   return (
     <section className='aspect-video w-full overflow-hidden bg-stone-800 lg:aspect-auto lg:h-[90dvh]'>
       <div className='relative flex h-full w-full'>

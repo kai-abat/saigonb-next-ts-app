@@ -64,3 +64,12 @@ export const getDupelicateIndexFromArrayList = (
 
   return duplicateIndices.sort();
 };
+
+export const getFilenames = (paths: string[]): string[] => {
+  const imageFilenames: string[] = [];
+  paths.forEach(path => {
+    const fileName = path.split('/').pop();
+    if (fileName) imageFilenames.push(fileName);
+  });
+  return imageFilenames;
+};

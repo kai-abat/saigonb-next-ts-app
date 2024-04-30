@@ -2,6 +2,7 @@
 import { State, deleteMenuAction } from '@/utils/actions/menuActions';
 import { Menu } from '@/utils/types/Props';
 import {
+  Button,
   Input,
   Modal,
   ModalBody,
@@ -9,9 +10,9 @@ import {
   ModalFooter,
   ModalHeader
 } from '@nextui-org/react';
-import { useEffect } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import { useFormState } from 'react-dom';
-import Button from '../ui/Button';
+// import Button from '../ui/Button';
 import SubmitButton from '../form/SubmitButton';
 
 function DeleteMenuModal({
@@ -40,10 +41,17 @@ function DeleteMenuModal({
       console.log('ERRORS!:', state.errors);
     }
     if (state.status === 'success') {
-      alert(JSON.stringify(state));
+      // alert(JSON.stringify(state));
     }
   }, [state]);
 
+  function closeHandler(
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+    onClose: () => void
+  ): void {
+    e.preventDefault();
+    onClose();
+  }
   return (
     <Modal
       isOpen={isOpen}
@@ -68,12 +76,9 @@ function DeleteMenuModal({
                 />
               </ModalBody>
               <ModalFooter>
-                <SubmitButton
-                  color='default'
-                  label='No'
-                  labelLoading=''
-                  onPressHandler={onClose}
-                />
+                <Button color='default' onClick={e => closeHandler(e, onClose)}>
+                  No
+                </Button>
                 <SubmitButton
                   color='danger'
                   label='Yes'

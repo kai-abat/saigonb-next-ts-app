@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import { ZodError, z } from 'zod';
 import { createSupabaseServerClient } from '../supabase/server';
 import { FileBody, SupaCoverPhotoFile } from '../types/SupabaseCompProps';
-import { Database } from '../types/supabase';
+import { Database } from '../types/supabase_3';
 import {
   NewMenuFormDataSchema,
   NewMenuSchema,
@@ -13,6 +13,7 @@ import {
 } from '../zod/NewMenuSchema';
 import { fetchMenuById, fetchMenuByName } from '../services/MenuAPI';
 import { getErrorMessage } from '../ErrorHandling';
+import { getFilenames } from '../Helper';
 
 export type State =
   | {
@@ -51,11 +52,14 @@ export const deleteMenuAction = async (
     // console.log("DB priceList", priceList);
     // console.log("DB coverPhotos", coverPhotos);
 
-    const imageUrls = coverPhotos.map(cover => cover.image);
     const supabase = createSupabaseServerClient();
 
+    const imageFilenames = getFilenames(coverPhotos.map(cover => cover.image));
+
     // delete cover photos
-    await supabase.storage.from('saigon').remove(imageUrls);
+    const { data, error } = await supabase.storage
+      .from('saigon')
+      .remove(imageFilenames);
     // delete cover photo db
     await Promise.all(
       coverPhotos.map(async cover => {
@@ -78,8 +82,12 @@ export const deleteMenuAction = async (
     await supabase.from('Menu').delete().eq('id', menu.id);
   }
 
-  revalidatePath('/menu', 'layout');
-  redirect('/menu/all');
+  revalidatePath('/', 'layout');
+
+  return {
+    status: 'success',
+    message: `Successfully removed!`
+  };
 };
 
 export const newMenuAction = async (
@@ -149,7 +157,7 @@ export const newMenuAction = async (
     );
 
     console.log('newPrices', newPrices);
-    const priceDB = await insertPriceList(menuId, newPrices);
+    const priceDB = await insertPriceList(menuDB?.id, newPrices);
 
     console.log('priceDB', priceDB);
 
@@ -167,10 +175,12 @@ export const newMenuAction = async (
     const coverPhotosDB = await insertCoverPhotos(
       coverPhotos,
       menuName,
-      menuId
+      menuDB?.id
     );
 
     console.log('coverPhotosDB', coverPhotosDB);
+
+    revalidatePath('/', 'layout');
 
     return {
       status: 'success',
@@ -528,7 +538,7 @@ const insertCoverPhotos = async (
   menuCoverPhotoDBBeforeAlter?.map(async db => {
     const found = coverPhotosDB.find(cover => cover?.id === db.id);
     if (!found) {
-      await supabase.storage.from('saigon').remove([db.imageUrl]);
+      await supabase.storage.from('saigon').remove(getFilenames([db.imageUrl]));
       await supabase.from('MenuCoverPhoto').delete().eq('id', db.id);
     }
   });

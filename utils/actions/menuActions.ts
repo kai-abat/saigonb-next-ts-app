@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import { ZodError, z } from 'zod';
 import { createSupabaseServerClient } from '../supabase/server';
 import { FileBody, SupaCoverPhotoFile } from '../types/SupabaseCompProps';
-import { Database } from '../types/supabase_3';
+import { Database } from '../types/supabase';
 import {
   NewMenuFormDataSchema,
   NewMenuSchema,

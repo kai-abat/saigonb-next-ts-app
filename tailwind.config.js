@@ -82,7 +82,7 @@ module.exports = {
               200: '#3C1C54',
               100: '#291339',
               50: '#13091B',
-              DEFAULT: '#A46ECE'
+              DEFAULT: '#622F8A'
             }
           }
           // ... rest of the colors

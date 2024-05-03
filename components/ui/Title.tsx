@@ -1,10 +1,10 @@
-import { ComponentProps } from "@/utils/types/Props";
+import { ComponentProps } from '@/utils/types/Props';
 
 const Title = ({ children, capitalize }: ComponentProps) => {
   return (
     <h1
-      className={`font-bold text-xl sm:text-2xl lg:text-3xl text-secondary dark:text-secondary drop-shadow-sm  ${
-        capitalize && "capitalize"
+      className={`text-xl font-bold text-secondary drop-shadow-sm dark:text-default-foreground sm:text-2xl lg:text-3xl  ${
+        capitalize && 'capitalize'
       }`}
     >
       {children}

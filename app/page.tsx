@@ -4,7 +4,7 @@ import FeaturedMenuLoader from '@/components/loaders/FeaturedMenuLoader';
 import HeroLoader from '@/components/loaders/HeroLoader';
 import WhyChooseUsLoader from '@/components/loaders/WhyChooseUsLoader';
 import Container from '@/components/ui/Container';
-import FacebookFeeds from '@/components/ui/FacebookFeeds';
+import Feeds from '@/components/ui/Feeds';
 import FeaturedMenu from '@/components/ui/FeaturedMenu';
 import Hero from '@/components/ui/Hero';
 import WhyChooseUs from '@/components/ui/WhyChooseUs';
@@ -18,7 +18,7 @@ export default async function HomePage() {
       </Suspense>
       <Container>
         <Suspense fallback={<FacebookFeedsLoader />}>
-          <FacebookFeeds />
+          <Feeds />
         </Suspense>
         <Suspense fallback={<WhyChooseUsLoader />}>
           <WhyChooseUs />

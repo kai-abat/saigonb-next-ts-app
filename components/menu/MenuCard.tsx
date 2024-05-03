@@ -46,7 +46,7 @@ const MenuCard = ({
     <>
       <Card
         shadow='sm'
-        className='  border-1 border-secondary bg-primary transition-all duration-700 hover:ring-2 hover:ring-secondary'
+        className='  border-1 border-secondary bg-primary transition-all duration-700 hover:ring-2 hover:ring-secondary dark:bg-stone-700'
       >
         <CardHeader
           id='card-body'

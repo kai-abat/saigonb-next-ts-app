@@ -81,20 +81,17 @@ const WhyChooseUs = ({
               return (
                 <div
                   key={items.label}
-                  className={` flex cursor-pointer items-center justify-center gap-x-2 rounded-xl px-1 py-3 shadow-lg transition-colors duration-250 ease-in-out hover:bg-secondary *:hover:text-foreground-100 xs:gap-x-3 sm:flex-col sm:gap-x-0 sm:gap-y-2 sm:px-2 sm:py-3 ${
-                    index === activeImage ? 'bg-secondary' : 'bg-primary/70'
+                  className={` flex cursor-pointer items-center justify-center gap-x-2 rounded-xl px-1 py-3 shadow-lg transition-colors duration-250 ease-in-out hover:bg-secondary hover:text-secondary-foreground xs:gap-x-3 sm:flex-col sm:gap-x-0 sm:gap-y-2 sm:px-2 sm:py-3 ${
+                    index === activeImage
+                      ? 'bg-secondary text-secondary-foreground'
+                      : 'bg-primary/70'
                   }`}
                   onClick={() => handleActiveImage(index)}
                 >
-                  <div
-                    className={`h-6 w-6 hover:text-foreground-100 lg:h-8 lg:w-8
-                  ${index === activeImage && ' text-foreground-100'}`}
-                  >
-                    {items.icon}
-                  </div>
+                  <div className={`h-6 w-6 lg:h-8 lg:w-8`}>{items.icon}</div>
                   <p
                     className={`  text-nowrap text-center text-[0.625rem]/[0.75rem] font-semibold xs:text-xs  sm:text-wrap lg:text-sm
-                    ${index === activeImage && ' text-foreground-100'}
+                    
                   `}
                   >
                     {items.label}

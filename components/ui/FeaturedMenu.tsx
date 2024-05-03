@@ -10,7 +10,7 @@ const FeaturedMenu = async () => {
 
   if (!menus) return <span>No Featured Menu</span>;
   return (
-    <div className='flex flex-col gap-4 rounded-xl bg-primary/60 p-4'>
+    <div className='flex flex-col gap-4 rounded-xl bg-primary/60 p-4 dark:bg-stone-700/60'>
       <Title capitalize>Featured Menu</Title>
       <Divider />
       <div className='grid grid-cols-2 gap-4 sm:grid-cols-4'>

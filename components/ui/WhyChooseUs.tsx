@@ -64,7 +64,7 @@ const WhyChooseUs = ({
   }
 
   return (
-    <div className='flex w-full flex-col gap-4 rounded-xl bg-primary/60 p-4'>
+    <div className='flex w-full flex-col gap-4 rounded-xl bg-primary/60 p-4 dark:bg-stone-700/60'>
       <Title capitalize>{title}</Title>
       <Divider />
       <div

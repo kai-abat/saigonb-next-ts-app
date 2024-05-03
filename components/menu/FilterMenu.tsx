@@ -22,7 +22,7 @@ const FilterMenu = ({
   return (
     <div
       id='filter-menu'
-      className='flex w-full flex-wrap items-center justify-center gap-2 rounded-lg bg-primary/60 px-3 py-2'
+      className='flex w-full flex-wrap items-center justify-center gap-2 rounded-lg bg-primary/60 px-3 py-2 dark:bg-stone-700/60'
     >
       {defaultCategories.map((category, index) => (
         <Button

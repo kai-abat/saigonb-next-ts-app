@@ -12,7 +12,7 @@ const MenuItem = async ({ name, menus }: ComponentProps) => {
   let isAuthenticated = !userData ? false : true;
 
   return (
-    <div className='flex flex-col gap-4 rounded-xl bg-primary/60 p-3'>
+    <div className='flex flex-col gap-4 rounded-xl bg-primary/60 p-3 dark:bg-stone-700/60'>
       <Title capitalize>{name}</Title>
       <Divider />
       {menus.length < 1 && <span>No menu available</span>}

@@ -1,10 +1,15 @@
 import MenuFormV2 from '@/components/menu/MenuFormV2';
 import { extractNumberFromURLParams } from '@/utils/Helper';
 import { fetchCategoriesOnly, fetchMenuById } from '@/utils/services/MenuAPI';
+import { getUserData } from '@/utils/services/UserAPI';
 import { Menu, PageProps } from '@/utils/types/Props';
+import { redirect } from 'next/navigation';
 
 const MenuFormPage = async (props: PageProps) => {
   const { searchParams } = props;
+
+  const userData = await getUserData();
+  if (!userData) redirect('/menu/all');
 
   let { id } = searchParams;
   let menuId = extractNumberFromURLParams(id);

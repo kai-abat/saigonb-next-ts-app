@@ -25,6 +25,7 @@ import UserProfileHeader from '../ui/UserProfileHeader';
 import { UserProfile } from '@/utils/types/Props';
 import { signOut } from '@/utils/actions/adminAction';
 import ButtonSignOut from '../ui/ButtonSignOut';
+import { FB_URL, INSTAGRAM_URL } from '../../utils/Constants';
 
 interface Menu {
   name: string;
@@ -34,9 +35,9 @@ interface Menu {
 
 const menuItems: Menu[] = [
   { name: 'Home', to: '/', icon: <HiOutlineHome /> },
-  { name: 'Menu', to: '/menu', icon: <HiOutlineRocketLaunch /> },
-  { name: 'About', to: '/aboutus', icon: <HiOutlineRocketLaunch /> },
-  { name: 'Contact', to: '/contactus', icon: <HiOutlinePhone /> }
+  { name: 'Menu', to: '/menu', icon: <HiOutlineRocketLaunch /> }
+  // { name: 'About', to: '/aboutus', icon: <HiOutlineRocketLaunch /> }
+  // { name: 'Contact', to: '/contactus', icon: <HiOutlinePhone /> }
 ];
 
 const Header = ({ userData }: { userData: UserProfile | undefined }) => {
@@ -94,13 +95,13 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
       <NavbarContent justify='end'>
         <NavbarItem className='hidden lg:flex'>
           <Link
-            href='#'
+            href={FB_URL}
             className=' text-3xl text-stone-900 dark:text-stone-200'
           >
             <IoLogoFacebook />
           </Link>
           <Link
-            href='#'
+            href={INSTAGRAM_URL}
             className=' text-3xl text-stone-900 dark:text-stone-200'
           >
             <IoLogoInstagram />

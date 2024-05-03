@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: ComponentProps) {
           {/* <Initializer userData={userData}> */}
           <section
             id='main-section'
-            className='min-w-420px relative flex flex-col bg-primary-100 dark:bg-stone-950'
+            className='min-w-420px relative flex min-h-screen flex-col justify-between bg-primary-100 dark:bg-stone-950'
           >
             <Header userData={userData} />
             <div className='fixed right-0 top-0 z-0 h-full min-h-[80dvh] w-full opacity-10 lg:min-h-dvh'>
@@ -51,7 +51,9 @@ export default async function RootLayout({ children }: ComponentProps) {
               /> */}
             </div>
 
-            <main className=' z-40 mb-4 flex flex-col gap-y-4'>{children}</main>
+            <main className=' z-40 mb-4 flex h-full flex-col gap-y-4 '>
+              {children}
+            </main>
             <Footer />
           </section>
           {/* </Initializer> */}

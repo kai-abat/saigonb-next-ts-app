@@ -1,8 +1,5 @@
 import LoginForm from '@/components/admin/LoginForm';
-import Logo from '@/components/layout/Logo';
-import CurvyContainer from '@/components/ui/CurvyContainer';
 import { getUserData } from '@/utils/services/UserAPI';
-import { Image } from '@nextui-org/react';
 import { redirect } from 'next/navigation';
 
 const LoginPage = async () => {

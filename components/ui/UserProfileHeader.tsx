@@ -35,16 +35,9 @@ const UserProfileHeader = ({
         </div>
       </div>
       <div className='hidden md:flex'>
-        <Tooltip
-          content='Sign Out'
-          showArrow
-          color='secondary'
-          radius='sm'
-          disableAnimation
-          closeDelay={200}
-        >
-          <ButtonSignOut />
-        </Tooltip>
+
+          <ButtonSignOut showLabel />
+
       </div>
     </div>
   );

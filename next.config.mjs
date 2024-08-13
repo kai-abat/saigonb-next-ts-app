@@ -21,6 +21,12 @@ const nextConfig = {
         hostname: 'swmrqqjavbgslarhgyvc.supabase.co',
         port: '',
         pathname: '/storage/v1/object/public/hero/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'saigonbrewers-posts-bucket.s3.ap-southeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**'
       }
     ]
   },

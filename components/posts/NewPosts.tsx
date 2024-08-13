@@ -24,7 +24,9 @@ import {
   validateRequiredS3Data
 } from '@/utils/actions/AWSS3Action';
 import { BucketSchemaDB, PostSchemaDB } from '@/utils/types/mongodbSchema';
-import { computeSHA256 } from '@/utils/Helper';
+
+import { revalidatePath } from 'next/cache';
+import { savePost } from '@/utils/actions/postActions';
 
 export interface FormValues {
   description: string;
@@ -71,86 +73,33 @@ const NewPosts = () => {
 
     console.log('handleSubmit started...');
     console.log('mediaFiles', mediaFiles);
+    setStatusMessage('Uploading...');
+
+    const formData = new FormData();
+    formData.append(`description`, postDescription);
+    formData.append(`media-total`, mediaFiles.length.toString());
+    mediaFiles.map((mediaFile, index) => {
+      formData.append(`media-file-${index}`, mediaFile.file);
+      formData.append(`media-order-${index}`, mediaFile.order.toString());
+    });
+
+    const result = await savePost(formData);
+
+    console.log('savePost result', result);
 
     // uploading
     setIsLoading(true);
     setStatusMessage('Uploading...');
 
     // Validatin files to upload
-    // TODO: Not finished
-    const validationResult = await Promise.all(
-      mediaFiles.map(async media => {
-        return await validateRequiredS3Data(media.file.type, media.file.size);
-      })
-    );
+    // TODO: Not finished / to be transferred to savePost server action
+    // const validationResult = await Promise.all(
+    //   mediaFiles.map(async media => {
+    //     return await validateRequiredS3Data(media.file.type, media.file.size);
+    //   })
+    // );
 
-    console.log('validationResult:', validationResult);
-
-    // Upload each file
-    let bucketValue: BucketSchemaDB[] = [];
-    await Promise.all(
-      mediaFiles.map(async media => {
-        const checkSum = await computeSHA256(media.file);
-        const signedUrlResult = await getSignedUrl(
-          media.file.name,
-          media.file.type,
-          media.file.size,
-          checkSum,
-          true
-        );
-        if (signedUrlResult.failure) {
-          setStatusMessage(signedUrlResult.failure.message);
-          setIsLoading(false);
-          console.log('Failed', signedUrlResult.failure.message);
-          return;
-        }
-        const url = signedUrlResult.success.url;
-
-        console.log('AWS S3 Signed URL:', url);
-
-        // Upload to AWS S3
-        const res = await fetch(url, {
-          method: 'PUT',
-          body: media.file,
-          headers: {
-            'Content-Type': media.file.type
-          }
-        });
-
-        // Setup BucketSchemaDB
-        bucketValue.push({
-          attachment: url.split('?')[0],
-          mediaType: media.file.type,
-          order: media.order
-        });
-      })
-    );
-
-    console.log('bucketValue ', bucketValue);
-    setStatusMessage('Posting...');
-    // Saving to database
-    const postDBValue: PostSchemaDB = {
-      post: postDescription,
-      bucket: bucketValue
-    };
-    // Saving to MongoDB REST API
-    const dbUrl = 'http://localhost:3001/api/posts';
-
-    console.log('Saving to MongoDB REST API');
-
-    try {
-      const res = await fetch(dbUrl, {
-        method: 'POST',
-        body: JSON.stringify(postDBValue),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      });
-      const data = await res.json();
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
+    // console.log('validationResult:', validationResult);
 
     console.log('Done saving to MongoDB REST API');
 
@@ -178,9 +127,9 @@ const NewPosts = () => {
 
   return (
     <FormProvider {...methods}>
-      <div className='flex flex-col gap-2'>
-        <Button onPress={onOpen} className='max-w-fit'>
-          Open Modal
+      <div className='flex w-full flex-col gap-2'>
+        <Button onPress={onOpen} className='max-w-fit' color='secondary'>
+          New Post
         </Button>
 
         <Modal

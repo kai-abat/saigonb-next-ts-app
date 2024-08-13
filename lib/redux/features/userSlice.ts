@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "../store";
-import { UserProfile } from "../../../utils/types/Props";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '../store';
+import { UserProfile } from '../../../utils/types/Props';
 
 // Define a type for the slice state
 // export interface UserState {
@@ -11,15 +11,15 @@ import { UserProfile } from "../../../utils/types/Props";
 
 // Define the initial state using that type
 export const initialState: UserProfile = {
-  id: "",
-  firstName: "",
-  lastName: "",
-  email: "",
-  position: "",
+  id: '',
+  firstName: '',
+  lastName: '',
+  email: '',
+  position: ''
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   // `createSlice` will infer the state type from the `initialState` argument
   initialState,
   reducers: {
@@ -45,8 +45,8 @@ export const userSlice = createSlice({
     },
     updateEmail(state, action: PayloadAction<string>) {
       state.email = action.payload;
-    },
-  },
+    }
+  }
 });
 
 export const {
@@ -55,7 +55,7 @@ export const {
   updateUserID,
   updateFirstName,
   updateLastName,
-  updateEmail,
+  updateEmail
 } = userSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
@@ -67,6 +67,6 @@ export const getEmail = (state: RootState) => state.user.email;
 export const getFirstName = (state: RootState) => state.user.firstName;
 export const getLastName = (state: RootState) => state.user.lastName;
 export const getUser = (state: RootState): UserProfile | undefined =>
-  state.user.id === "" ? undefined : state.user;
+  state.user.id === '' ? undefined : state.user;
 
 export default userSlice.reducer;

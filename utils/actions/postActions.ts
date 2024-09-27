@@ -1,15 +1,15 @@
 'use server';
 
+import { computeSHA256 } from '@/utils/Helper';
 import { revalidatePath } from 'next/cache';
+import { saveBlog } from '../services/BlogAPI';
 import {
   BucketSchemaDB,
   PostSchemaDB,
   PostSchemaDBUpdate
 } from '../types/mongodbSchema';
-import { ErrorReturnType } from '../types/restAPITypes';
 import { getSignedUrl } from './AWSS3Action';
 import { State } from './menuActions';
-import { computeSHA256 } from '@/utils/Helper';
 
 export type PostActionReturnType =
   | {
@@ -138,25 +138,31 @@ export const savePost = async (formData: FormData): Promise<State> => {
     bucket: bucketValue
   };
   // Saving to MongoDB REST API
-  const dbUrl = 'http://localhost:3001/api/posts';
 
-  console.log('Saving to MongoDB REST API');
+  // v1 Safe Via Node Express REST API
+  // const dbUrl = 'http://localhost:3001/api/posts';
 
-  try {
-    const res = await fetch(dbUrl, {
-      method: 'POST',
-      body: JSON.stringify(postDBValue),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    const data = await res.json();
-    console.log(data);
-  } catch (error) {
-    console.log(error);
-  }
+  // console.log('Saving to MongoDB REST API');
 
-  console.log('Done saving to MongoDB REST API');
+  // try {
+  //   const res = await fetch(dbUrl, {
+  //     method: 'POST',
+  //     body: JSON.stringify(postDBValue),
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   });
+  //   const data = await res.json();
+  //   console.log(data);
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  // console.log('Done saving to MongoDB REST API');
+
+  // v2 Save to supabase
+  console.log('Ongoing save to supabase...');
+  const data = await saveBlog(undefined, postDBValue);
+  console.log('Done saving to supabase...');
 
   revalidatePath('/posts');
 

@@ -1,14 +1,17 @@
+import { fetchAllBlog } from '@/backend/controller/blogController';
 import NewPosts from '@/components/posts/NewPosts';
 import Posts from '@/components/posts/Posts';
 import Container from '@/components/ui/Container';
-import { getPost } from '@/utils/actions/postActions';
+import { getUserData } from '@/utils/services/UserAPI';
+import { redirect } from 'next/navigation';
 
 const PostPage = async () => {
-  const data = await getPost();
+  const user = await getUserData();
+  const data = await fetchAllBlog();
 
   return (
     <Container className='pt-4'>
-      <NewPosts />
+      {user && <NewPosts />}
       <Posts data={data} />
     </Container>
   );

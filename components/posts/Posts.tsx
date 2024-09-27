@@ -8,8 +8,9 @@ import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import { initializePostPreview } from '@/lib/redux/features/postPreviewSlice';
 import MediaPreviewModal from '../ui/MediaPreviewModal';
 import { useDisclosure } from '@nextui-org/react';
+import { BlogType } from '@/utils/types/blogTypes';
 
-const Posts = ({ data }: { data: PostActionReturnType }) => {
+const Posts = ({ data }: { data: BlogType[] | null }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const dispatch = useAppDispatch();
   dispatch(initializePostPreview());
@@ -17,13 +18,13 @@ const Posts = ({ data }: { data: PostActionReturnType }) => {
   const type = useAppSelector(state => state.postPreview.type);
   const currentMedia = useAppSelector(state => state.postPreview.media);
 
-  if (data.failure) {
+  if (!data) {
     return <p>No posts found!</p>;
   }
 
-  const sortedPosts = data.success.slice().sort((a, b) => {
-    const date1 = Date.parse(a.createdAt);
-    const date2 = Date.parse(b.createdAt);
+  const sortedPosts = data.slice().sort((a, b) => {
+    const date1 = Date.parse(a.created_at);
+    const date2 = Date.parse(b.created_at);
     return date2 - date1;
   });
 
@@ -32,7 +33,7 @@ const Posts = ({ data }: { data: PostActionReturnType }) => {
       <div className='flex w-full flex-col gap-3'>
         {sortedPosts.map((post, index) => {
           return (
-            <Post key={`${post._id}_${index}`} post={post} onOpen={onOpen} />
+            <Post key={`${post.id}_${index}`} post={post} onOpen={onOpen} />
           );
         })}
       </div>

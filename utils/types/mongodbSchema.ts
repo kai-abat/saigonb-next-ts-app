@@ -1,7 +1,7 @@
 export declare interface BucketSchemaDB {
   attachment: string;
   mediaType: string;
-  order: Number;
+  order: number;
 }
 
 export declare interface PostSchemaDB {

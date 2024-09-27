@@ -1,8 +1,10 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 import { ZodError, z } from 'zod';
+import { getErrorMessage } from '../ErrorHandling';
+import { getFilenames } from '../Helper';
+import { fetchMenuById, fetchMenuByName } from '../services/MenuAPI';
 import { createSupabaseServerClient } from '../supabase/server';
 import { FileBody, SupaCoverPhotoFile } from '../types/SupabaseCompProps';
 import { Database } from '../types/supabase';
@@ -11,9 +13,6 @@ import {
   NewMenuSchema,
   imageURLSchema
 } from '../zod/NewMenuSchema';
-import { fetchMenuById, fetchMenuByName } from '../services/MenuAPI';
-import { getErrorMessage } from '../ErrorHandling';
-import { getFilenames } from '../Helper';
 
 export type State =
   | {

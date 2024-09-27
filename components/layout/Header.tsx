@@ -37,7 +37,7 @@ interface Menu {
 const menuItems: Menu[] = [
   { name: 'Home', to: '/', icon: <HiOutlineHome /> },
   { name: 'Menu', to: '/menu', icon: <HiOutlineRocketLaunch /> },
-  { name: 'Posts', to: '/posts', icon: <HiOutlineRocketLaunch /> }
+  { name: 'News', to: '/news', icon: <HiOutlineRocketLaunch /> }
   // { name: 'About', to: '/aboutus', icon: <HiOutlineRocketLaunch /> }
   // { name: 'Contact', to: '/contactus', icon: <HiOutlinePhone /> }
 ];
@@ -60,7 +60,6 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
       className='z-[9999]'
       classNames={{
         base: ['justify-evenly'],
-
         item: [
           'flex',
           'relative',
@@ -83,7 +82,7 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
           <LogoHeader />
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
+      <NavbarContent className='mr-4 hidden gap-4 sm:flex' justify='center'>
         {menuItems.map((item, index) => (
           <NavbarItem key={index} isActive={isLinkActive(item.to)}>
             <Link color='foreground' href={item.to}>

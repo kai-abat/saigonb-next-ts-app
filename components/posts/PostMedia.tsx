@@ -2,15 +2,14 @@
 
 import { setMedia } from '@/lib/redux/features/postPreviewSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
-import { BucketSchemaDBUpdate } from '@/utils/types/mongodbSchema';
+import { BlogBucketType } from '@/utils/types/blogTypes';
 import Image from 'next/image';
-import { useState } from 'react';
 
 const PostMedia = ({
   media,
   onOpen
 }: {
-  media: BucketSchemaDBUpdate;
+  media: BlogBucketType;
   onOpen: () => void;
 }) => {
   const dispatch = useAppDispatch();

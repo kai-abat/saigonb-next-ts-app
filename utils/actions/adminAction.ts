@@ -1,11 +1,11 @@
-"use server";
+'use server';
 
-import { redirect } from "next/navigation";
-import { createSupabaseServerClient } from "../supabase/server";
-import { revalidatePath } from "next/cache";
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
+import { createSupabaseServerClient } from '../supabase/server';
 
 export type State = {
-  status: "error" | "success";
+  status: 'error' | 'success';
   isValid: boolean;
   message: string;
   errors?: Array<{
@@ -19,35 +19,35 @@ export const signIn = async (
   formData: FormData
 ): Promise<State> => {
   // we're gonna put a delay in here to simulate some kind of data processing like persisting data
-  await new Promise((resolve) => setTimeout(resolve, 2000));
+  await new Promise(resolve => setTimeout(resolve, 2000));
 
   const supabase = createSupabaseServerClient();
 
   // type-casting here for convenience
   // in practice, you should validate your inputs
   const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
+    email: formData.get('email') as string,
+    password: formData.get('password') as string
   };
 
   const { error } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
     return {
-      status: "error",
+      status: 'error',
       isValid: false,
       message:
-        "Sorry, your email and password was incorrect. Please double-check your account.",
+        'Sorry, your email and password was incorrect. Please double-check your account.'
     };
   }
 
-  revalidatePath("/", "layout");
-  redirect("/");
+  revalidatePath('/', 'layout');
+  redirect('/');
 };
 
 export const signOut = async () => {
   // we're gonna put a delay in here to simulate some kind of data processing like persisting data
-  await new Promise((resolve) => setTimeout(resolve, 3000));
+  await new Promise(resolve => setTimeout(resolve, 3000));
 
   const supabase = createSupabaseServerClient();
 
@@ -58,6 +58,6 @@ export const signOut = async () => {
   // const { data: userData } = await supabase.auth.getUser();
   // console.log("signout", sessionData, userData);
 
-  revalidatePath("/", "layout");
-  redirect("/");
+  revalidatePath('/', 'layout');
+  redirect('/');
 };

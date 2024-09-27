@@ -1,23 +1,16 @@
-import { PostSchemaDBUpdate } from '@/utils/types/mongodbSchema';
+import { BlogType } from '@/utils/types/blogTypes';
 import {
+  Avatar,
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
-  Avatar,
-  Button
+  CardHeader
 } from '@nextui-org/react';
-import PostMedia from './PostMedia';
 import PostCTA from './PostCTA';
+import PostMedia from './PostMedia';
 
-const Post = ({
-  post,
-  onOpen
-}: {
-  post: PostSchemaDBUpdate;
-  onOpen: () => void;
-}) => {
-  const buckets = post.bucket.slice().sort((a, b) => a.order - b.order);
+const Post = ({ post, onOpen }: { post: BlogType; onOpen: () => void }) => {
+  const buckets = post.BlogBucket.slice().sort((a, b) => a.order - b.order);
 
   return (
     <Card className='w-full gap-y-5 rounded-xl bg-primary/60 dark:bg-stone-700/60'>
@@ -45,7 +38,7 @@ const Post = ({
           {buckets.map((media, index) => {
             return (
               <PostMedia
-                key={`post-media-${media._id}-${index}`}
+                key={`post-media-${media.id}-${index}`}
                 media={media}
                 onOpen={onOpen}
               />

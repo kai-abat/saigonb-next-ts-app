@@ -1,3 +1,5 @@
+'use client';
+
 import { BlogType } from '@/utils/types/blogTypes';
 import {
   Avatar,
@@ -8,8 +10,11 @@ import {
 } from '@nextui-org/react';
 import PostCTA from './PostCTA';
 import PostMedia from './PostMedia';
+import { useSelector } from 'react-redux';
+import { getUserClient } from '@/lib/redux/features/userSlice';
 
 const Post = ({ post, onOpen }: { post: BlogType; onOpen: () => void }) => {
+  const user = useSelector(getUserClient);
   const buckets = post.BlogBucket.slice().sort((a, b) => a.order - b.order);
 
   return (
@@ -26,9 +31,11 @@ const Post = ({ post, onOpen }: { post: BlogType; onOpen: () => void }) => {
               </h5> */}
           </div>
         </div>
-        <div className='flex gap-2'>
-          <PostCTA />
-        </div>
+        {user.id && (
+          <div className='flex gap-2'>
+            <PostCTA />
+          </div>
+        )}
       </CardHeader>
       <CardBody className='px-3 py-0 text-medium text-default-700'>
         <pre className='whitespace-pre-wrap'>{post.post}</pre>

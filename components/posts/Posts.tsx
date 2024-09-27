@@ -1,16 +1,18 @@
 'use client';
 
-import { getPost, PostActionReturnType } from '@/utils/actions/postActions';
 import Post from './Post';
-import { useState } from 'react';
-
-import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import { initializePostPreview } from '@/lib/redux/features/postPreviewSlice';
-import MediaPreviewModal from '../ui/MediaPreviewModal';
-import { useDisclosure } from '@nextui-org/react';
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
 import { BlogType } from '@/utils/types/blogTypes';
+import { UserProfile } from '@/utils/types/Props';
+import { useDisclosure } from '@nextui-org/react';
+import MediaPreviewModal from '../ui/MediaPreviewModal';
 
-const Posts = ({ data }: { data: BlogType[] | null }) => {
+type Props = {
+  data: BlogType[] | null;
+};
+
+const Posts = ({ data }: Props) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const dispatch = useAppDispatch();
   dispatch(initializePostPreview());

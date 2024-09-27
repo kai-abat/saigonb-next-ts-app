@@ -69,4 +69,6 @@ export const getLastName = (state: RootState) => state.user.lastName;
 export const getUser = (state: RootState): UserProfile | undefined =>
   state.user.id === '' ? undefined : state.user;
 
+export const getUserClient = (state: RootState) => state.user;
+
 export default userSlice.reducer;

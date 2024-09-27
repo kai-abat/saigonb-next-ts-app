@@ -9,7 +9,7 @@ import { GrNext, GrPrevious } from 'react-icons/gr';
 import FallbackImage from './FallbackImage';
 
 export function ImageSlider({ images }: { images: MenuCoverPhoto[] }) {
-  const [imagesStore, setImagesStore] = useState<MenuCoverPhoto[]>(images);
+  // const [imagesStore, setImagesStore] = useState<MenuCoverPhoto[]>(images);
   const [active, setActive] = useState(images?.at(0)?.image);
   const sliderRef = useRef<HTMLInputElement>(null);
 

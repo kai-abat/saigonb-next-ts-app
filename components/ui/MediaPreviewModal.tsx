@@ -31,19 +31,28 @@ const MediaPreviewModal = ({
 
   return (
     <>
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='center'>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement='center'
+        size='xl'
+        className='z-50 bg-primary-50'
+      >
         <ModalContent>
           {onClose => (
             <>
               <ModalHeader className='flex flex-col gap-1'>Preview</ModalHeader>
-              <ModalBody>
+              <ModalBody className=''>
                 {type === 'image' && (
-                  <Image
-                    src={media}
-                    alt='media previewer'
-                    width={500}
-                    height={500}
-                  />
+                  <div className=' flex items-center justify-center'>
+                    <Image
+                      src={media}
+                      alt='media previewer'
+                      width={500}
+                      height={500}
+                      className='aspect-square h-full rounded-md object-cover'
+                    />
+                  </div>
                 )}
               </ModalBody>
             </>

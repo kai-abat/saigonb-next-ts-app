@@ -52,7 +52,7 @@ export default async function RootLayout({ children }: ComponentProps) {
               /> */}
               </div>
 
-              <main className=' z-40 mb-4 flex h-full flex-col gap-y-4 '>
+              <main className=' z-30 mb-4 flex h-full flex-col gap-y-4 '>
                 {children}
               </main>
               <Footer />

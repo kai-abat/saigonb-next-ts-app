@@ -3,9 +3,14 @@ import NewPosts from '@/components/posts/NewPosts';
 import Posts from '@/components/posts/Posts';
 import Container from '@/components/ui/Container';
 import { getUserData } from '@/utils/services/UserAPI';
-import { redirect } from 'next/navigation';
+import { Metadata } from 'next';
 
-const PostPage = async () => {
+export const metadata: Metadata = {
+  title: 'Saigon Brewers News Page',
+  description: 'Saigon Brewers, Welcome to our news page.'
+};
+
+const NewsPage = async () => {
   const user = await getUserData();
   const data = await fetchAllBlog();
 
@@ -16,4 +21,4 @@ const PostPage = async () => {
     </Container>
   );
 };
-export default PostPage;
+export default NewsPage;

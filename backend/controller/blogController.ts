@@ -1,3 +1,4 @@
+'use server';
 import { getAllBlog } from '../model/blogModel';
 import { BlogType } from '@/utils/types/blogTypes';
 

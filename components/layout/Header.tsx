@@ -26,6 +26,7 @@ import { UserProfile } from '@/utils/types/Props';
 import { signOut } from '@/utils/actions/adminAction';
 import ButtonSignOut from '../ui/ButtonSignOut';
 import { FB_URL, INSTAGRAM_URL } from '../../utils/Constants';
+import ButtonSignIn from '../ui/ButtonSignIn';
 
 interface Menu {
   name: string;
@@ -35,7 +36,8 @@ interface Menu {
 
 const menuItems: Menu[] = [
   { name: 'Home', to: '/', icon: <HiOutlineHome /> },
-  { name: 'Menu', to: '/menu', icon: <HiOutlineRocketLaunch /> }
+  { name: 'Menu', to: '/menu', icon: <HiOutlineRocketLaunch /> },
+  { name: 'News', to: '/news', icon: <HiOutlineRocketLaunch /> }
   // { name: 'About', to: '/aboutus', icon: <HiOutlineRocketLaunch /> }
   // { name: 'Contact', to: '/contactus', icon: <HiOutlinePhone /> }
 ];
@@ -58,7 +60,6 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
       className='z-[9999]'
       classNames={{
         base: ['justify-evenly'],
-
         item: [
           'flex',
           'relative',
@@ -81,7 +82,7 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
           <LogoHeader />
         </NavbarBrand>
       </NavbarContent>
-      <NavbarContent className='hidden gap-4 sm:flex' justify='center'>
+      <NavbarContent className='mr-4 hidden gap-4 sm:flex' justify='center'>
         {menuItems.map((item, index) => (
           <NavbarItem key={index} isActive={isLinkActive(item.to)}>
             <Link color='foreground' href={item.to}>
@@ -109,6 +110,9 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
         </NavbarItem>
         <NavbarItem className='hidden sm:flex'>
           <ThemeSwitcher />
+        </NavbarItem>
+        <NavbarItem className={`${userData && 'hidden'}`}>
+          <ButtonSignIn showLabel />
         </NavbarItem>
         <NavbarItem>
           <UserProfileHeader userData={userData} />
@@ -150,7 +154,7 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
             </Link>
           </NavbarMenuItem>
         ))}
-        {/* <NavbarMenuItem className={`${userData && 'hidden'}`}>
+        <NavbarMenuItem className={`${userData && 'hidden'}`}>
           <Button
             as={Link}
             color='secondary'
@@ -161,7 +165,7 @@ const Header = ({ userData }: { userData: UserProfile | undefined }) => {
           >
             Sign In
           </Button>
-        </NavbarMenuItem> */}
+        </NavbarMenuItem>
         <NavbarMenuItem className={`${!userData && 'hidden'}`}>
           <ButtonSignOut showLabel />
         </NavbarMenuItem>

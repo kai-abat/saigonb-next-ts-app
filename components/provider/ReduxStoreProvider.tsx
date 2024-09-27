@@ -1,14 +1,12 @@
-"use client";
-import { setUser } from "@/lib/redux/features/userSlice";
-import { useAppDispatch } from "@/lib/redux/hooks";
-import { AppStore, makeStore } from "@/lib/redux/store";
-import { UserProfile } from "@/utils/types/Props";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { useEffect, useRef } from "react";
-import { Provider } from "react-redux";
+'use client';
+
+import { AppStore, makeStore } from '@/lib/redux/store';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { useEffect, useRef } from 'react';
+import { Provider } from 'react-redux';
 
 export default function ReduxStoreProvider({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {

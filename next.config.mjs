@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://localhost:3001/:path*'
+      }
+    ];
+  },
   images: {
     remotePatterns: [
       {
@@ -13,6 +21,12 @@ const nextConfig = {
         hostname: 'swmrqqjavbgslarhgyvc.supabase.co',
         port: '',
         pathname: '/storage/v1/object/public/hero/**'
+      },
+      {
+        protocol: 'https',
+        hostname: 'saigonbrewers-posts-bucket.s3.ap-southeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**'
       }
     ]
   },

@@ -15,8 +15,8 @@ const ButtonSignOut = ({ showLabel = false }: ComponentProps) => {
     <Button
       radius='sm'
       color='secondary'
-      disableRipple
-      disableAnimation
+      // disableRipple
+      // disableAnimation
       // startContent={<Spinner size="lg" color="current" />}
       isLoading={isPending}
       startContent={!isPending && <RiLogoutBoxRLine />}

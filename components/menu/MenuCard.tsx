@@ -24,6 +24,7 @@ import { useState } from 'react';
 import DeleteMenuModal from './DeleteMenuModal';
 import fallbackImage from '/images/saigonbrewers-fallback-loader-w400.png';
 import FallbackImage from '../ui/FallbackImage';
+import { GrEdit } from 'react-icons/gr';
 
 const MenuCard = ({
   menuItem,
@@ -109,7 +110,7 @@ const MenuCard = ({
               <PopoverContent>
                 <div className='flex flex-col gap-y-3 px-1 py-2'>
                   <Button
-                    startContent={<LiaEditSolid />}
+                    startContent={<GrEdit />}
                     variant='light'
                     className='flex justify-start'
                     color='secondary'

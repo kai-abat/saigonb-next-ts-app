@@ -7,7 +7,8 @@ const TextAreaController = ({
   className,
   showError = false,
   isAutoFocus = false,
-  isReadOnly = false
+  isReadOnly = false,
+  placeholder = undefined
 }: {
   controllerName: string;
   label: string;
@@ -15,6 +16,7 @@ const TextAreaController = ({
   showError?: boolean;
   isAutoFocus?: boolean;
   isReadOnly?: boolean;
+  placeholder?: string;
 }) => {
   const { control } = useFormContext();
   return (
@@ -41,6 +43,7 @@ const TextAreaController = ({
             className={className}
             readOnly={isReadOnly}
             // className='hidden'
+            placeholder={placeholder}
           />
         );
       }}

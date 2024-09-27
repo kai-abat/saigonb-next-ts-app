@@ -8,6 +8,7 @@
 
 # testing
 /coverage
+temp
 
 # next.js
 /.next/
@@ -43,3 +44,4 @@ utils/types/supabase_1.ts
 utils/types/supabase_2.ts
 1.8.1
 supabase_3.ts
+supabase_no_blog.ts

@@ -10,7 +10,7 @@ import FeaturedPost from './FeaturedPost';
 
 const FeaturedPostSlides = ({ posts }: { posts: PostsType }) => {
   return (
-    <section className=''>
+    <section>
       <div className='rounded-xl bg-primary/60 dark:bg-stone-700/60'>
         <Swiper
           navigation

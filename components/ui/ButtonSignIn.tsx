@@ -6,7 +6,13 @@ import { RiLogoutBoxRLine } from 'react-icons/ri';
 
 const ButtonSignIn = ({ showLabel = false }: ComponentProps) => {
   return (
-    <Button as={Link} radius='sm' color='secondary' href='/admin/login'>
+    <Button
+      data-testid='signin-button'
+      as={Link}
+      radius='sm'
+      color='secondary'
+      href='/admin/login'
+    >
       {showLabel && 'Sign In'}
     </Button>
   );

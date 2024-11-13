@@ -33,8 +33,14 @@ const Hero = async () => {
       <div className='relative flex h-full w-full'>
         {/* Slogan */}
         <div className=' z-50 flex shrink grow-[2] basis-3/5 flex-col justify-start gap-y-1 font-playfair_display tracking-wider text-primary *:drop-shadow-md first:mt-5 *:xs:ml-3 sm:gap-y-3 sm:tracking-widest *:sm:ml-8 *:md:ml-12'>
-          <Typography variant='h1'>More Coffee,</Typography>
-          <Typography variant='h1' className=' indent-6 md:indent-12'>
+          <Typography data-testid='heading1' variant='h1'>
+            More Coffee,
+          </Typography>
+          <Typography
+            data-testid='heading2'
+            variant='h1'
+            className=' indent-6 md:indent-12'
+          >
             More Progress
           </Typography>
         </div>

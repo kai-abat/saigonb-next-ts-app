@@ -13,6 +13,7 @@ const ButtonSignOut = ({ showLabel = false }: ComponentProps) => {
 
   return (
     <Button
+      data-testid='signout-button'
       radius='sm'
       color='secondary'
       // disableRipple
